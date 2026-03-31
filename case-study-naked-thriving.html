@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Naked & Thriving — Yuxuan Li</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --bg: #FDFCFA; --text: #1F2937; --sub: #6A7282;
+      --muted: #8D9096; --accent: #ED5148; --border: rgba(0,0,0,0.07);--max:1200px;--content:680px; }
+    html { scroll-behavior: smooth; }
+    body { background:var(--bg);font-family:'Poppins',-apple-system,sans-serif;font-size:16px;color:var(--text);-webkit-font-smoothing:antialiased; }
+    .nav-wrap { position:sticky;top:0;z-index:100;transition:background 0.3s ease,box-shadow 0.3s ease; }
+    .nav-wrap.scrolled { background:rgba(253,252,250,0.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border); }
+    .nav { max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:20px 56px; }
+    .logo { display:flex;align-items:center;gap:10px;text-decoration:none; }
+    .logo img { width:32px;height:32px;object-fit:contain; }
+    .logo-name { font-size:15px;font-weight:500;color:var(--text); }
+    .nav-links { display:flex;gap:36px;list-style:none; }
+    .nav-links a { font-size:15px;color:var(--sub);text-decoration:none;transition:color 0.15s;position:relative; }
+    .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.2s; }
+    .nav-links a:hover { color:var(--text); } .nav-links a:hover::after { width:100%; }
+    .back { max-width:var(--max);margin:0 auto;padding:28px 56px 0;animation:fadeUp 0.5s ease both; }
+    .back a { font-size:13px;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s; }
+    .back a:hover { color:var(--accent); }
+    .cs-hero { max-width:var(--max);margin:0 auto;padding:36px 56px 0;animation:fadeUp 0.6s 0.05s ease both; }
+    .cs-meta-label { font-size:11px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:20px; }
+    .cs-title { font-size:clamp(28px,3.8vw,40px);font-weight:400;line-height:1.1;letter-spacing:-0.025em;color:var(--text);max-width:800px;margin-bottom:20px; }
+    .cs-desc { font-size:16px;font-weight:300;color:var(--sub);line-height:1.75;max-width:800px;margin-bottom:32px; }
+    .cs-role { max-width:var(--max);margin:0 auto;padding:0 56px 32px;animation:fadeUp 0.6s 0.1s ease both; }
+    .cs-role-inner { padding:20px 0;display:grid;grid-template-columns:2fr 1fr;gap:32px;align-items:start; }
+    .cs-role-row { display:flex;flex-direction:column;gap:8px; }
+    .role-label { font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--sub); }
+    .role-value { font-size:16px;font-weight:400;color:var(--text); }
+    .role-pills { display:flex;flex-wrap:wrap;gap:10px; }
+    .role-pill { font-size:12px;color:var(--sub);background:rgba(0,0,0,0.04);padding:4px 10px;border-radius:4px;cursor:default; }
+    .cs-img-wrap { max-width:var(--max);margin:0 auto;padding:0 56px;animation:fadeUp 0.6s 0.15s ease both; }
+    .cs-hero-img { width:100%;aspect-ratio:16/7;border-radius:16px;overflow:hidden;position:relative; }
+    .blob { position:absolute;border-radius:50%;pointer-events:none; }
+    .img-hint { position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-size:11px;color:rgba(255,255,255,0.18);letter-spacing:0.08em;white-space:nowrap; }
+    .cs-impact { max-width:var(--max);margin:0 auto;padding:48px 56px 0; }
+    .cs-impact-grid { display:flex;border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+    .cs-impact-item { flex:1;padding:28px 24px; }
+    .cs-impact-val { font-size:34px;font-weight:300;color:var(--text);letter-spacing:-0.04em;line-height:1;margin-bottom:6px; }
+    .cs-impact-val em { color:var(--accent);font-style:normal; }
+    .cs-impact-label { font-size:13px;color:var(--sub);font-weight:400; }
+    .cs-body { max-width:var(--content);margin:0 auto;padding:0 56px; }
+    .cs-section { padding:48px 0;border-top:1px solid var(--border); }
+    .cs-section-label { font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:16px; }
+    .cs-section h2 { font-size:20px;font-weight:400;color:var(--text);letter-spacing:-0.015em;line-height:1.3;margin-bottom:14px; }
+    .challenges { list-style:none; }
+    .challenges li { display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border); }
+    .challenges li:last-child { border-bottom:none;padding-bottom:0; }
+    .ch-num { font-size:11px;color:var(--muted);flex-shrink:0;padding-top:2px; }
+    .ch-title { font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px; }
+    .ch-desc { font-size:16px;font-weight:300;color:var(--sub);line-height:1.7;max-width: 680px; }
+    .cs-highlights { max-width:var(--max);margin:0 auto;padding:48px 56px;}
+    .cs-highlights-label { font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub); }
+    .highlight-item { display:grid;grid-template-columns:1.1fr 1fr;gap:52px;align-items:center;padding:44px 0; }
+    .highlight-item:last-child { border-bottom:none;padding-bottom:0; }
+    .highlight-item.flip { direction:rtl; } .highlight-item.flip > * { direction:ltr; }
+    .hl-img { border-radius:12px;overflow:hidden;aspect-ratio:4/3;transition:transform 0.3s ease; }
+    .hl-num { font-size:11px;color:var(--muted);margin-bottom:10px; }
+    .hl-title { font-size:18px;font-weight:400;color:var(--text);letter-spacing:-0.015em;line-height:1.3;margin-bottom:10px; }
+    .hl-desc { font-size:16px;font-weight:300;color:var(--sub);line-height:1.75; }
+    .cs-learned { max-width:var(--max);margin:0 auto;padding:64px 56px 80px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start; }
+    .learned-label { font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--sub);margin-bottom:16px; }
+    .learned-text { font-size:20px;font-weight:300;color:var(--text);line-height:1.6;letter-spacing:-0.01em; }
+    .learned-text em { font-style:italic;color:var(--accent); }
+    .learned-summary { font-size:16px;font-weight:300;color:var(--sub);line-height:1.8;margin-bottom:28px;padding-top:36px; }
+    .learned-tags { display:flex;flex-wrap:wrap;gap:8px; }
+    .learned-tag { font-size:12px;color:var(--sub);background:rgba(0,0,0,0.04);padding:4px 10px;border-radius:4px;cursor:default; }
+    .cs-nav { max-width:var(--max);margin:0 auto;padding:28px 56px 0;display:flex;justify-content:space-between;margin-bottom: 40px;}
+    .cs-nav a { font-size:14px;color:var(--sub);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s; }
+    .cs-nav a:hover { color:var(--accent); }
+    .site-footer { max-width:var(--max);margin:0 auto;padding:72px 56px 80px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end; }
+    .footer-label { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px; }
+    .footer-heading { font-size:clamp(28px,3.5vw,44px);font-weight:300;letter-spacing:-0.025em;color:var(--text);line-height:1.15; }
+    .footer-heading em { font-style:italic;color:var(--accent); }
+    .footer-links { display:flex;gap:32px; }
+    .footer-link { font-size:16px;font-weight:400;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s; }
+    .footer-link:hover { color:var(--accent); }
+    .pw-overlay { position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center; }
+    .pw-overlay.hidden { opacity:0;pointer-events:none;transition:opacity 0.4s ease; }
+    .pw-box { width:100%;max-width:400px;padding:0 24px;text-align:center; }
+    .pw-logo { width:32px;height:32px;object-fit:contain;margin:0 auto 32px;display:block; }
+    .pw-title { font-size:18px;font-weight:400;color:var(--text);margin-bottom:8px; }
+    .pw-sub { font-size:14px;font-weight:300;color:var(--muted);margin-bottom:32px;line-height:1.6; }
+    .pw-input { width:100%;padding:14px 16px;margin-bottom:12px;font-size:15px;font-family:inherit;font-weight:300;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:10px;outline:none;transition:border-color 0.2s;display:block; }
+    .pw-input:focus { border-color:rgba(0,0,0,0.2); } .pw-input.error { border-color:var(--accent); }
+    .pw-btn { width:100%;padding:14px;font-size:14px;font-weight:500;font-family:inherit;color:#fff;background:var(--text);border:none;border-radius:10px;cursor:pointer;transition:background 0.2s; }
+    .pw-btn:hover { background:var(--accent); }
+    .pw-error { font-size:13px;color:var(--accent);margin-top:10px;opacity:0;transition:opacity 0.2s;height:20px; }
+    .pw-error.show { opacity:1; }
+    .pw-back { margin-top:20px;font-size:13px;color:var(--muted);text-decoration:none;transition:color 0.15s;display:inline-block; }
+    .pw-back:hover { color:var(--accent); }
+    .sf { opacity:0;transform:translateY(14px);transition:opacity 0.6s ease,transform 0.6s ease; }
+    .sf.on { opacity:1;transform:translateY(0); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    img {width:100%;height:100%;object-fit:cover;}
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.85); align-items: center; justify-content: center;
+      cursor: zoom-out;
+    }
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-overlay img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain; border-radius: 8px;
+    }
+
+    /* Zoomable image wrapper */
+    .zoomable-wrap {
+      position: relative; overflow: hidden; cursor: zoom-in;
+    }
+    .zoomable-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .zoomable-wrap:hover img { transform: scale(1.05); }
+    .zoomable-wrap .zoom-hint {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .zoomable-wrap:hover .zoom-hint { opacity: 1; }
+    .zoom-hint span {
+      color: #fff; font-size: 13px; font-weight: 400;
+      letter-spacing: 0.12em; text-transform: uppercase;
+    }
+</style>
+</head>
+<div class="lightbox-overlay" id="lightbox">
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+<body>
+  <div class="nav-wrap" id="navWrap"><nav class="nav"><a class="logo" href="index.html"><img src="imgs/logo.png" alt="Yuxuan Li"/><span class="logo-name">Yuxuan Li</span></a><ul class="nav-links"><li><a href="index.html">Work</a></li><li><a href="about.html">About</a></li><li><a href="imgs/yuxuan_resume.pdf" target="_blank">Resume</a></li></ul></nav></div>
+  <div class="back"><a href="index.html">← Back to work</a></div>
+  <section class="cs-hero"><div class="cs-meta-label">NAKED &amp; THRIVING · 2021</div><h1 class="cs-title">Redesigning Subscription Management</h1>
+    <!-- <p class="cs-desc">Naked &amp; Thriving is a subscription-based skincare brand where managing subscriptions is a key part of the customer experience. <br/>While the initial goal was to reduce cancellations by making the cancel flow harder, I found that many users were canceling because basic subscription changes were too difficult to complete.<br> I redesigned the self-serve experience across mobile and desktop, making common tasks easier to find, understand, and complete.</p> -->
+  </section>
+  <div class="cs-role">
+    <div class="cs-role-inner">
+      <div class="cs-role-row"><span class="role-label">Context</span><p class="cs-desc">Naked &amp; Thriving is a subscription-based skincare brand where managing subscriptions is a key part of the customer experience. <br/>I redesigned the self-serve flow across mobile and desktop to make common subscription changes easier to complete, reducing the friction that was pushing some users toward cancellation.</p></div>
+      <div class="cs-role-row"><span class="role-label">What I did</span><div class="role-pills"><span class="role-pill">UX Strategy</span><span class="role-pill">User Research</span><span class="role-pill">Information Architecture</span><span class="role-pill">Responsive Design</span><span class="role-pill">Prototyping</span></div></div>
+    </div>
+  </div>
+  <div class="cs-img-wrap"><div class="cs-hero-img" style="background:linear-gradient(135deg,#94B9B7 0%,#7AB0AD 100%);">
+    <img src="imgs/nt-hero.png" alt="" style="width:100%;height:100%;object-fit:cover;"/>
+    <!-- <div class="blob" style="width:420px;height:420px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(163, 201, 183, 0.16) 0%,transparent 65%);"></div>
+    <div class="blob" style="width:260px;height:260px;bottom:-60px;left:-60px;background:radial-gradient(circle,rgba(72, 196, 237, 0.1) 0%,transparent 65%);"></div>
+    <div class="blob" style="width:200px;height:200px;bottom:40px;right:200px;background:radial-gradient(circle,rgba(140, 200, 175, 0.1) 0%,transparent 65%);"></div> -->
+  </div></div>
+
+ 
+  <div class="cs-highlights">
+    <div class="cs-highlights-label">Design Highlights</div>    
+    <div class="highlight-item sf flip"><div class="hl-img" ><img src="imgs/nt-insight1.png" alt="" style="width:100%;object-fit:cover;"/></div><div><div class="hl-num">01</div><div class="hl-title">Found the problem behind cancellations</div><p class="hl-desc">The original ask was to make cancellation harder to reduce churn. But after digging into support patterns and user behavior, I found that many users weren’t actually trying to leave, they were trying to make simple subscription changes and couldn’t figure out how. <br>That shifted the focus from adding friction to improving the experience, making it easier for users to do what they came to do instead of pushing them toward dead ends.</p></div></div>    
+    <div class="highlight-item sf"><div class="hl-img zoomable-wrap" ><img src="imgs/nt-insight2.png"/><div class="zoom-hint"><span>Click to expand</span></div></div><div><div class="hl-num">02</div><div class="hl-title">Redesigned the flow around user intent</div><p class="hl-desc">The existing experience forced users through too many pages for simple account tasks. <br>I restructured the flow around what users actually needed to do, not how the system happened to be organized. <br>That made the experience faster, clearer, and more aligned with how people manage subscriptions in real life.</p></div></div>    
+    <div class="highlight-item sf flip"><div class="hl-img zoomable-wrap" ><img src="imgs/nt-insight3.png"/><div class="zoom-hint"><span>Click to expand</span></div></div><div><div class="hl-num">03</div><div class="hl-title">Designing within real constraints</div><p class="hl-desc">Built on WordPress and WooCommerce, some structural changes weren't possible. I had to balance user needs, business goals, and technical limitations to make deliberate trade-offs that improved clarity without ignoring retention goals.</p></div></div>  
+  </div>
+  <div class="cs-learned sf">
+    <div><div class="learned-label">What I Learned</div><p class="learned-text">Sometimes the <em>real problem</em> isn't what users are asking for, it's what they're doing instead.</p></div>
+    <div><p class="learned-summary">Users weren't asking to cancel, they were cancelling because they couldn't figure out how to modify. That distinction changed everything about how we prioritized the redesign.</p></div>
+  </div>
+  <div class="cs-nav"><a href="case-study-lytx.html">← Previous project</a><a href="index.html">Back to all work →</a></div>
+  <div class="site-footer sf"><div><div class="footer-label">Let's talk</div><h2 class="footer-heading">Always curious,<br/>always <em>open to a chat.</em></h2></div><div class="footer-links"><a class="footer-link" href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a><a class="footer-link" href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com ↗</a></div></div>
+  <script>
+    const navWrap=document.getElementById('navWrap');window.addEventListener('scroll',()=>{navWrap.classList.toggle('scrolled',window.scrollY>10)});
+    const obs=new IntersectionObserver((e)=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});},{threshold:0.08});document.querySelectorAll('.sf').forEach(el=>obs.observe(el));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.zoomable-wrap').forEach(wrap => {
+      wrap.addEventListener('click', () => {
+        lightboxImg.src = wrap.querySelector('img').src;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightbox.addEventListener('click', () => {
+      lightbox.classList.remove('open');
+    });
+  </script>
+</body>
+</html>

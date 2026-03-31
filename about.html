@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Yuxuan Li</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #FDFCFA; --text: #1F2937; --sub: #6A7282;
+      --muted: #8D9096; --accent: #ED5148; --border: rgba(0,0,0,0.07);
+      --max: 1200px; --content: 680px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      font-family: 'Poppins', -apple-system, sans-serif;
+      font-size: 16px; color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .nav-wrap { position:sticky;top:0;z-index:100;transition:background 0.3s ease,box-shadow 0.3s ease; }
+    .nav-wrap.scrolled { background:rgba(253,252,250,0.93);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--border); }
+    .nav { max-width:var(--max);margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:20px 56px; }
+    .logo { display:flex;align-items:center;gap:10px;text-decoration:none; }
+    .logo img { width:32px;height:32px;object-fit:contain; }
+    .logo-name { font-size:15px;font-weight:500;color:var(--text); }
+    .nav-links { display:flex;gap:36px;list-style:none; }
+    .nav-links a { font-size:15px;color:var(--sub);text-decoration:none;transition:color 0.15s;position:relative; }
+    .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.2s; }
+    .nav-links a:hover { color:var(--text); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-links a.active { color:var(--text); }
+    .nav-links a.active::after { width:100%; }
+
+    .site-footer { max-width:var(--max);margin:0 auto;padding:72px 56px 80px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end; }
+    .footer-label { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px; }
+    .footer-heading { font-size:clamp(16px,3.2vw,32px);font-weight:300;letter-spacing:-0.025em;color:var(--text);line-height:1.15; }
+    .footer-heading em { font-style:italic;color:var(--accent); }
+    .footer-links { display:flex;gap:32px; }
+    .footer-link { font-size:16px;font-weight:400;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s; }
+    .footer-link:hover { color:var(--accent); }
+
+    .sf { opacity:0;transform:translateY(14px);transition:opacity 0.6s ease,transform 0.6s ease; }
+    .sf.on { opacity:1;transform:translateY(0); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+    .hero-zone { background:linear-gradient(160deg,#FDFCFA 0%,#FFF9F7 60%,#FFF5F2 100%); }
+    .about-hero { max-width:var(--max);margin:0 auto;padding:64px 56px 72px;display:grid;grid-template-columns:1fr 380px;gap:80px;align-items:center;animation:fadeUp 0.7s ease both; }
+    .hero-eyebrow { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:20px; }
+    .hero-name { font-size:clamp(40px,5vw,64px);font-weight:400;letter-spacing:-0.03em;line-height:1.05;color:var(--text);margin-bottom:24px; }
+    .hero-name em { font-style:italic;font-weight:300;color:var(--sub); }
+    .hero-bio { font-size:17px;font-weight:300;color:var(--sub);line-height:1.8;margin-bottom:16px;max-width:480px; }
+    .hero-bio strong { font-weight:500;color:var(--text); }
+    .hero-bio:last-of-type { margin-bottom:32px; }
+    .hero-links { display:flex;gap:24px; }
+    .hero-link { font-size:14px;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid var(--border);padding-bottom:2px;transition:border-color 0.2s,color 0.2s; }
+    .hero-link:hover { color:var(--accent);border-color:var(--accent); }
+    .hero-photo { aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:#E8E4DE;animation:photoIn 0.9s 0.3s cubic-bezier(0.34,1.2,0.64,1) both; }
+    .hero-photo img { width:100%;height:100%;object-fit:cover; }
+    .photo-ph { width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center; }
+    .photo-ph-icon { width:48px;height:48px;border-radius:50%;background:var(--muted);opacity:0.4; }
+    .photo-ph-text { font-size:12px;color:var(--muted);letter-spacing:0.06em; }
+    @keyframes photoIn { from{opacity:0;transform:scale(0.94) translateY(12px)} to{opacity:1;transform:scale(1) translateY(0)} }
+    .story { max-width:var(--max);margin:0 auto;padding:72px 56px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start; }
+    .story-imgs { display:flex;flex-direction:column;gap:12px; }
+    .story-photo img { width:100%;height:100%;object-fit:cover; }
+    .story-img-big { width:100%;aspect-ratio:9/6;border-radius:16px;overflow:hidden;background:#D4CFC8; }
+    .story-img-row { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+    .story-img-sm { aspect-ratio:1/1;border-radius:12px;overflow:hidden; }
+    .si1 { background:#C8D4CE; } .si2 { background:#D4C8CE; }
+    .img-ph { width:100%;height:100%;display:flex;align-items:center;justify-content:center; }
+    .img-ph span { font-size:11px;color:rgba(0,0,0,0.2);letter-spacing:0.08em; }
+    .story-label { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px; }
+    .story-heading { font-size:28px;font-weight:400;color:var(--text);letter-spacing:-0.02em;line-height:1.3;margin-bottom:20px; }
+    .story-heading em { font-style:italic;color:var(--accent); }
+    .story-text { font-size:16px;font-weight:300;color:var(--sub);line-height:1.85;margin-bottom:16px; }
+    .story-text:last-child { margin-bottom:0; }
+    .outside { max-width:var(--max);margin:0 auto;padding:72px 56px;}
+    .outside-label { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:40px; }
+    .outside-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px; }
+    .outside-card { border-radius:12px;overflow:hidden;opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease,box-shadow 0.3s ease; }
+    .outside-card.on { opacity:1;transform:translateY(0); }
+    /* .oc-img:hover { transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,0.08); } */
+    .outside-card:nth-child(1){transition-delay:0s} .outside-card:nth-child(2){transition-delay:0.08s}
+    .outside-card:nth-child(3){transition-delay:0.16s} .outside-card:nth-child(4){transition-delay:0.24s}
+    .oc-img { aspect-ratio:3/4;position:relative;overflow:hidden;border-radius:16px; }
+    .oc1{background:linear-gradient(160deg,#2C3E2D 0%,#1A2B1B 100%)} .oc2{background:linear-gradient(160deg,#4A3728 0%,#2E2018 100%)}
+    .oc3{background:linear-gradient(160deg,#2A3A4A 0%,#1A2535 100%)} .oc4{background:linear-gradient(160deg,#3A2A2A 0%,#251818 100%)}
+    .oc-tag { position:absolute;bottom:14px;left:14px;font-size:11px;letter-spacing:0.06em;color:rgba(255,255,255,0.35); }
+    .oc-body { padding:16px 0 0; }
+    .oc-title { font-size:15px;font-weight:400;color:var(--text);margin-bottom:4px; }
+    .oc-desc { font-size:13px;font-weight:300;color:var(--muted);line-height:1.5; }
+    .yoyo { max-width:var(--max);margin:0 auto;padding:72px 56px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center; }
+    .yoyo-label { font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px; }
+    .yoyo-heading { font-size:32px;font-weight:400;color:var(--text);letter-spacing:-0.025em;line-height:1.2;margin-bottom:16px; }
+    .yoyo-heading em { font-style:italic;color:var(--accent); }
+    .yoyo-desc { font-size:16px;font-weight:300;color:var(--sub);line-height:1.8; }
+    .yoyo-photo { aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:#E0D8CC;transition:transform 0.4s cubic-bezier(0.34,1.4,0.64,1);cursor:pointer; }
+    /* .yoyo-photo:hover { transform:rotate(1.5deg) scale(1.02); } */
+    .yoyo-photo img { width:100%;height:100%;object-fit:cover; }
+</style>
+</head>
+<body>
+
+  <div class="nav-wrap" id="navWrap">
+    <nav class="nav">
+      <a class="logo" href="index.html"><img src="imgs/logo.png" alt="Yuxuan Li"/><span class="logo-name">Yuxuan Li</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Work</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="imgs/yuxuan_resume.pdf" target="_blank">Resume</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="hero-zone">
+    <div class="about-hero">
+      <div>
+        <div class="hero-eyebrow">About me</div>
+        <h1 class="hero-name">Yuxuan Li.</h1>
+        <p class="hero-bio">Product designer with <strong>7+ years</strong> of experience making complex things feel clear across platforms, services, and workflows used by millions. <br/> With a background in both design and communication, I’m especially drawn to understanding the why behind user behavior and turning that into thoughtful, delightful user experiences. <br/>My work often sits at the intersection of ambiguity and structure: figuring out what matters, simplifying complexity, and designing with both clarity and care.</p>
+        <div class="hero-links">
+          <a class="hero-link" href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>
+          <a class="hero-link" href="mailto:yl.yuxuanli@gmail.com">Say hello ↗</a>
+          <a class="hero-link" href="imgs/yuxuan_resume.pdf" target="_blank">Resume ↗</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="photo-ph"><div class="photo-ph-icon"></div><img src="imgs/about-yuxuan.jpg" alt="Yuxuan Li"/></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="story sf">
+    <div class="story-imgs">
+      <div class="story-img-big"><div class="img-ph"><img src="imgs/about-story1.jpg" alt="Yuxuan Li" style="width:100%;height:100%;object-fit:cover;"/></div></div>
+      <div class="story-img-row">
+        <div class="story-img-sm si1"><div class="img-ph"><img src="imgs/about-story2.jpg" alt="Yuxuan Li" style="width:100%;height:100%;object-fit:cover;"/></div></div>
+        <div class="story-img-sm si2"><div class="img-ph"><img src="imgs/about-story3.jpg" alt="Yuxuan Li" style="width:100%;height:100%;object-fit:cover;"/></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="story-label">My Story</div>
+      <h2 class="story-heading">From chasing stories<br/>to designing them </h2>
+      <p class="story-text">Before I was a designer, I was a reporter. I spent years asking uncomfortable questions, digging into complicated situations, and trying to make sense of messy information.</p>
+      <p class="story-text">That experience still shapes how I work today.</p>
+      <p class="story-text">I’m naturally drawn to the “why” behind people’s behavior: what they need, what they avoid, what confuses them, and what helps them move forward. Design became the place where that curiosity met problem-solving.</p>
+      <p class="story-text">Different tools, same mindset.</p>
+    </div>
+  </div>
+
+  <div class="outside sf">
+    <div class="outside-label">Outside of work</div>
+    <div class="outside-grid">
+      <div class="outside-card"><div class="oc-img oc1"><img src="imgs/oow-yoyo.jpg" style="width:100%;height:100%;object-fit:cover;"/></div><div class="oc-body"><div class="oc-title">Yoyo 🐾</div><div class="oc-desc">My dog. Everyone says she's the cutest. Everyone is correct.</div></div></div>
+      <div class="outside-card"><div class="oc-img oc2"><img src="imgs/oow-bouldering.jpg"  style="width:100%;height:100%;object-fit:cover;"/></div><div class="oc-body"><div class="oc-title">Bouldering</div><div class="oc-desc">Finding flow on the wall and occasionally getting humbled by it.</div></div></div>
+      <div class="outside-card"><div class="oc-img oc3"><img src="imgs/oow-ceramics.jpg" style="width:100%;height:100%;object-fit:cover;"/></div><div class="oc-body"><div class="oc-title">Ceramics</div><div class="oc-desc">Hands in clay, no screens. A good reminder that not everything needs an undo button.</div></div></div>
+      <div class="outside-card"><div class="oc-img oc4"><img src="imgs/oow-travelling.jpg"  style="width:100%;height:100%;object-fit:cover;"/></div><div class="oc-body"><div class="oc-title">Travelling</div><div class="oc-desc">Always chasing places that shift my perspective a little.</div></div></div>
+    </div>
+  </div>
+
+  <div class="yoyo sf">
+    <div>
+      <div class="yoyo-label">The most important member of the team</div>
+      <h2 class="yoyo-heading">Meet Yoyo.<br/><em>Chief happiness officer.</em></h2>
+      <p class="yoyo-desc">She has never shipped a product, attended a design critique, or filed a Jira ticket. And yet somehow, she's the most universally beloved member of any room she walks into.</p>
+      <p class="yoyo-desc">Honestly, that feels like a skill.</p>
+      <a class="hero-link" href="imgs/yoyo-resume.pdf" target="_blank">Yoyo's Resume ↗</a>
+
+    </div>
+    <div class="yoyo-photo"><div class="img-ph"><img src="imgs/about-yoyo.jpg" style="width:100%;height:100%;object-fit:cover;"/></div></div>
+  </div>
+
+  <div class="site-footer sf">
+    <div>
+      <div class="footer-label">Let's talk</div>
+      <h2 class="footer-heading">Always curious,<br/>always <em>open to a chat.</em></h2>
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>
+      <a class="footer-link" href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com ↗</a>
+    </div>
+  </div>
+
+  <script>
+
+    const navWrap = document.getElementById('navWrap');
+    window.addEventListener('scroll', () => { navWrap.classList.toggle('scrolled', window.scrollY > 10); });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.sf').forEach(el => obs.observe(el));
+
+    const cardObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); cardObs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.outside-card').forEach(el => cardObs.observe(el));
+  </script>
+</body>
+</html>
