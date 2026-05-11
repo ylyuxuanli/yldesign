@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workplace Lunch Coordination — Design Workshop</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf7;
+    --bg-soft: #f3f1ea;
+    --surface: #ffffff;
+    --ink: #1a1a1a;
+    --ink-soft: #555047;
+    --ink-faint: #8e8a82;
+    --rule: #e6e3da;
+    --accent: #c8413a;
+    --accent-soft: rgba(200, 65, 58, 0.08);
+    --blue: #2c5d8f;
+    --green: #4a7a3f;
+    --paper: #f4ede0;
+    --paper-deep: #ebe1cd;
+    --sticky-yellow: #fde68a;
+    --sticky-pink: #fbb6c4;
+    --sticky-blue: #a5c9e6;
+    --sticky-green: #b8d4a8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck { max-width: 1140px; margin: 0 auto; padding: 0 56px; }
+  @media (max-width: 768px) { .deck { padding: 0 24px; } }
+  section {
+    padding: 110px 0 110px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  section:last-child { border-bottom: none; }
+
+  h1.title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+    margin-bottom: 28px;
+  }
+  h2.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    margin-bottom: 24px;
+    max-width: 820px;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  p.body {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 1.0625rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    line-height: 1.65;
+  }
+  p.body + p.body { margin-top: 1em; }
+  .reasoning {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--ink);
+    max-width: 62ch;
+    letter-spacing: -0.01em;
+  }
+  .reasoning + .reasoning { margin-top: 1em; }
+  em { font-style: normal; font-weight: inherit; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  .slide-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    border-top: 1px solid var(--ink);
+    padding-top: 14px;
+  }
+  .slide-meta .num { font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  /* COVER */
+  .cover {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 80px;
+  }
+  .cover .meta-top {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--ink);
+    padding-top: 14px;
+    margin-bottom: 80px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .cover h1 {
+    font-size: clamp(2.75rem, 6.5vw, 5rem);
+    line-height: 0.98;
+    margin-bottom: 20px;
+  }
+  .cover .strikethrough {
+    color: var(--ink-faint);
+    position: relative;
+    display: inline-block;
+  }
+  .cover .strikethrough::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: 55%;
+    height: 2px;
+    background: var(--accent);
+    transform: rotate(-1deg);
+  }
+  .cover .reframe {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .cover .lede {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 600px;
+    margin-top: 32px;
+    font-weight: 400;
+  }
+  .cover-meta {
+    margin-top: 96px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+  @media (max-width: 768px) {
+    .cover-meta { grid-template-columns: repeat(2, 1fr); }
+  }
+  .cover-meta dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+  .cover-meta dd {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* TWO COL */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* CLUSTERS */
+  .clusters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 56px;
+    margin-top: 48px;
+  }
+  @media (max-width: 768px) {
+    .clusters { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .cluster .cluster-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 16px;
+  }
+  .cluster .cluster-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.1em;
+  }
+  .cluster .cluster-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+  .cluster ul { list-style: none; }
+  .cluster ul li {
+    padding: 8px 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    border-bottom: 1px dotted var(--rule);
+    padding-left: 18px;
+    position: relative;
+  }
+  .cluster ul li:last-child { border-bottom: none; }
+  .cluster ul li::before {
+    content: '?';
+    position: absolute;
+    left: 0;
+    color: var(--ink-faint);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+  }
+  .cluster ul li.flagged::before { content: '!'; color: var(--accent); font-weight: 600; }
+  .cluster ul li.flagged { color: var(--ink); font-weight: 500; }
+  .cluster-note {
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    line-height: 1.5;
+  }
+
+  /* INSIGHT */
+  .insight-box {
+    margin: 64px 0;
+    padding: 48px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+  }
+  .insight-box .insight-label {
+    position: absolute;
+    top: -10px;
+    left: 0;
+    background: var(--bg);
+    padding-right: 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .insight-box .quote {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    line-height: 1.25;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    max-width: 900px;
+  }
+  .insight-box .quote em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .insight-box .quote .strike {
+    color: var(--ink-faint);
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 2px;
+    font-weight: 500;
+  }
+
+  /* PRINCIPLES */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--ink);
+  }
+  @media (max-width: 768px) { .principles { grid-template-columns: 1fr; } }
+  .principle {
+    padding: 32px 32px 32px 0;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .principle:nth-child(odd) { padding-right: 48px; border-right: 1px solid var(--rule); }
+  .principle:nth-child(even) { padding-left: 48px; padding-right: 0; }
+  @media (max-width: 768px) {
+    .principle:nth-child(odd) { border-right: none; padding-right: 0; }
+    .principle:nth-child(even) { padding-left: 0; }
+  }
+  .principle .p-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+  .principle h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+  }
+  .principle p {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* MODES */
+  .modes-table {
+    margin-top: 40px;
+    border-top: 1px solid var(--ink);
+  }
+  .mode-row {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr 120px;
+    gap: 24px;
+    align-items: baseline;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 768px) {
+    .mode-row { grid-template-columns: 40px 1fr; gap: 16px; }
+    .mode-row .mode-desc, .mode-row .mode-status { grid-column: 2; }
+  }
+  .mode-row .mode-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+  .mode-row .mode-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: -0.015em;
+  }
+  .mode-row .mode-desc {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .mode-row .mode-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+  .mode-row.focused {
+    background: var(--accent-soft);
+    margin: 0 -24px;
+    padding: 24px;
+    border-bottom: 1px solid var(--accent);
+    border-top: 1px solid var(--accent);
+  }
+  .mode-row.focused .mode-status { color: var(--accent); font-weight: 600; }
+
+  /* TRADEOFF */
+  .tradeoff-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    margin-top: 56px;
+  }
+  @media (max-width: 768px) { .tradeoff-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .tradeoff-col h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--ink);
+    font-weight: 500;
+  }
+  .tradeoff-col.in h3 { color: var(--green); border-color: var(--green); }
+  .tradeoff-col.out h3 { color: var(--accent); border-color: var(--accent); }
+  .tradeoff-col ul { list-style: none; }
+  .tradeoff-col ul li {
+    padding: 9px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    padding-left: 20px;
+    position: relative;
+    border-bottom: 1px dotted var(--rule);
+  }
+  .tradeoff-col ul li:last-child { border-bottom: none; }
+  .tradeoff-col.in ul li::before {
+    content: '+';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 600;
+  }
+  .tradeoff-col.out ul li::before {
+    content: '−';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .tradeoff-col.out ul li { color: var(--ink-faint); }
+
+  /* ARTIFACT FRAME — paper feel kept only inside this */
+  .artifact-frame {
+    margin-top: 48px;
+    padding: 56px 40px;
+    background: var(--paper);
+    background-image:
+      radial-gradient(at 20% 30%, rgba(180, 160, 120, 0.08) 0%, transparent 50%),
+      radial-gradient(at 80% 70%, rgba(160, 140, 100, 0.1) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    position: relative;
+  }
+  .artifact-frame::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -10px;
+    left: 24px;
+    background: var(--bg);
+    padding: 0 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  @media (max-width: 768px) {
+    .artifact-frame { padding: 40px 20px; }
+  }
+
+  /* STORYBOARD */
+  .storyboard {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 900px) {
+    .storyboard { grid-template-columns: repeat(2, 1fr); }
+  }
+  .panel {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    padding: 12px;
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+  }
+  .panel .panel-num {
+    position: absolute;
+    top: -12px; left: -12px;
+    width: 28px; height: 28px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .panel svg { width: 100%; flex-grow: 1; }
+  .panel .caption {
+    font-family: 'Kalam', cursive;
+    font-size: 0.85rem;
+    color: var(--ink);
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+
+  /* WIREFRAMES */
+  .wireframes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .wireframes { grid-template-columns: repeat(2, 1fr); }
+  }
+  .wireframe { position: relative; }
+  .wireframe .phone {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 18px;
+    padding: 8px;
+    aspect-ratio: 9/17;
+    position: relative;
+    box-shadow: 3px 4px 8px rgba(0,0,0,0.08);
+  }
+  .wireframe .phone svg { width: 100%; height: 100%; }
+  .wireframe .label {
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+    text-align: center;
+    margin-top: 14px;
+  }
+  .wireframe .step-num {
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: var(--paper);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1rem;
+    z-index: 2;
+  }
+  .wireframe .callout {
+    font-family: 'Caveat', cursive;
+    color: var(--accent);
+    font-size: 1rem;
+    margin-top: 6px;
+    text-align: center;
+    line-height: 1.2;
+    transform: rotate(-1deg);
+  }
+
+  /* POST-NOTE */
+  .post-note {
+    margin-top: 40px;
+    padding: 24px 28px;
+    background: var(--bg-soft);
+    border-left: 2px solid var(--accent);
+    max-width: 780px;
+  }
+  .post-note .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .post-note p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* OPEN Q */
+  .open-q-list {
+    margin-top: 28px;
+    border-top: 1px solid var(--ink);
+  }
+  .open-q-list .q {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 16px;
+  }
+  .open-q-list .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    padding-top: 4px;
+  }
+  .open-q-list .q-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .next-list { list-style: none; margin-top: 16px; }
+  .next-list li {
+    padding: 12px 0 12px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    position: relative;
+  }
+  .next-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .end-card {
+    text-align: center;
+    padding: 100px 20px 40px;
+    margin-top: 80px;
+    border-top: 1px solid var(--rule);
+  }
+  .end-card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    margin-bottom: 16px;
+    letter-spacing: -0.025em;
+  }
+  .end-card .body { margin: 0 auto; color: var(--ink-soft); }
+  .end-card .signature {
+    font-family: 'Caveat', cursive;
+    font-size: 1.75rem;
+    color: var(--ink);
+    margin-top: 36px;
+  }
+
+  /* NAV */
+  .nav-dots {
+    position: fixed;
+    right: 28px; top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 100;
+  }
+  @media (max-width: 900px) { .nav-dots { display: none; } }
+  .nav-dots a {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+    transition: all 0.25s;
+    display: block;
+  }
+  .nav-dots a:hover { opacity: 1; transform: scale(1.5); background: var(--accent); }
+  .nav-dots a.active { opacity: 1; background: var(--ink); transform: scale(1.4); }
+
+  .mt-md { margin-top: 24px; }
+  .mt-lg { margin-top: 48px; }
+  .accent-text { color: var(--accent); }
+
+  .key-quote {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding: 6px 0 6px 18px;
+    margin-top: 20px;
+    max-width: 60ch;
+    line-height: 1.5;
+  }
+
+</style>
+</head>
+<body>
+
+<nav class="nav-dots">
+  <a href="#s1" title="Cover"></a>
+  <a href="#s2" title="The Brief"></a>
+  <a href="#s3" title="Questions"></a>
+  <a href="#s4" title="Insight"></a>
+  <a href="#s5" title="Principles"></a>
+  <a href="#s6" title="Modes & Scope"></a>
+  <a href="#s7" title="Storyboard"></a>
+  <a href="#s8" title="Wireframes"></a>
+  <a href="#s9" title="Closing"></a>
+</nav>
+
+<div class="deck">
+
+<!-- 01 COVER -->
+<section id="s1" class="cover">
+  <div class="meta-top">
+    <span>Design Exercise</span>
+    <span>01 / 09</span>
+  </div>
+  <div class="eyebrow">A 2-hour exploratory exercise</div>
+  <h1 class="title">
+    TABLE.
+    <!-- <span class="strikethrough">A cafeteria ordering app</span><br>
+    reframed as <span class="reframe">a workplace lunch coordination&nbsp;system.</span> -->
+  </h1>
+  <p class="lede">
+    <span class="strikethrough">A cafeteria ordering app</span><br>
+    Rebuilding workplace connection through shared lunch experiences for a large enterprise rolling out hybrid work and opening a new cafeteria.
+  </p>
+  <dl class="cover-meta">
+    <div><dt>Context</dt><dd>Hybrid workplace<br>2–3 days in office</dd></div>
+    <div><dt>Fidelity</dt><dd>Low-fi · exploratory<br>workshop-style</dd></div>
+    <div><dt>Scope</dt><dd>Kickoff narrative<br>not a full spec</dd></div>
+    <div><dt>Designer</dt><dd>Yuxuan</dd></div>
+  </dl>
+</section>
+
+<!-- 02 BRIEF -->
+<section id="s2">
+  <div class="slide-meta">
+    <span>The brief · where I started</span>
+    <span class="num">02 / 09</span>
+  </div>
+  <div class="eyebrow">Reading the brief</div>
+  <h2 class="section-title">The brief combined multiple systems into one app.</h2>
+
+  <div class="two-col mt-lg">
+    <div>
+      <p class="body">
+        The requirements included
+        <ul style="padding-left: 30px;">
+          <li>ordering</li>
+          <li>reservations</li>
+          <li>social interaction</li>
+          <li>workplace coordination</li>
+          <li>operational forecasting</li>
+        </ul>
+        At first glance, this looked like a cafeteria ordering app.
+      </p>
+    </div>
+    <div>
+      <p class="reasoning">
+        But the more I unpacked the brief, the more it felt like a coordination problem between people, space, and operations.
+      </p>
+      <p class="reasoning">
+        That made me pause and ask: <strong>what's the actual underlying problem here?</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 QUESTIONS -->
+<section id="s3">
+  <div class="slide-meta">
+    <span>Questions I sat with</span>
+    <span class="num">03 / 09</span>
+  </div>
+  <div class="eyebrow">Mapping the tensions</div>
+  <h2 class="section-title">Before scoping, I wrote down every question worth asking.</h2>
+  <p class="body">
+    Grouped into five clusters. Most of these won't get answered in this kickoff — but writing them down made the tradeoffs visible and forced me to commit to a point of view.
+  </p>
+
+  <div class="clusters">
+    <div class="cluster">
+      <div class="cluster-head"><span class="cluster-num">01</span><span class="cluster-name">Ordering &amp; flexibility</span></div>
+      <ul>
+        <li>Should employees dine in, take out, or both?</li>
+        <li>How far in advance should orders happen?</li>
+        <li>Should instant / walk-in orders still be allowed?</li>
+        <li class="flagged">How does flexibility hurt forecasting accuracy?</li>
+      </ul>
+    </div>
+    <div class="cluster">
+      <div class="cluster-head"><span class="cluster-num">02</span><span class="cluster-name">Seating &amp; coordination</span></div>
+      <ul>
+        <li>Booking solo or as a group?</li>
+        <li class="flagged">Is lunch partially a <strong>space</strong> problem?</li>
+        <li class="flagged">What happens if you order food but can't find a seat?</li>
+      </ul>
+      <div class="cluster-note">This cluster kept pulling me back. The seating question turns out to be the hinge.</div>
+    </div>
+    <div class="cluster">
+      <div class="cluster-head"><span class="cluster-num">03</span><span class="cluster-name">Social features</span></div>
+      <ul>
+        <li>Why would employees socialize <strong>inside</strong> a cafeteria app?</li>
+        <li>What kind of social interaction feels natural in a workplace?</li>
+        <li>Would anyone actually want another feed?</li>
+      </ul>
+      <p class="key-quote">A workplace utility isn't a place people <strong>want</strong> to hang out socially.</p>
+    </div>
+    <div class="cluster">
+      <div class="cluster-head"><span class="cluster-num">04</span><span class="cluster-name">Personalization</span></div>
+      <ul>
+        <li>Allergies — must be visible, not buried</li>
+        <li>Dietary preferences as filters</li>
+        <li>Repeat-order behavior</li>
+        <li>Efficiency over discovery — this is a utility</li>
+      </ul>
+    </div>
+    <div class="cluster">
+      <div class="cluster-head"><span class="cluster-num">05</span><span class="cluster-name">Menu &amp; operations</span></div>
+      <ul>
+        <li>Fixed menu, dynamic menu, or hybrid?</li>
+        <li>Stable core + rotating specials?</li>
+        <li class="flagged">Planned vs instant orders — forecast tradeoff</li>
+        <li>Reducing food waste</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 04 INSIGHT -->
+<section id="s4">
+  <div class="slide-meta">
+    <span>The insight that changed scope</span>
+    <span class="num">04 / 09</span>
+  </div>
+  <div class="eyebrow">What I noticed</div>
+  <h2 class="section-title">Nothing in this product works in isolation</h2>
+  <p class="body">
+    Across every cluster, the same theme kept surfacing. Ordering depends on seating. Seating depends on attendance. Attendance depends on coordination. Forecasting depends on all of it.
+  </p>
+
+  <div class="insight-box">
+    <div class="insight-label">Key insight</div>
+    <p class="quote">
+      The challenge is <span class="strike">not food ordering.</span> It's coordinating <strong>people, lunch, seating, and cafeteria operations</strong> in a hybrid workplace.
+    </p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="eyebrow">What this reframe unlocks</div>
+      <p class="body">
+        Once I treated lunch as a coordination problem, the product structure became clearer. The kitchen's forecasting problem and the employee's social problem stop being separate features — they're the same flow seen from two angles. The reservation <strong>is</strong> the forecasting signal.
+      </p>
+    </div>
+    <div>
+      <div class="eyebrow">The reframe</div>
+      <p class="reasoning"><span style="color: var(--ink-faint); text-decoration: line-through;">A cafeteria ordering app</span></p>
+      <p class="reasoning" style="margin-top: 12px;"><span class="accent-text">↓</span></p>
+      <p class="reasoning" style="margin-top: 12px; font-weight: 700; color: var(--accent);">A workplace lunch coordination system.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 PRINCIPLES -->
+<section id="s5">
+  <div class="slide-meta">
+    <span>Product principles</span>
+    <span class="num">05 / 09</span>
+  </div>
+  <div class="eyebrow">Rules used to say no</div>
+  <h2 class="section-title">Principles guiding tradeoffs</h2>
+  <p class="body">
+    These are the heuristics I used to cut features and choose between options.
+  </p>
+
+  <div class="principles">
+    <div class="principle">
+      <div class="p-num">PRINCIPLE 01</div>
+      <h3>Support social flexibility, not forced participation.</h3>
+      <p>Some people want lunch alone. That's a valid mode, not a failure state. The product shouldn't pressure people into group behavior.</p>
+    </div>
+    <div class="principle">
+      <div class="p-num">PRINCIPLE 02</div>
+      <h3>Coordination over social networking.</h3>
+      <p>"Social" is interpreted as lightweight coordination, not feeds, posts, or chat. Workplaces already have Slack/Teams/Email (but they can share infomation to Slack/Teams/Email).</p>
+    </div>
+    <div class="principle">
+      <div class="p-num">PRINCIPLE 03</div>
+      <h3>Planning, not scheduling.</h3>
+      <p>Encourage intent ("I'll be in Tuesday, want to grab lunch?") without enforcing rigid calendars. Lunch is a soft commitment.</p>
+    </div>
+    <div class="principle">
+      <div class="p-num">PRINCIPLE 04</div>
+      <h3>Solo and group are equal citizens.</h3>
+      <p>The architecture treats individual orders inside a group reservation the same as standalone orders. No second-class flows.</p>
+    </div>
+  </div>
+
+  <p class="reasoning mt-lg">
+    <strong>A note on "social".</strong> I read the brief carefully. "Socialize" doesn't have to mean a feed. In a workplace, the most natural social interaction at lunch is just knowing who's around and being able to invite them to a table. That's coordination, not a network.
+  </p>
+</section>
+
+<!-- 06 MODES -->
+<section id="s6">
+  <div class="slide-meta">
+    <span>Experience modes · scope decision</span>
+    <span class="num">06 / 09</span>
+  </div>
+  <div class="eyebrow">Going deep, not wide</div>
+  <h2 class="section-title">Defined 4 product modes.</h2>
+  <p class="body">
+    For a 2-hour design exercise, I chose to go deep on the mode that combines the most tensions.
+  </p>
+
+  <div class="modes-table">
+    <div class="mode-row focused">
+      <span class="mode-num">01</span>
+      <span class="mode-name">Group lunch</span>
+      <span class="mode-desc">Reserve a table, invite teammates, everyone orders their own meal inside the reservation. The mode that combines ordering, reservations, hybrid coordination, lightweight social, and forecasting.</span>
+      <span class="mode-status">Today's focus</span>
+    </div>
+    <div class="mode-row">
+      <span class="mode-num">02</span>
+      <span class="mode-name">Solo pickup</span>
+      <span class="mode-desc">Order ahead, grab and go. Eat at desk or back to a meeting.</span>
+      <span class="mode-status">Later</span>
+    </div>
+    <div class="mode-row">
+      <span class="mode-num">03</span>
+      <span class="mode-name">Solo dine-in</span>
+      <span class="mode-desc">Order, reserve a seat for one. Quiet lunch, optionally at an "open table".</span>
+      <span class="mode-status">Later</span>
+    </div>
+    <div class="mode-row">
+      <span class="mode-num">04</span>
+      <span class="mode-name">Walk-in / instant</span>
+      <span class="mode-desc">Show up, order at counter. Lower forecast signal but preserves flexibility.</span>
+      <span class="mode-status">Later</span>
+    </div>
+  </div>
+
+  <div class="tradeoff-grid">
+    <div class="tradeoff-col in">
+      <h3>In scope for kickoff</h3>
+      <ul>
+        <li>Group lunch coordination flow</li>
+        <li>Table reservations tied to a group</li>
+        <li>Individual ordering inside a group reservation</li>
+        <li>Lightweight invitations</li>
+        <li>Dietary filters &amp; allergy markers</li>
+        <li>Repeat-order shortcut</li>
+        <li>How the signal feeds kitchen forecasting</li>
+      </ul>
+    </div>
+    <div class="tradeoff-col out">
+      <h3>Intentionally out</h3>
+      <ul>
+        <li>Solo flows (share data model, designed later)</li>
+        <li>Social feed, posting, commenting</li>
+        <li>Persistent chat or DMs</li>
+        <li>Payment &amp; checkout details</li>
+        <li>Admin / kitchen-side UI</li>
+        <li>Onboarding</li>
+        <li>Notifications surface</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="reasoning mt-lg">
+    <strong>Why group lunch:</strong> it's the only mode that naturally combines all five tensions from the brief. The solo modes are simpler variants of the same data model, designing the hard one first means the others mostly fall out.
+  </p>
+</section>
+
+<!-- 07 STORYBOARD -->
+<section id="s7">
+  <div class="slide-meta">
+    <span>Storyboard · group lunch</span>
+    <span class="num">07 / 09</span>
+  </div>
+  <h2 class="section-title">Core experience - Mia's Tuesday.</h2>
+  <p class="body">
+    The journey of one organizer and her team on a day they're all in the office. I sketch the story before the screens so the screens have something to serve.
+  </p>
+
+  <div class="artifact-frame" data-label="Sketched · Storyboard">
+    <div class="storyboard">
+      <div class="panel">
+        <span class="panel-num">1</span>
+        <svg viewBox="0 0 100 100">
+          <rect x="10" y="20" width="30" height="60" rx="4" fill="none" stroke="#1f1c18" stroke-width="1.5"/>
+          <circle cx="25" cy="35" r="5" fill="none" stroke="#1f1c18" stroke-width="1.5"/>
+          <line x1="20" y1="48" x2="30" y2="48" stroke="#1f1c18" stroke-width="1.2"/>
+          <line x1="18" y1="55" x2="32" y2="55" stroke="#1f1c18" stroke-width="1.2"/>
+          <line x1="20" y1="62" x2="30" y2="62" stroke="#1f1c18" stroke-width="1.2"/>
+          <path d="M48,40 Q60,30 70,40" stroke="#c8413a" stroke-width="1.5" fill="none"/>
+          <polygon points="68,38 73,40 68,43" fill="#c8413a"/>
+          <text x="75" y="50" font-family="Caveat" font-size="9" fill="#1f1c18">11:40am</text>
+          <text x="75" y="62" font-family="Caveat" font-size="9" fill="#1f1c18">Tuesday</text>
+        </svg>
+        <p class="caption">Mia opens the app mid-morning. She's in office.</p>
+      </div>
+      <div class="panel">
+        <span class="panel-num">2</span>
+        <svg viewBox="0 0 100 100">
+          <circle cx="30" cy="40" r="8" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="50" cy="35" r="8" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="70" cy="42" r="8" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="40" cy="60" r="8" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="60" cy="65" r="8" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="50" cy="35" r="3" fill="#4a7a3f"/>
+          <circle cx="70" cy="42" r="3" fill="#4a7a3f"/>
+          <circle cx="40" cy="60" r="3" fill="#4a7a3f"/>
+          <text x="20" y="85" font-family="Caveat" font-size="9" fill="#4a7a3f">3 of 5 in office today</text>
+        </svg>
+        <p class="caption">She sees teammates with the "in office" dot.</p>
+      </div>
+      <div class="panel">
+        <span class="panel-num">3</span>
+        <svg viewBox="0 0 100 100">
+          <rect x="15" y="15" width="70" height="70" rx="6" fill="#fde68a" stroke="#1f1c18" stroke-width="1.5"/>
+          <text x="50" y="35" text-anchor="middle" font-family="Caveat" font-size="11" font-weight="700" fill="#1f1c18">Lunch?</text>
+          <text x="50" y="50" text-anchor="middle" font-family="Caveat" font-size="9" fill="#1f1c18">12:15 · Table 4</text>
+          <line x1="25" y1="60" x2="75" y2="60" stroke="#1f1c18" stroke-width="0.8"/>
+          <rect x="25" y="65" width="20" height="14" rx="2" fill="none" stroke="#1f1c18" stroke-width="1"/>
+          <rect x="50" y="65" width="20" height="14" rx="2" fill="none" stroke="#1f1c18" stroke-width="1"/>
+          <text x="35" y="74" text-anchor="middle" font-family="Kalam" font-size="6" fill="#1f1c18">J</text>
+          <text x="60" y="74" text-anchor="middle" font-family="Kalam" font-size="6" fill="#1f1c18">A</text>
+        </svg>
+        <p class="caption">Creates a lunch table. Invites Jay &amp; Ana.</p>
+      </div>
+      <div class="panel">
+        <span class="panel-num">4</span>
+        <svg viewBox="0 0 100 100">
+          <rect x="12" y="20" width="22" height="50" rx="3" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <rect x="39" y="20" width="22" height="50" rx="3" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <rect x="66" y="20" width="22" height="50" rx="3" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <text x="23" y="32" text-anchor="middle" font-family="Caveat" font-size="8" fill="#1f1c18">Mia</text>
+          <text x="50" y="32" text-anchor="middle" font-family="Caveat" font-size="8" fill="#1f1c18">Jay</text>
+          <text x="77" y="32" text-anchor="middle" font-family="Caveat" font-size="8" fill="#1f1c18">Ana</text>
+          <text x="23" y="50" text-anchor="middle" font-family="Caveat" font-size="6" fill="#1f1c18">poke bowl</text>
+          <text x="50" y="50" text-anchor="middle" font-family="Caveat" font-size="6" fill="#1f1c18">grain bowl</text>
+          <text x="77" y="50" text-anchor="middle" font-family="Caveat" font-size="6" fill="#1f1c18">curry</text>
+          <text x="23" y="62" text-anchor="middle" font-family="Kalam" font-size="5" fill="#4a7a3f">✓ ordered</text>
+          <text x="50" y="62" text-anchor="middle" font-family="Kalam" font-size="5" fill="#4a7a3f">✓ ordered</text>
+          <text x="77" y="62" text-anchor="middle" font-family="Kalam" font-size="5" fill="#c8413a">…pending</text>
+          <text x="50" y="85" text-anchor="middle" font-family="Caveat" font-size="9" fill="#1f1c18">each orders their own</text>
+        </svg>
+        <p class="caption">Each teammate places their own order in the reservation.</p>
+      </div>
+      <div class="panel">
+        <span class="panel-num">5</span>
+        <svg viewBox="0 0 100 100">
+          <ellipse cx="50" cy="55" rx="32" ry="14" fill="none" stroke="#1f1c18" stroke-width="1.5"/>
+          <circle cx="30" cy="40" r="6" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="50" cy="36" r="6" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <circle cx="70" cy="40" r="6" fill="none" stroke="#1f1c18" stroke-width="1.2"/>
+          <rect x="38" y="50" width="24" height="6" rx="1" fill="#fde68a" stroke="#1f1c18" stroke-width="0.8"/>
+          <text x="50" y="82" text-anchor="middle" font-family="Caveat" font-size="9" font-weight="700" fill="#1f1c18">12:15 · Table 4</text>
+          <text x="50" y="93" text-anchor="middle" font-family="Caveat" font-size="8" fill="#4a7a3f">they actually have lunch</text>
+        </svg>
+        <p class="caption">They eat together. Kitchen pre-prepped the meals.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-note">
+    <div class="label">The forecasting signal</div>
+    <p>By the time Ana confirms her order in step 4, the kitchen already knows three meals are landing at 12:15 at table 4. Multiply that across 200 reservations and you have a demand curve, not a guess.</p>
+  </div>
+</section>
+
+<!-- 08 WIREFRAMES -->
+<section id="s8">
+  <div class="slide-meta">
+    <span>Lo-fi wireframes · key screens</span>
+    <span class="num">08 / 09</span>
+  </div>
+  <h2 class="section-title">Testing the core interaction model</h2>
+  <p class="body">
+    The goal of these wireframes is not visual polish, but validating how these systems work together.
+  </p>
+
+  <div class="artifact-frame" data-label="Sketched · low-fidelity">
+    <div class="wireframes">
+
+      <div class="wireframe">
+        <span class="step-num">1</span>
+        <div class="phone">
+          <svg viewBox="0 0 100 180">
+            <rect x="5" y="10" width="90" height="14" rx="2" fill="none" stroke="#1f1c18" stroke-width="1"/>
+            <text x="10" y="20" font-family="Caveat" font-size="7" fill="#1f1c18">Tuesday · in office</text>
+            <text x="6" y="35" font-family="Caveat" font-size="6" fill="#4a4438">Your team today</text>
+            <circle cx="14" cy="46" r="5" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="14" cy="46" r="1.5" fill="#4a7a3f"/>
+            <circle cx="28" cy="46" r="5" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="28" cy="46" r="1.5" fill="#4a7a3f"/>
+            <circle cx="42" cy="46" r="5" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="42" cy="46" r="1.5" fill="#4a7a3f"/>
+            <circle cx="56" cy="46" r="5" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="1,1"/>
+            <circle cx="70" cy="46" r="5" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="1,1"/>
+            <rect x="6" y="62" width="88" height="20" rx="3" fill="#fde68a" stroke="#1f1c18" stroke-width="1"/>
+            <text x="50" y="74" text-anchor="middle" font-family="Caveat" font-size="8" font-weight="700" fill="#1f1c18">+ Start a lunch table</text>
+            <text x="6" y="95" font-family="Caveat" font-size="6" fill="#4a4438">Open invites</text>
+            <rect x="6" y="100" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="110" font-family="Caveat" font-size="6" fill="#1f1c18">Design team · 12:30</text>
+            <text x="10" y="118" font-family="Caveat" font-size="5" fill="#8a8170">2/4 joined</text>
+            <text x="6" y="135" font-family="Caveat" font-size="6" fill="#4a4438">Your usual</text>
+            <rect x="6" y="140" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <text x="10" y="150" font-family="Caveat" font-size="6" fill="#1f1c18">↻ Poke bowl + miso</text>
+            <text x="10" y="158" font-family="Caveat" font-size="5" fill="#8a8170">tap to reorder</text>
+          </svg>
+        </div>
+        <div class="label">Home — "who's in?"</div>
+        <div class="callout">→ social = a row of dots, not a feed</div>
+      </div>
+
+      <div class="wireframe">
+        <span class="step-num">2</span>
+        <div class="phone">
+          <svg viewBox="0 0 100 180">
+            <text x="6" y="16" font-family="Caveat" font-size="7" fill="#1f1c18">← New lunch table</text>
+            <text x="6" y="32" font-family="Caveat" font-size="6" fill="#4a4438">Time</text>
+            <rect x="6" y="36" width="40" height="12" rx="2" fill="#a5c9e6" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="26" y="44" text-anchor="middle" font-family="Caveat" font-size="6" fill="#1f1c18">12:15</text>
+            <rect x="50" y="36" width="40" height="12" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="70" y="44" text-anchor="middle" font-family="Caveat" font-size="6" fill="#1f1c18">12:45</text>
+            <text x="6" y="60" font-family="Caveat" font-size="6" fill="#4a4438">Table size</text>
+            <rect x="6" y="64" width="20" height="12" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="16" y="72" text-anchor="middle" font-family="Caveat" font-size="6">2</text>
+            <rect x="30" y="64" width="20" height="12" rx="2" fill="#a5c9e6" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="40" y="72" text-anchor="middle" font-family="Caveat" font-size="6">4</text>
+            <rect x="54" y="64" width="20" height="12" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="64" y="72" text-anchor="middle" font-family="Caveat" font-size="6">6</text>
+            <text x="6" y="90" font-family="Caveat" font-size="6" fill="#4a4438">Invite</text>
+            <rect x="6" y="94" width="88" height="14" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="103" font-family="Caveat" font-size="5" fill="#8a8170">+ add teammates</text>
+            <text x="6" y="118" font-family="Caveat" font-size="5" fill="#2c5d8f">↳ 3 in office: Jay, Ana, Sam</text>
+            <rect x="6" y="128" width="88" height="20" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <text x="10" y="138" font-family="Caveat" font-size="6" fill="#1f1c18">☐ Open table?</text>
+            <text x="10" y="146" font-family="Caveat" font-size="5" fill="#8a8170">others can join the empty seats</text>
+            <rect x="6" y="155" width="88" height="16" rx="3" fill="#fde68a" stroke="#1f1c18" stroke-width="1"/>
+            <text x="50" y="166" text-anchor="middle" font-family="Caveat" font-size="7" font-weight="700">Reserve →</text>
+          </svg>
+        </div>
+        <div class="label">Create the table</div>
+        <div class="callout">↑ "open table" = optional, low-pressure</div>
+      </div>
+
+      <div class="wireframe">
+        <span class="step-num">3</span>
+        <div class="phone">
+          <svg viewBox="0 0 100 180">
+            <text x="6" y="14" font-family="Caveat" font-size="7" fill="#1f1c18">Today's menu</text>
+            <text x="6" y="22" font-family="Caveat" font-size="5" fill="#8a8170">Tuesday · table 4 · 12:15</text>
+            <rect x="6" y="28" width="22" height="12" rx="6" fill="#b8d4a8" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="17" y="36" text-anchor="middle" font-family="Caveat" font-size="5">veg</text>
+            <rect x="30" y="28" width="22" height="12" rx="6" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="41" y="36" text-anchor="middle" font-family="Caveat" font-size="5">GF</text>
+            <rect x="54" y="28" width="38" height="12" rx="6" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="1,1"/>
+            <text x="73" y="36" text-anchor="middle" font-family="Caveat" font-size="5">nut-free ⚠</text>
+            <text x="6" y="50" font-family="Caveat" font-size="5" fill="#4a4438">core (always available)</text>
+            <rect x="6" y="54" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="64" font-family="Caveat" font-size="6" fill="#1f1c18">Poke bowl</text>
+            <text x="10" y="72" font-family="Caveat" font-size="5" fill="#8a8170">your usual ↻</text>
+            <text x="84" y="64" text-anchor="end" font-family="Caveat" font-size="6">+</text>
+            <rect x="6" y="78" width="88" height="18" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="88" font-family="Caveat" font-size="6">Grain bowl</text>
+            <text x="84" y="88" text-anchor="end" font-family="Caveat" font-size="6">+</text>
+            <text x="6" y="106" font-family="Caveat" font-size="5" fill="#4a4438">today's specials</text>
+            <rect x="6" y="110" width="88" height="22" rx="2" fill="#fde68a" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="120" font-family="Caveat" font-size="6">Thai green curry</text>
+            <text x="10" y="128" font-family="Caveat" font-size="5" fill="#c8413a">contains peanut ⚠</text>
+            <text x="84" y="120" text-anchor="end" font-family="Caveat" font-size="6">+</text>
+            <rect x="6" y="134" width="88" height="18" rx="2" fill="#fde68a" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="10" y="144" font-family="Caveat" font-size="6">Roast chicken</text>
+            <text x="84" y="144" text-anchor="end" font-family="Caveat" font-size="6">+</text>
+            <text x="6" y="166" font-family="Caveat" font-size="5" fill="#2c5d8f">Skip — order at counter</text>
+          </svg>
+        </div>
+        <div class="label">Menu — core + specials</div>
+        <div class="callout">allergy &amp; dietary inline ⚠</div>
+      </div>
+
+      <div class="wireframe">
+        <span class="step-num">4</span>
+        <div class="phone">
+          <svg viewBox="0 0 100 180">
+            <text x="6" y="14" font-family="Caveat" font-size="7" fill="#1f1c18">Table 4 · 12:15</text>
+            <text x="6" y="22" font-family="Caveat" font-size="5" fill="#8a8170">3 of 4 ordered</text>
+            <rect x="6" y="26" width="88" height="3" rx="1.5" fill="none" stroke="#1f1c18" stroke-width="0.5"/>
+            <rect x="6" y="26" width="66" height="3" rx="1.5" fill="#4a7a3f"/>
+            <rect x="6" y="36" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="14" cy="47" r="4" fill="#fde68a" stroke="#1f1c18" stroke-width="0.6"/>
+            <text x="14" y="49" text-anchor="middle" font-family="Caveat" font-size="5">M</text>
+            <text x="22" y="45" font-family="Caveat" font-size="6">Mia (you)</text>
+            <text x="22" y="53" font-family="Caveat" font-size="5" fill="#4a7a3f">✓ poke bowl</text>
+            <rect x="6" y="60" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="14" cy="71" r="4" fill="#b8d4a8" stroke="#1f1c18" stroke-width="0.6"/>
+            <text x="14" y="73" text-anchor="middle" font-family="Caveat" font-size="5">J</text>
+            <text x="22" y="69" font-family="Caveat" font-size="6">Jay</text>
+            <text x="22" y="77" font-family="Caveat" font-size="5" fill="#4a7a3f">✓ grain bowl</text>
+            <rect x="6" y="84" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8"/>
+            <circle cx="14" cy="95" r="4" fill="#fbb6c4" stroke="#1f1c18" stroke-width="0.6"/>
+            <text x="14" y="97" text-anchor="middle" font-family="Caveat" font-size="5">A</text>
+            <text x="22" y="93" font-family="Caveat" font-size="6">Ana</text>
+            <text x="22" y="101" font-family="Caveat" font-size="5" fill="#c8413a">… still choosing</text>
+            <rect x="6" y="108" width="88" height="22" rx="2" fill="none" stroke="#1f1c18" stroke-width="0.8" stroke-dasharray="2,2"/>
+            <text x="14" y="120" font-family="Caveat" font-size="6">+ empty seat</text>
+            <text x="14" y="127" font-family="Caveat" font-size="5" fill="#8a8170">open to office</text>
+            <rect x="6" y="138" width="88" height="16" rx="2" fill="#a5c9e6" stroke="#1f1c18" stroke-width="0.6"/>
+            <text x="10" y="148" font-family="Caveat" font-size="5">↗ Nudge Ana</text>
+            <text x="6" y="166" font-family="Caveat" font-size="5" fill="#8a8170">kitchen prepping 3 meals ✓</text>
+          </svg>
+        </div>
+        <div class="label">Group view — live state</div>
+        <div class="callout">↑ each meal individual, bundled</div>
+      </div>
+
+      <div class="wireframe">
+        <span class="step-num">5</span>
+        <div class="phone">
+          <svg viewBox="0 0 100 180">
+            <text x="50" y="20" text-anchor="middle" font-family="Caveat" font-size="9" font-weight="700">Ready at 12:15</text>
+            <text x="50" y="30" text-anchor="middle" font-family="Caveat" font-size="6" fill="#8a8170">Table 4 · cafeteria, level 2</text>
+            <path d="M10,40 L90,40 L90,135 Q88,138 86,135 Q84,132 82,135 Q80,138 78,135 Q76,132 74,135 Q72,138 70,135 L70,135 L10,135 Z" fill="#f4ede0" stroke="#1f1c18" stroke-width="0.8"/>
+            <text x="50" y="52" text-anchor="middle" font-family="Kalam" font-size="5" fill="#1f1c18">— LUNCH TICKET —</text>
+            <line x1="14" y1="58" x2="86" y2="58" stroke="#1f1c18" stroke-width="0.4" stroke-dasharray="2,2"/>
+            <text x="14" y="68" font-family="Caveat" font-size="6">Mia — poke bowl</text>
+            <text x="14" y="76" font-family="Caveat" font-size="6">Jay — grain bowl</text>
+            <text x="14" y="84" font-family="Caveat" font-size="6">Ana — Thai curry</text>
+            <text x="14" y="92" font-family="Caveat" font-size="6" fill="#8a8170">Sam — (empty seat)</text>
+            <line x1="14" y1="100" x2="86" y2="100" stroke="#1f1c18" stroke-width="0.4" stroke-dasharray="2,2"/>
+            <text x="14" y="110" font-family="Caveat" font-size="5" fill="#4a4438">arrive 5 min early</text>
+            <text x="14" y="118" font-family="Caveat" font-size="5" fill="#4a4438">show this at counter</text>
+            <text x="14" y="128" font-family="Kalam" font-size="5" fill="#1f1c18">RES #4821</text>
+            <text x="50" y="150" text-anchor="middle" font-family="Caveat" font-size="6" fill="#2c5d8f">Add to calendar</text>
+            <text x="50" y="160" text-anchor="middle" font-family="Caveat" font-size="6" fill="#c8413a">Cancel · let kitchen know</text>
+          </svg>
+        </div>
+        <div class="label">Confirmed — day-of</div>
+        <div class="callout">cancel is loud — protects forecast</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="post-note">
+    <div class="label">Where I'd push next</div>
+    <p>The "open table" mechanic in screen 2 is the most interesting lever in the whole system, it bridges solo and group modes and gives shy participation a path in.</p>
+  </div>
+</section>
+
+<!-- 09 CLOSING -->
+<section id="s9">
+  <div class="slide-meta">
+    <span>Where I'd go next</span>
+    <span class="num">09 / 09</span>
+  </div>
+  <div class="eyebrow">Closing the kickoff</div>
+  <h2 class="section-title">What I'd want to validate before going further.</h2>
+
+  <div class="two-col mt-lg">
+    <div>
+      <div class="eyebrow">If this were day 2</div>
+      <p class="body">
+        I'd validate the reframe with 4–5 employees and 1–2 cafeteria managers before adding fidelity. Specifically:
+      </p>
+      <ul class="next-list">
+        <li>Do people actually want to coordinate lunch, or do they just want to know who's in?</li>
+        <li>How sticky is the "table reservation" mental model in an office context?</li>
+        <li>Does the kitchen trust pre-order signals enough to actually pre-prep?</li>
+        <li>Is the "open table" feature a delight or a privacy problem?</li>
+      </ul>
+    </div>
+    <div>
+      <div class="eyebrow">Open questions I'm sitting with</div>
+      <div class="open-q-list">
+        <div class="q">
+          <span class="q-num">01</span>
+          <span class="q-text">Is "group lunch" the right primary, or am I optimizing for the most differentiated mode rather than the most common one?</span>
+        </div>
+        <div class="q">
+          <span class="q-num">02</span>
+          <span class="q-text">How does this interact with calendar tools people already use?</span>
+        </div>
+        <div class="q">
+          <span class="q-num">03</span>
+          <span class="q-text">What's the cost of being wrong about forecasting for the kitchen, and for trust in the app itself?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="end-card">
+    <h2>Thanks for reading</h2>
+  
+    <p class="signature">— Yuxuan</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const dots = document.querySelectorAll('.nav-dots a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = Array.from(sections).indexOf(e.target);
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[i]) dots[i].classList.add('active');
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
