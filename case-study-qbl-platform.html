@@ -173,10 +173,10 @@
   </div></div> 
   
   
-  <div class="highlight-item wide sf"><div class="hl-img hl-video"><video src="imgs/qbl-overview.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Prototype of the Books Health overview and AI chat"></video></div><div><div class="hl-num">03 · Early trust: experts lead</div><div class="hl-title">Turning the service model into a product experience</div><p class="hl-desc">I designed the overview to help customers quickly understand the state of their books and what needed attention. When the score signaled a gap, AI could explain what was driving it and why an expert could help, and the expert could shape a personalized AI + human support plan.</p>
+  <div class="highlight-item wide sf"><div class="hl-img hl-video"><video src="imgs/qbl-overview.mp4" poster="imgs/qbl-overview-poster.jpg" muted loop playsinline preload="none" aria-label="Prototype of the Books Health overview and AI chat"></video></div><div><div class="hl-num">03 · Early trust: experts lead</div><div class="hl-title">Turning the service model into a product experience</div><p class="hl-desc">I designed the overview page to help customers quickly see the state of their books and what needed attention. When the Books Health score signaled a gap, AI explained why, and an expert could shape a personalized AI + human support plan.</p>
   </div></div>
 
-  <div class="highlight-item wide flip sf"><div class="hl-img hl-video"><video src="imgs/qbl-ongoing.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Prototype of the ongoing AI chat bringing in an expert"></video></div><div><div class="hl-num">04 · Growing trust: AI leads</div><div class="hl-title">Building ongoing support as trust grows</div><p class="hl-desc">As customers built trust in the experience, AI took on more of the ongoing work. It handled routine tasks and questions, and flagged when human judgment would add value, bringing in an expert with full context.</p>
+  <div class="highlight-item wide flip sf"><div class="hl-img hl-video"><video src="imgs/qbl-ongoing.mp4" poster="imgs/qbl-ongoing-poster.jpg" muted loop playsinline preload="none" aria-label="Prototype of the ongoing AI chat bringing in an expert"></video></div><div><div class="hl-num">04 · Growing trust: AI leads</div><div class="hl-title">Building ongoing support as trust grows</div><p class="hl-desc">As customers built trust in the experience, AI took on more of the ongoing work. It handled routine tasks and questions, and flagged when human judgment would add value, bringing in an expert with full context.</p>
   </div></div>
 
 </div>
@@ -192,6 +192,7 @@
   <script>
     const navWrap=document.getElementById('navWrap');window.addEventListener('scroll',()=>{navWrap.classList.toggle('scrolled',window.scrollY>10)});
     const obs=new IntersectionObserver((e)=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');obs.unobserve(e.target);}});},{threshold:0.08});document.querySelectorAll('.sf').forEach(el=>obs.observe(el));
+    const vio=new IntersectionObserver((es)=>{es.forEach(e=>{const v=e.target;if(e.isIntersecting){const p=v.play();if(p&&p.catch)p.catch(()=>{});}else{v.pause();}});},{threshold:0.4});document.querySelectorAll('.hl-video video').forEach(v=>vio.observe(v));const vpre=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.preload='auto';vpre.unobserve(e.target);}});},{rootMargin:'800px 0px'});document.querySelectorAll('.hl-video video').forEach(v=>vpre.observe(v));
     const PASSWORD='yldesign',overlay=document.getElementById('pwOverlay'),pwInput=document.getElementById('pwInput'),pwBtn=document.getElementById('pwBtn'),pwErr=document.getElementById('pwError'),SK='cs_qbl_platform';
     if(sessionStorage.getItem(SK)==='true'){overlay.classList.add('hidden');setTimeout(()=>overlay.remove(),400);}
     function attempt(){if(pwInput.value===PASSWORD){sessionStorage.setItem(SK,'true');overlay.classList.add('hidden');setTimeout(()=>overlay.remove(),400);}else{pwInput.classList.add('error');pwErr.classList.add('show');pwInput.value='';setTimeout(()=>pwInput.classList.remove('error'),600);}}
