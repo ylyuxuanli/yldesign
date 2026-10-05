@@ -20,8 +20,9 @@
     .logo-name { font-size:15px;font-weight:500;color:var(--text); }
     .nav-links { display:flex;gap:36px;list-style:none; }
     .nav-links a { font-size:15px;color:var(--sub);text-decoration:none;transition:color 0.15s;position:relative; }
-    .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--text);transition:width 0.2s; }
-    .nav-links a:hover { color:var(--text); } .nav-links a:hover::after { width:100%; }
+    .nav-links a::after { content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--accent);transition:width 0.2s; }
+    .nav-links a:hover { color:var(--accent); } .nav-links a:hover::after { width:100%; }
+    .nav-links a.active { color:var(--text); } .nav-links a.active::after { width:100%; }
     .back { max-width:var(--max);margin:0 auto;padding:28px 56px 0;animation:fadeUp 0.5s ease both; }
     .back a { font-size:13px;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.15s; }
     .back a:hover { color:var(--accent); }
@@ -132,7 +133,7 @@
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
-  <div class="nav-wrap" id="navWrap"><nav class="nav"><a class="logo" href="index.html"><img src="imgs/logo.png" alt="Yuxuan Li"/><span class="logo-name">Yuxuan Li</span></a><ul class="nav-links"><li><a href="index.html">Work</a></li><li><a href="about.html">About</a></li><li><a href="imgs/yuxuan_resume.pdf" target="_blank">Resume</a></li></ul></nav></div>
+  <div class="nav-wrap" id="navWrap"><nav class="nav"><a class="logo" href="index.html"><img src="imgs/logo.png" alt="Yuxuan Li"/><span class="logo-name">Yuxuan Li</span></a><ul class="nav-links"><li><a href="index.html" class="active">Work</a></li><li><a href="about.html">About</a></li><li><a href="imgs/yuxuan_resume.pdf" target="_blank">Resume</a></li></ul></nav></div>
   <div class="back"><a href="index.html">← Back to work</a></div>
   <section class="cs-hero"><div class="cs-meta-label">LYTX · 2021–2022</div><h1 class="cs-title">Core Product Improvements Across a Complex Fleet Platform</h1></section>
   <div class="cs-role">
