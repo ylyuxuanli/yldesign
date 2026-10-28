@@ -196,6 +196,7 @@
   function draw() {
     const s = plan.seq[cur];
     fill($('frame'), s, true);
+    $('app').classList.toggle('dark', s.layout === 'title');
     $('count').textContent = (cur + 1) + ' / ' + plan.seq.length;
     $('progBar').style.width = ((cur + 1) / plan.seq.length * 100) + '%';
     $('prevBtn').disabled = cur === 0;
