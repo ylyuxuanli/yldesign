@@ -26,6 +26,8 @@
     h: (b) => el('h2', 'c-h' + (b.size === 'xl' ? ' xl' : ''), T(b.h)),
     p: (b) => el('p', 'c-p', T(b.p)),
     sub: (b) => el('p', 'c-sub', T(b.sub)),
+    note: (b) => el('div', 'c-note', T(b.note)),
+    quote: (b) => el('blockquote', 'c-quote', '<span>' + T(b.quote) + '</span>' + (b.by ? '<cite>' + T(b.by) + '</cite>' : '')),
 
     list(b) {
       const w = el('div', 'c-list' + (b.muted ? ' muted' : ''));
@@ -171,6 +173,15 @@
       x.to.forEach((t) => to.appendChild(el('div', 'c-node', T(t))));
       w.appendChild(to);
       if (x.note) w.appendChild(el('div', 'c-branch-note', T(x.note)));
+      return w;
+    },
+    table(b) {
+      const x = b.table;
+      const w = el('div', 'c-table'); w.style.setProperty('--cols', x.cols.length);
+      const cell = (v, i) => '<span class="' + (i === x.hi ? 'hi' : '') + (v === true ? ' yes' : v === false ? ' no' : '') + '">' +
+        (v === true ? '✓' : v === false ? '✕' : T(v)) + '</span>';
+      w.appendChild(el('div', 'c-tr head', '<span></span>' + x.cols.map((c, i) => cell(c, i)).join('')));
+      x.rows.forEach((r) => w.appendChild(el('div', 'c-tr', '<span class="c-trh">' + T(r.h) + '</span>' + r.cells.map(cell).join(''))));
       return w;
     },
     swap(b) {

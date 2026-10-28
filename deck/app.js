@@ -3,7 +3,7 @@
   const $ = (id) => document.getElementById(id);
   const ACCESS_PW = 'yldesign', ACCESS_KEY = 'deck_access', PRES_KEY = 'deck_presenter';
   // Minutes for the slides this page builds itself
-  const MIN = { welcome: 0.5, setup: 0, agenda: 0.5, lens: 0.25, end: 0.25 };
+  const MIN = { welcome: 0.5, setup: 0, agenda: 0.5, end: 0.25 };
 
   const lens = (id) => D.lenses.find((l) => l.id === id) || D.lenses[0];
   const fmtMin = (m) => (m < 1 ? '<1' : Math.round(m)) + ' min';
@@ -23,7 +23,6 @@
   const preset = q.has('for') || q.has('t');
   const locked = q.get('lock') === '1';
   const audience = q.get('audience') === '1';
-  let showCaptions = !audience;
 
   function query(c, extra) {
     const p = new URLSearchParams();
@@ -45,10 +44,8 @@
     const chosen = D.projects.filter((p) => cfg.projects.includes(p.id));
     const flat = [];
     chosen.forEach((p) => p.slides.forEach((s) => flat.push({ ...s, project: p })));
-    const cases = chosen.filter((p) => p.id !== 'intro');
     const lensOn = cfg.lens !== 'all';
-    let budget = cfg.t === 'all' ? Infinity
-      : cfg.t - MIN.welcome - MIN.agenda - (lensOn ? cases.length * MIN.lens : 0);
+    let budget = cfg.t === 'all' ? Infinity : cfg.t - MIN.welcome - MIN.agenda;
     const score = (s, i) => (s.must ? 100 : 0) + (4 - s.pri) * 2 +
       (lensOn && (s.lens || []).includes(cfg.lens) ? 2.5 : 0) - i * 0.001;
     const keep = new Set();
@@ -59,10 +56,7 @@
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
     if (!locked) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
     seq.push({ type: 'agenda', id: 'agenda', min: MIN.agenda });
-    picked.forEach((s) => {
-      seq.push({ ...s, type: 'content' });
-      if (lensOn && s.must && s.project.id !== 'intro') seq.push({ type: 'lens', id: 'lens', min: MIN.lens, project: s.project });
-    });
+    picked.forEach((s) => seq.push({ ...s, type: 'content' }));
     seq.push({ type: 'end', id: 'end', min: MIN.end });
 
     const per = chosen.map((p) => ({ p, min: seq.filter((s) => s.project === p).reduce((a, s) => a + s.min, 0) }))
@@ -95,7 +89,7 @@
       t.appendChild(el('div', 'hs-k', 'Portfolio review'));
       t.appendChild(el('h1', 'hs-h', 'Hi, I\'m Yuxuan.<br/>Thanks for <em>stopping by.</em>'));
       t.appendChild(el('p', 'hs-p', settled
-        ? 'I put together a version of my work for ' + esc(forWhom()) + ', about ' + esc(timeLabel()) + '.'
+        ? 'I put together a version of my work for ' + esc(forWhom()) + ', ' + (cfg.t === 'all' ? '' : 'about ') + esc(timeLabel()) + '.'
         : 'I\'m a product designer who makes complex things simple. Tell me a little about you, and this deck will shape itself around what you care about.'));
       const row = el('div', 'cta-row');
       const go = el('button', 'cta', settled ? 'Start →' : 'Let\'s go →');
@@ -109,18 +103,18 @@
     }
     if (s.type === 'setup') {
       n = el('div', 'slide hs');
-      n.appendChild(el('div', 'hs-k', 'Two quick questions'));
-      n.appendChild(el('h2', 'hs-h', 'Who\'s joining today?'));
-      const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Your role'));
+      n.appendChild(el('div', 'hs-k', 'Before we start'));
+      n.appendChild(el('h2', 'hs-h', 'Let\'s tailor this <em>for you</em>'));
+      const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'What\'s your role?'));
       const c1 = el('div', 'chips');
       D.lenses.forEach((l) => c1.appendChild(chip(l.name, cfg.lens === l.id, () => { cfg.lens = l.id; rebuild(); })));
       q1.appendChild(c1); n.appendChild(q1);
-      const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'How much time do we have?'));
+      const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'How much time do you have?'));
       const c2 = el('div', 'chips');
       D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; rebuild(); })));
       c2.appendChild(chip('No rush, show me everything', cfg.t === 'all', () => { cfg.t = 'all'; rebuild(); }));
       q2.appendChild(c2); n.appendChild(q2);
-      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Include'));
+      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'What to include'));
       const c3 = el('div', 'chips');
       D.projects.forEach((p) => c3.appendChild(chip(p.short, cfg.projects.includes(p.id), () => {
         const on = cfg.projects.includes(p.id);
@@ -131,7 +125,7 @@
       q3.appendChild(c3);
       q3.appendChild(el('div', 'hint', plan.picked.length + ' of ' + plan.total + ' slides fit, about ' + Math.round(plan.used) + ' min.'));
       n.appendChild(q3);
-      const go = el('button', 'cta', 'Build my deck →');
+      const go = el('button', 'cta', 'Show me →');
       go.onclick = () => goTo(indexOf('agenda'));
       n.appendChild(go);
       return n;
@@ -145,7 +139,7 @@
         const r = el('div', 'ag-row');
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
-        if (x.p.focus && cfg.lens !== 'all') mid.appendChild(el('div', 'ag-why', esc(x.p.focus[cfg.lens])));
+        if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc(x.p.focus[cfg.lens] || x.p.focus.all)));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
@@ -154,24 +148,11 @@
       n.appendChild(ag);
       return n;
     }
-    if (s.type === 'lens') {
-      const p = s.project;
-      n = el('div', 'slide hs');
-      n.appendChild(el('div', 'hs-k', 'For ' + esc(forWhom())));
-      n.appendChild(el('h2', 'hs-h', 'What to <em>look for</em>'));
-      n.appendChild(el('p', 'hs-p', esc(p.focus[cfg.lens] || p.focus.all)));
-      const rel = plan.picked.filter((x) => x.project === p && (x.lens || []).includes(cfg.lens)).slice(0, 4);
-      if (rel.length) {
-        const list = el('div', 'lens-list');
-        rel.forEach((x) => list.appendChild(el('div', 'lens-item', '<span>' + esc(x.label.toUpperCase()) + '</span>' + esc(x.title))));
-        n.appendChild(list);
-      }
-      return n;
-    }
     if (s.type === 'end') {
       n = el('div', 'slide hs');
       n.appendChild(el('div', 'dots', '<span></span><span></span><span></span>'));
       n.appendChild(el('h2', 'hs-h', 'Thank you!<br/>Always <em>open to a chat.</em>'));
+      n.appendChild(el('p', 'hs-p', 'Across both projects, the thread is the same: I design the system around the screens. Who does what, when AI should act, and when a human should step in.'));
       n.appendChild(el('div', 'end-links',
         '<a href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com ↗</a>' +
         '<a href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>' +
@@ -202,12 +183,6 @@
     $('prevBtn').disabled = cur === 0;
     $('nextBtn').disabled = cur === plan.seq.length - 1;
 
-    const cap = $('caption'); cap.innerHTML = '';
-    const why = s.why && s.why[cfg.lens];
-    if (why) cap.appendChild(el('div', 'why', '<b>For ' + esc(forWhom()) + ':</b> ' + esc(why)));
-    cap.classList.toggle('off', !showCaptions);
-    $('capBtn').classList.toggle('off', !showCaptions);
-
     const pill = $('settingsPill');
     pill.hidden = !settled;
     pill.innerHTML = 'For <b>' + esc(forWhom()) + '</b> · ' + esc(timeLabel()) + (locked ? '' : '<span class="edit">Edit</span>');
@@ -231,7 +206,6 @@
   $('prevBtn').onclick = () => go(-1);
   $('nextBtn').onclick = () => go(1);
   $('settingsPill').onclick = () => { if (!locked) goTo(indexOf('setup')); };
-  $('capBtn').onclick = () => { showCaptions = !showCaptions; draw(); };
   $('fullBtn').onclick = toggleFull;
   function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.(); }
 
@@ -305,7 +279,7 @@
     const n = (notes && notes[s.type === 'content' ? s.id : s.type]) || {};
     const box = $('prNotes');
     box.innerHTML = n.base ? esc(n.base) : '<span class="none">No notes for this slide.</span>';
-    const extra = (n.lens && n.lens[cfg.lens]) || (s.why && s.why[cfg.lens]);
+    const extra = n.lens && n.lens[cfg.lens];
     if (extra) box.appendChild(el('span', 'lens-note', '<b>' + esc(lens(cfg.lens).name) + ':</b> ' + esc(extra)));
     drawTimer();
     if (bc) bc.postMessage({ type: 'go', i: cur, q: query(cfg), settled });
@@ -363,7 +337,6 @@
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
     else if (e.key === 'f') toggleFull();
-    else if (e.key === 'c') { showCaptions = !showCaptions; draw(); }
   });
 
   // ---------- Access gate, then start ----------

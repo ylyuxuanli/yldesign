@@ -43,10 +43,7 @@ button { font-family: inherit; }
 
 .bottom { position: absolute; left: 0; right: 0; bottom: 0; z-index: 10; display: flex; align-items: center; gap: 10px; padding: 0 24px 18px; pointer-events: none; }
 .bottom > * { pointer-events: auto; }
-.caption { flex: 1; min-width: 0; font-size: 14px; line-height: 1.5; color: var(--sub); }
-.caption .why { display: inline-block; padding: 6px 12px; border-left: 3px solid var(--accent); background: rgba(255,243,241,0.92); color: var(--text); border-radius: 0 8px 8px 0; }
-.caption .why b { font-weight: 500; }
-.caption.off { visibility: hidden; }
+.bottom .spacer { flex: 1; pointer-events: none; }
 .nav-btn { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.85); font-size: 15px; color: var(--text); cursor: pointer; flex: none; }
 .nav-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .nav-btn:disabled { opacity: 0.3; cursor: default; }
@@ -99,9 +96,6 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .ag-m { font-size: clamp(13px, calc(1.4 * var(--u)), 18px); color: var(--muted); white-space: nowrap; }
 
 /* Lens */
-.lens-list { margin-top: calc(2.4 * var(--u)); display: grid; gap: calc(1 * var(--u)); }
-.lens-item { display: flex; gap: calc(1.4 * var(--u)); align-items: baseline; font-size: clamp(14px, calc(1.5 * var(--u)), 20px); }
-.lens-item span { color: var(--accent); font-size: clamp(11px, calc(1 * var(--u)), 14px); font-weight: 500; letter-spacing: 0.08em; }
 
 /* End */
 .end-links { display: flex; gap: calc(3 * var(--u)); margin-top: calc(2.4 * var(--u)); flex-wrap: wrap; }
@@ -174,8 +168,6 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
   .top { padding: 10px 16px; }
   .stage { position: relative; inset: auto; flex: 1; min-height: 0; }
   .bottom { padding: 8px 16px 14px; flex-wrap: wrap; }
-  .caption { flex-basis: 100%; order: -1; font-size: 13px; }
-  .caption:empty { display: none; }
   .count { margin-left: auto; }
   .presenter { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
 }
