@@ -26,80 +26,35 @@
     </div>
   </div>
 
-  <div id="readView">
-    <div class="nav-wrap">
-      <nav class="nav">
-        <a class="logo" href="../index.html"><img src="../imgs/logo.png" alt="Yuxuan Li"/><span class="logo-name">Yuxuan Li</span></a>
-        <ul class="nav-links">
-          <li><a href="../index.html">Work</a></li>
-          <li><a href="../about.html">About</a></li>
-          <li><a href="../imgs/yuxuan_resume.pdf" target="_blank">Resume</a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <header class="intro">
-      <div class="dots"><span class="d d-yellow"></span><span class="d d-orange"></span><span class="d d-red"></span></div>
-      <h1>Portfolio review</h1>
-      <p class="intro-sub" id="introSub"></p>
+  <!-- The deck -->
+  <div class="app" id="app">
+    <header class="top">
+      <a class="logo" href="../index.html" title="yldesign.me"><img src="../imgs/logo.png" alt="Yuxuan Li"/></a>
+      <button class="pill" id="settingsPill" title="Change who this is for and how long it takes"></button>
+      <div class="top-actions">
+        <button class="icon-btn" id="capBtn" title="Captions (C)">Captions</button>
+        <button class="icon-btn" id="shareBtn" title="Share this version">Share</button>
+        <button class="icon-btn" id="fullBtn" title="Full screen (F)">⤢</button>
+      </div>
     </header>
 
-    <section class="controls" id="controls" aria-label="Tailor this review">
-      <div class="ctrl">
-        <div class="ctrl-label">I'm viewing as</div>
-        <div class="chips" id="lensChips"></div>
-      </div>
-      <div class="ctrl">
-        <div class="ctrl-label">Time I have <span class="ctrl-val" id="timeVal"></span></div>
-        <input type="range" id="timeRange" min="5" step="5"/>
-        <div class="range-ends"><span>5 min</span><span id="timeMax"></span></div>
-      </div>
-      <div class="ctrl">
-        <div class="ctrl-label">Include</div>
-        <div class="chips" id="projChips"></div>
-      </div>
-      <div class="ctrl-row">
-        <div class="seg" role="tablist">
-          <button class="seg-btn on" data-mode="read">Read</button>
-          <button class="seg-btn" data-mode="slides">Slides</button>
-        </div>
-        <button class="share-btn" id="shareBtn">Share this version ↗</button>
-      </div>
-    </section>
-
-    <div class="summary" id="summary"></div>
-
-    <main class="read" id="read"></main>
-
-    <footer class="site-footer">
-      <div>
-        <div class="footer-label">Let's talk</div>
-        <h2 class="footer-heading">Always curious,<br/>always <em>open to a chat.</em></h2>
-      </div>
-      <div class="footer-links">
-        <a class="footer-link" href="mailto:yl.yuxuanli@gmail.com">Email ↗</a>
-        <a class="footer-link" href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>
-      </div>
-    </footer>
-  </div>
-
-  <!-- Slides (viewer and audience window) -->
-  <div class="stage" id="stage" hidden>
-    <div class="stage-slide" id="stageSlide"></div>
-    <div class="stage-bar">
-      <button class="sb-btn" id="stageExit" title="Back to reading (Esc)">✕</button>
-      <div class="stage-progress"><div id="stageProg"></div></div>
-      <span class="stage-count" id="stageCount"></span>
-      <button class="sb-btn" id="stagePrev" title="Previous (←)">←</button>
-      <button class="sb-btn" id="stageNext" title="Next (→)">→</button>
-      <button class="sb-btn" id="stageFull" title="Full screen (F)">⤢</button>
+    <div class="stage" id="stage">
+      <div class="frame" id="frame"></div>
     </div>
+    <div class="caption" id="caption"></div>
+
+    <footer class="bottom">
+      <button class="nav-btn" id="prevBtn" title="Previous (←)">←</button>
+      <div class="progress"><div id="progBar"></div></div>
+      <span class="count" id="count"></span>
+      <button class="nav-btn" id="nextBtn" title="Next (→)">→</button>
+    </footer>
   </div>
 
   <!-- Presenter: only unlocks with the presenter password -->
   <div class="presenter" id="presenter" hidden>
     <div class="pr-main">
-      <div class="pr-current" id="prCurrent"></div>
+      <div class="pr-stage"><div class="frame" id="prFrame"></div></div>
       <div class="pr-nav">
         <button class="pr-btn" id="prPrev">← Prev</button>
         <span id="prCount"></span>
@@ -108,18 +63,9 @@
     </div>
     <aside class="pr-side">
       <div class="pr-timer">
-        <div>
-          <div class="pr-k">Elapsed</div>
-          <div class="pr-big" id="prElapsed">0:00</div>
-        </div>
-        <div>
-          <div class="pr-k">Budget</div>
-          <div class="pr-big pr-dim" id="prBudget"></div>
-        </div>
-        <div>
-          <div class="pr-k">Pace</div>
-          <div class="pr-pace" id="prPace">Not started</div>
-        </div>
+        <div><div class="pr-k">Elapsed</div><div class="pr-big" id="prElapsed">0:00</div></div>
+        <div><div class="pr-k">Budget</div><div class="pr-big pr-dim" id="prBudget"></div></div>
+        <div><div class="pr-k">Pace</div><div class="pr-pace" id="prPace">Not started</div></div>
       </div>
       <div class="pr-tools">
         <button class="pr-btn" id="prStart">Start timer</button>
@@ -130,7 +76,7 @@
       <div class="pr-k" id="prSlideTime"></div>
       <div class="pr-notes" id="prNotes"></div>
       <div class="pr-k">Up next</div>
-      <div class="pr-next" id="prNextSlide"></div>
+      <div class="pr-next"><div class="frame" id="prNextFrame"></div></div>
     </aside>
   </div>
 
@@ -139,8 +85,8 @@
     <div class="modal-box">
       <div class="modal-title">Share this version</div>
       <p class="modal-sub" id="shareDesc"></p>
-      <label class="check"><input type="checkbox" id="shareAdjust" checked/> Let them adjust time, audience and projects</label>
-      <label class="check"><input type="checkbox" id="shareSlides"/> Open in slides</label>
+      <label class="check"><input type="checkbox" id="shareSkip" checked/> Skip the questions, open on the agenda</label>
+      <label class="check"><input type="checkbox" id="shareAdjust" checked/> Let them change role and time</label>
       <div class="share-row">
         <input class="share-url" id="shareUrl" readonly/>
         <button class="pw-btn" id="shareCopy">Copy</button>
