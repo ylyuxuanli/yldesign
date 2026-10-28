@@ -84,6 +84,9 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .chip:hover { border-color: var(--text); color: var(--text); }
 .chip.on { background: var(--text); border-color: var(--text); color: #fff; }
 .chip.small { font-size: clamp(12px, calc(1.1 * var(--u)), 15px); }
+.q-label span { font-size: 0.7em; color: var(--muted); margin-left: 0.6em; }
+.ag-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: calc(0.6 * var(--u)); }
+.ag-tags span { font-size: clamp(11px, calc(0.95 * var(--u)), 13px); padding: 2px 10px; border-radius: 999px; background: #F3F1EC; color: var(--sub); }
 .hint { font-size: clamp(12px, calc(1.1 * var(--u)), 15px); color: var(--muted); margin-top: calc(0.8 * var(--u)); }
 
 /* Agenda */

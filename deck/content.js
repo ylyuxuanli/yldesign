@@ -6,6 +6,7 @@
 //   pri     1 = core story, 2 = strong support, 3 = nice to have
 //   must    always included
 //   lens    audiences this slide matters most to (pm, design, dm, eng, ds), used to pick slides
+//   skills  skills this slide shows (see `skills` below), used to pick slides and order projects
 //   label   small section label at the top of the slide
 //   title   name used in the agenda
 //   layout  how the slide is drawn (see render.js): statement, values, title, split, full
@@ -28,6 +29,19 @@ window.DECK = {
   ],
 
   times: [10, 15, 20, 30],
+
+  // What a viewer can ask to see. Slides list the skills they show in `skills`.
+  skills: [
+    { id: 'agentic',  name: 'Agentic AI design' },
+    { id: 'hai',      name: 'Human + AI interaction' },
+    { id: 'systems',  name: 'Systems thinking' },
+    { id: 'service',  name: 'Service design' },
+    { id: 'research', name: 'Research & insight' },
+    { id: 'strategy', name: 'Product strategy' },
+    { id: 'zero',     name: '0 to 1' },
+    { id: 'proto',    name: 'Prototyping' },
+    { id: 'align',    name: 'Cross-team alignment' }
+  ],
 
   projects: [
     // ------------------------------------------------------------------ Intro
@@ -58,7 +72,7 @@ window.DECK = {
                  { p: 'It\'s the first project in this deck.' }],
           right: [{ media: { ph: 'QuickBooks overview with Books Health and a live expert video call' } }] },
 
-        { id: 'intro-offerland', min: 0.75, pri: 3, lens: ['pm', 'design'], label: 'Side project', title: 'Offerland.ai',
+        { id: 'intro-offerland', skills: ['zero'], min: 0.75, pri: 3, lens: ['pm', 'design'], label: 'Side project', title: 'Offerland.ai',
           layout: 'split', ratio: 38,
           left: [{ h: 'Offerland.ai' },
                  { p: 'On the side, I lead design for Offerland, a tool that helps job seekers share interview experiences and track applications.' },
@@ -67,7 +81,7 @@ window.DECK = {
                         design: 'It\'s my 0 to 1 playground for trying AI interaction patterns fast, without a big company\'s process.' } }],
           right: [{ media: { ph: 'Offerland job dashboard and interview experience page' } }] },
 
-        { id: 'intro-lytx', min: 0.75, pri: 3, lens: ['eng', 'design'], label: 'Before', title: 'Lytx',
+        { id: 'intro-lytx', skills: ['systems'], min: 0.75, pri: 3, lens: ['eng', 'design'], label: 'Before', title: 'Lytx',
           layout: 'split', ratio: 38,
           left: [{ h: 'Lytx' },
                  { list: ['Fleet management system', 'Driver app', 'The design system behind both'] },
@@ -111,7 +125,7 @@ window.DECK = {
                   { ph: 'Owner with an expense insight card' },
                   { ph: 'Contractor with "246 tasks done" AI card' }] },
 
-        { id: 'qb-context', min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], label: 'Context', title: 'My role and the team',
+        { id: 'qb-context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], label: 'Context', title: 'My role and the team',
           layout: 'split', ratio: 40,
           left: [
             { groups: [
@@ -133,7 +147,7 @@ window.DECK = {
                  { p: 'Small business owners did most of their bookkeeping on their own, with very little AI help. They had to spot problems themselves.' }],
           right: [{ media: { ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
-        { id: 'qb-from-to', min: 1, pri: 2, lens: ['pm', 'design'], label: 'The opportunity', title: 'Help before problems happen',
+        { id: 'qb-from-to', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], label: 'The opportunity', title: 'Help before problems happen',
           layout: 'split', ratio: 40,
           left: [{ h: 'Can we help before problems happen?' },
                  { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
@@ -142,7 +156,7 @@ window.DECK = {
                  { chain: ['Customers', 'Manual workflow', 'Expert services $$'], vertical: true, dim: true }],
           right: [{ orbit: { center: 'Customer + QuickBooks', nodes: ['Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI'] } }] },
 
-        { id: 'qb-why', min: 1, pri: 2, lens: ['pm', 'ds'], label: 'Why it matters', title: '"I don\'t know what I don\'t know"',
+        { id: 'qb-why', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], label: 'Why it matters', title: '"I don\'t know what I don\'t know"',
           layout: 'split', ratio: 50,
           left: [
             { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview' },
@@ -155,7 +169,7 @@ window.DECK = {
           ],
           right: [{ media: { ph: 'Business owners reviewing their books together', fill: true } }] },
 
-        { id: 'qb-challenge', min: 1.25, pri: 1, lens: ['dm', 'pm'], label: 'Challenge', title: 'AI first or human first?',
+        { id: 'qb-challenge', skills: ['align', 'strategy', 'hai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], label: 'Challenge', title: 'AI first or human first?',
           layout: 'split', ratio: 42,
           left: [{ h: 'AI first or <em>human first?</em>', size: 'xl' },
                  { note: '<b>The real problem wasn\'t AI versus human. It was trust,</b> and a human is only one way to build it.' }],
@@ -169,14 +183,14 @@ window.DECK = {
             { h: 'So I dug into why', p: 'People didn\'t need a person for everything. They didn\'t trust AI to get their books right.' }
           ] }], rightPanel: true },
 
-        { id: 'qb-journey', min: 1, pri: 3, lens: ['design', 'dm'], label: 'Journey', title: 'Mapping the journey together',
+        { id: 'qb-journey', skills: ['service', 'research', 'align'], min: 1, pri: 3, lens: ['design', 'dm'], label: 'Journey', title: 'Mapping the journey together',
           layout: 'full',
           blocks: [{ h: 'Mapping the journey together' },
                    { sub: { all: 'With core QuickBooks, service design and service delivery',
                             dm: 'Mapping it together is how three teams started to share one picture' } },
                    { media: { ph: 'Customer journey map across onboarding, ongoing use and year-end', grow: true } }] },
 
-        { id: 'qb-journey-moments', min: 1, pri: 2, lens: ['design', 'dm', 'pm'], label: 'Journey', title: 'Where a human really matters',
+        { id: 'qb-journey-moments', skills: ['service', 'hai'], min: 1, pri: 2, lens: ['design', 'dm', 'pm'], label: 'Journey', title: 'Where a human really matters',
           layout: 'full', center: true,
           blocks: [{ h: 'Where a human really matters' },
                    { p: { all: 'The need for experts wasn\'t spread evenly. It peaked at onboarding and year-end. In between, most issues didn\'t need a live call. They needed something they could trust.',
@@ -190,7 +204,7 @@ window.DECK = {
                      { h: 'Year-end', p: 'Accuracy and taxes matter most. <b>Peak need.</b>' }
                    ] }] },
 
-        { id: 'qb-levels', min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], label: 'Framework', title: 'Who holds the missing piece?',
+        { id: 'qb-levels', skills: ['agentic', 'hai', 'systems'], min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], label: 'Framework', title: 'Who holds the missing piece?',
           layout: 'split', ratio: 38,
           left: [{ h: 'Who holds the <em>missing piece?</em>' },
                  { p: { all: 'To decide who owns each decision, we sorted bookkeeping jobs by one question.',
@@ -217,7 +231,7 @@ window.DECK = {
             ['Review and sign off books for handoff', 3]
           ] }] },
 
-        { id: 'qb-should', min: 1.5, pri: 1, lens: ['ds', 'pm', 'eng', 'dm'], label: 'The hard call', title: 'AI can do it. Should it?',
+        { id: 'qb-should', skills: ['agentic', 'hai', 'strategy'], min: 1.5, pri: 1, lens: ['ds', 'pm', 'eng', 'dm'], label: 'The hard call', title: 'AI can do it. Should it?',
           layout: 'split', ratio: 50,
           left: [{ h: 'AI can do it. <em>Should it?</em>', size: 'xl' },
                  { p: { all: 'Our agent scored over 90 when AI and accountants evaluated it, so PM and engineering wanted to automate more. I pushed back, for two reasons.',
@@ -243,7 +257,7 @@ window.DECK = {
             { note: '<b>The boundary isn\'t fixed.</b> It moves as trust is earned.' }
           ], rightPanel: true },
 
-        { id: 'qb-system', min: 1.5, pri: 1, lens: ['eng', 'ds'], label: 'System', title: 'How the system works',
+        { id: 'qb-system', skills: ['agentic', 'systems', 'service'], min: 1.5, pri: 1, lens: ['eng', 'ds'], label: 'System', title: 'How the system works',
           layout: 'full',
           blocks: [{ p: { all: 'AI scores every gap and routes it. The harder part was how context moves between AI, customers and experts, so nobody explains twice.',
                           eng: 'Routing was only half the problem. The harder part was the handoff: what context travels with an issue, so the next person never starts from zero.',
@@ -261,14 +275,14 @@ window.DECK = {
             footer: 'High-risk actions always go to a human'
           } }] },
 
-        { id: 'qb-codesign', min: 0.75, pri: 3, lens: ['design', 'dm'], label: 'Co-design', title: 'How much do you show?',
+        { id: 'qb-codesign', skills: ['research', 'hai'], min: 0.75, pri: 3, lens: ['design', 'dm'], label: 'Co-design', title: 'How much do you show?',
           layout: 'split', ratio: 40,
           left: [{ h: 'If AI works in the background, how much do you show?' },
                  { p: 'Show everything and it\'s overwhelming. Show too little and it\'s a black box. I ran co-design sessions with customers to find the line.' },
                  { list: ['How support fits into the experience', 'What they wanted visibility into', 'Signals that built confidence', 'What made the service feel worth it'], title: 'What we explored' }],
           right: [{ media: { ph: 'Co-design board with sticky notes and concept sketches' } }] },
 
-        { id: 'qb-prototypes', min: 1, pri: 2, lens: ['design', 'pm'], label: 'Prototypes', title: 'Four interaction models',
+        { id: 'qb-prototypes', skills: ['proto', 'hai'], min: 1, pri: 2, lens: ['design', 'pm'], label: 'Prototypes', title: 'Four interaction models',
           layout: 'full',
           blocks: [{ h: 'Four interaction models, one winner' },
                    { table: { cols: ['Chat first', 'By who does it', 'By level', 'By workflow'], hi: 3, rows: [
@@ -280,7 +294,7 @@ window.DECK = {
                           design: 'The lesson: don\'t ship your internal model as the IA. Customers think about their books, so AI and experts show up inside the workflow, and chat is a helper, not the main surface.' } },
                    { mediaGrid: [{ ph: 'Your bookkeeping team' }, { ph: 'Overview with tasks' }, { ph: 'Overview with insights' }, { ph: 'Overview with AI chat' }], cols: 4 }] },
 
-        { id: 'qb-solution', min: 1, pri: 1, lens: ['design', 'eng'], label: 'Target experience', title: 'One overview, AI and experts built in',
+        { id: 'qb-solution', skills: ['hai'], min: 1, pri: 1, lens: ['design', 'eng'], label: 'Target experience', title: 'One overview, AI and experts built in',
           layout: 'split', ratio: 34,
           left: [{ h: 'Three questions, one page' },
                  { groups: [
@@ -293,7 +307,7 @@ window.DECK = {
                         design: 'Notice how the expert card changes across the customer lifecycle.' } }],
           right: [{ media: { ph: 'Target design: "Good morning, James" overview with Books Health and Needs attention' } }] },
 
-        { id: 'qb-james', min: 1.5, pri: 2, lens: ['design', 'pm'], label: 'A year with James', title: 'A year with James',
+        { id: 'qb-james', skills: ['hai', 'service'], min: 1.5, pri: 2, lens: ['design', 'pm'], label: 'A year with James', title: 'A year with James',
           layout: 'split', ratio: 36, leftTheme: true,
           left: [{ h: 'Meet James Porter' }, { p: 'He runs Porter General Contracting, and wants to grow his business, not manage books.' },
                  { stats: [{ v: '2', l: 'Years in business' }, { v: '5', l: 'Employees' }, { v: '$675K', l: 'Revenue' }], row: true }],
@@ -307,7 +321,7 @@ window.DECK = {
                       pm: 'We didn\'t start from how many calls to offer. We started from when an expert creates the most value.',
                       dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } }] },
 
-        { id: 'qb-mvp', min: 1.5, pri: 1, lens: ['pm', 'eng', 'dm', 'ds'], label: 'What we shipped first', title: 'What we shipped first, and why',
+        { id: 'qb-mvp', skills: ['strategy', 'align'], min: 1.5, pri: 1, lens: ['pm', 'eng', 'dm', 'ds'], label: 'What we shipped first', title: 'What we shipped first, and why',
           layout: 'split', ratio: 36,
           left: [{ h: 'What we shipped first' },
                  { p: { all: 'We couldn\'t ship it all at once. The MVP tested one thing: does this way of bringing AI and experts together actually work for customers?',
@@ -326,7 +340,7 @@ window.DECK = {
                    eng: 'Once expert services wanted it everywhere, it became a platform capability. Email shipped the value now, and the platform version could be built properly.' } }
           ] }], rightPanel: true },
 
-        { id: 'qb-results', min: 1, pri: 1, lens: ['pm', 'ds'], label: 'Results', title: 'Early signals',
+        { id: 'qb-results', skills: ['strategy'], min: 1, pri: 1, lens: ['pm', 'ds'], label: 'Results', title: 'Early signals',
           layout: 'split', ratio: 58,
           left: [{ h: 'Early signals' },
                  { stats: [{ v: '55%', l: 'engagement' }, { v: '~24%', l: 'engaged with expert calls' }, { v: '30%', l: 'less manual work' },
@@ -336,7 +350,7 @@ window.DECK = {
                         ds: 'I measured trust, completion and safety, not model accuracy. Next step: track Level 2 acceptance to decide what moves to Level 1.' } }],
           right: [{ media: { ph: 'Contractor smiling on site', fill: true } }] },
 
-        { id: 'qb-learned', min: 0.75, pri: 2, lens: ['dm', 'design'], label: 'What I learned', title: 'What I learned',
+        { id: 'qb-learned', skills: ['systems', 'align'], min: 0.75, pri: 2, lens: ['dm', 'design'], label: 'What I learned', title: 'What I learned',
           layout: 'full',
           blocks: [{ cards: [
             { icon: '🧭', h: 'Move without a defined problem', p: 'Use the customer journey to align teams, not just as research.' },
@@ -369,7 +383,7 @@ window.DECK = {
           media: [{ ph: 'Owner smiling on a video call with a formation expert' }],
           checklist: [['Choose your entity type', true], ['File your articles of org', true], ['Obtain your EIN', false]] },
 
-        { id: 'bf-context', min: 1, pri: 2, lens: ['pm', 'ds'], label: 'Opportunity', title: 'Start with us, stay with us',
+        { id: 'bf-context', skills: ['strategy', 'zero'], min: 1, pri: 2, lens: ['pm', 'ds'], label: 'Opportunity', title: 'Start with us, stay with us',
           layout: 'split', ratio: 40,
           left: [{ h: 'Start with us, <em>stay with us</em>' },
                  { p: { all: 'QuickBooks wanted to expand into new services. I owned business formation from the very first concept through the pilot.',
@@ -381,7 +395,7 @@ window.DECK = {
             { h: 'It\'s the very start of a business', p: 'If owners start with us, they\'re likely to stay for bookkeeping and more' }
           ] }], rightPanel: true },
 
-        { id: 'bf-research', min: 0.75, pri: 2, lens: ['ds', 'design'], label: 'Research', title: 'How we learned what owners needed',
+        { id: 'bf-research', skills: ['research'], min: 0.75, pri: 2, lens: ['ds', 'design'], label: 'Research', title: 'How we learned what owners needed',
           layout: 'full',
           blocks: [{ h: 'How we learned what owners actually needed' },
                    { stats: [{ k: 'Breadth', v: '1,500+', l: 'Surveys' },
@@ -392,7 +406,7 @@ window.DECK = {
                           design: 'Mixed methods: surveys for reach, interviews for depth, experts to validate. When we started, it looked like a paperwork problem. It isn\'t.' } },
                    { mediaRow: [{ ph: 'Workshop with the team' }, { ph: 'Remote interview' }, { ph: 'Interview guide' }] }] },
 
-        { id: 'bf-decision', min: 1.25, pri: 1, lens: ['pm', 'design'], label: 'Insight', title: 'Paperwork is easy. The decision is hard.',
+        { id: 'bf-decision', skills: ['research', 'strategy'], min: 1.25, pri: 1, lens: ['pm', 'design'], label: 'Insight', title: 'Paperwork is easy. The decision is hard.',
           layout: 'full',
           blocks: [{ h: 'Paperwork is easy, <em>the decision is hard.</em>' },
                    { p: { all: 'The filing has clear steps. The hard part is choosing your entity type. It decides your taxes, your liability and whether you can raise money, and it\'s hard to undo.',
@@ -409,7 +423,7 @@ window.DECK = {
                        ['State rules', 'What does my state require?', 'Fines and penalties']
                      ] } }] },
 
-        { id: 'bf-cost', min: 0.75, pri: 2, lens: ['design', 'ds', 'eng'], label: 'Insight', title: 'A wrong start costs for years',
+        { id: 'bf-cost', skills: ['research', 'hai'], min: 0.75, pri: 2, lens: ['design', 'ds', 'eng'], label: 'Insight', title: 'A wrong start costs for years',
           layout: 'split', ratio: 52,
           left: [{ h: 'A wrong start <em>costs for years</em>' },
                  { p: 'One owner set up the wrong structure at the start. Now he pays a few hundred dollars extra every year. Can\'t he fix it? Yes, but it would cost thousands in CPA fees, so he just lives with it.' },
@@ -418,7 +432,7 @@ window.DECK = {
                            ds: 'And a model doesn\'t make this safer. "How do I pay the least tax?" can get an answer that optimizes the wrong thing, or isn\'t allowed. A confident wrong answer here is expensive.' } }],
           right: [{ stats: [{ k: 'Living with it', v: '$100s', l: 'extra, every year' }, { k: 'Fixing it', v: '$1,000s', l: 'in CPA fees, once' }], row: true }], rightPanel: true },
 
-        { id: 'bf-who', min: 1, pri: 1, lens: ['design', 'pm', 'dm'], label: 'Insight', title: 'Owners don\'t know who to ask',
+        { id: 'bf-who', skills: ['research', 'service'], min: 1, pri: 1, lens: ['design', 'pm', 'dm'], label: 'Insight', title: 'Owners don\'t know who to ask',
           layout: 'full',
           blocks: [{ h: 'Owners don\'t know <em>who to ask</em>' },
                    { p: { all: 'Everyone holds a piece, nobody holds the whole picture, so owners get stuck in between. Even their CPA isn\'t a great fit: state formation rules aren\'t their area, and they charge hundreds an hour.',
@@ -434,7 +448,7 @@ window.DECK = {
                        { h: 'What the owner needs', sub: 'The whole picture', cells: [2, 2, 2, 2], strong: true }
                      ] } }] },
 
-        { id: 'bf-gap', min: 1, pri: 1, lens: ['pm', 'dm', 'design'], label: 'Positioning', title: 'The gap is advice, not filing',
+        { id: 'bf-gap', skills: ['strategy', 'zero'], min: 1, pri: 1, lens: ['pm', 'dm', 'design'], label: 'Positioning', title: 'The gap is advice, not filing',
           layout: 'full',
           blocks: [{ h: 'The gap is <em>advice, not filing</em>' },
                    { table: { cols: ['DIY', 'Filing services', 'CPA', 'QuickBooks'], hi: 3, rows: [
@@ -448,14 +462,14 @@ window.DECK = {
                           design: 'Competitors have a polished filing flow. We designed around the conversation instead: advice first, filing as part of the service.',
                           dm: 'This is where the project became a product decision, not a design task: advice first, with filing as part of the service.' } }] },
 
-        { id: 'bf-prototype', min: 0.75, pri: 2, lens: ['design'], label: 'Prototype', title: 'A roadmap that prepares you for the expert',
+        { id: 'bf-prototype', skills: ['proto'], min: 0.75, pri: 2, lens: ['design'], label: 'Prototype', title: 'A roadmap that prepares you for the expert',
           layout: 'split', ratio: 34,
           left: [{ h: 'A roadmap that prepares you for the expert' },
                  { p: 'Based on your goals, you see the recommended path, the cost and the timeline, with an expert one tap away.' },
                  { note: 'Because the decision is high stakes, the roadmap doesn\'t hand you an answer. It prepares you for the conversation.' }],
           right: [{ media: { ph: '"Welcome back, John" formation roadmap with cost, timeline and expert contact' } }] },
 
-        { id: 'bf-new', min: 1, pri: 2, lens: ['design', 'pm', 'eng'], label: 'Two front doors', title: 'Two audiences, two front doors',
+        { id: 'bf-new', skills: ['service'], min: 1, pri: 2, lens: ['design', 'pm', 'eng'], label: 'Two front doors', title: 'Two audiences, two front doors',
           layout: 'split', ratio: 50,
           left: [{ k: 'New businesses' },
                  { steps: [{ h: 'Fast onboarding', p: 'Just enough to get them formed' },
@@ -467,7 +481,7 @@ window.DECK = {
                             { h: 'Nothing to re-enter', p: 'We already know their business' },
                             { h: 'Expert already prepped', p: 'The expert knows their situation before the call' }] }], rightPanel: true },
 
-        { id: 'bf-blueprint', min: 0.75, pri: 3, lens: ['design', 'dm', 'eng'], label: 'Service blueprint', title: 'The relationship continues after filing',
+        { id: 'bf-blueprint', skills: ['service', 'systems'], min: 0.75, pri: 3, lens: ['design', 'dm', 'eng'], label: 'Service blueprint', title: 'The relationship continues after filing',
           layout: 'full',
           blocks: [{ h: 'The relationship continues after filing' },
                    { p: { all: 'This is a service as much as a product, so I mapped what the customer sees, what the expert does, and what happens behind the scenes.',
@@ -476,7 +490,7 @@ window.DECK = {
                    { branch: { from: 'Advisory call', to: ['DIY', 'DIY with a partner platform', 'Expert files it'], note: 'Then into bookkeeping and compliance, with the same expert relationship' } },
                    { media: { ph: 'Service blueprint, zoomed into the after-filing lane', grow: true } }] },
 
-        { id: 'bf-pilot', min: 1.25, pri: 1, lens: ['dm', 'eng', 'pm'], label: 'Pilot', title: 'No engineering, so we built it ourselves',
+        { id: 'bf-pilot', skills: ['zero', 'proto', 'align'], min: 1.25, pri: 1, lens: ['dm', 'eng', 'pm'], label: 'Pilot', title: 'No engineering, so we built it ourselves',
           layout: 'split', ratio: 44,
           left: [{ h: 'No engineering, so we <em>built it ourselves</em>' },
                  { p: { all: 'We lost engineering support for the pilot. Instead of waiting, I designed the pilot around what we had: 6 experts, 20 customers, 4 states.',
@@ -492,7 +506,7 @@ window.DECK = {
                  { note: 'Same pattern as the first project: <b>the system prepares, the expert decides.</b>' }],
           right: [{ mediaGrid: [{ ph: 'Expert tool: client information' }, { ph: 'Expert tool: state rules' }, { ph: 'Expert tool: entity options' }, { ph: 'Customer summary' }], cols: 2 }] },
 
-        { id: 'bf-results', min: 0.75, pri: 1, lens: ['pm', 'ds', 'dm'], label: 'Results', title: 'The pilot proved the demand',
+        { id: 'bf-results', skills: ['zero', 'strategy'], min: 0.75, pri: 1, lens: ['pm', 'ds', 'dm'], label: 'Results', title: 'The pilot proved the demand',
           layout: 'split', ratio: 50,
           left: [{ h: 'The pilot proved the demand' },
                  { stats: [{ v: '4.6/5', l: 'satisfaction' }, { v: '100%', l: 'would recommend' }], row: true },
@@ -502,7 +516,7 @@ window.DECK = {
                         dm: 'Early proof did what a deck couldn\'t: it got resources for MVP and launch, and raised the project\'s priority in the org.' } }],
           right: [{ media: { ph: 'Owner smiling at her phone, with formation checklist', fill: true } }] },
 
-        { id: 'bf-learned', min: 0.5, pri: 2, lens: ['dm', 'pm'], label: 'What I learned', title: 'What I learned',
+        { id: 'bf-learned', skills: ['zero', 'align'], min: 0.5, pri: 2, lens: ['dm', 'pm'], label: 'What I learned', title: 'What I learned',
           layout: 'full',
           blocks: [{ cards: [
             { icon: '🔎', h: 'Research decides where to play', p: 'In zero to one, research isn\'t a phase.' },

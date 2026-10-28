@@ -13,13 +13,12 @@
 
   // ---------- Settings, kept in the URL ----------
   const q = new URLSearchParams(location.search);
-  const allProjects = D.projects.map((p) => p.id);
+  const allSkills = D.skills.map((x) => x.id);
   const cfg = {
     lens: D.lenses.some((l) => l.id === q.get('for')) ? q.get('for') : 'all',
     t: q.get('t') === 'all' ? 'all' : (parseInt(q.get('t'), 10) || 20),
-    projects: (q.get('p') || allProjects.join(',')).split(',').filter((id) => allProjects.includes(id))
+    skills: (q.get('s') || '').split(',').filter((id) => allSkills.includes(id))
   };
-  if (!cfg.projects.length) cfg.projects = allProjects.slice();
   const preset = q.has('for') || q.has('t');
   const locked = q.get('lock') === '1';
   const audience = q.get('audience') === '1';
@@ -28,7 +27,7 @@
     const p = new URLSearchParams();
     if (c.lens !== 'all') p.set('for', c.lens);
     p.set('t', c.t);
-    if (c.projects.length !== allProjects.length) p.set('p', c.projects.join(','));
+    if (c.skills.length) p.set('s', c.skills.join(','));
     Object.entries(extra || {}).forEach(([k, v]) => p.set(k, v));
     return p.toString();
   }
@@ -39,19 +38,40 @@
   }
 
   // ---------- Building the deck for this audience and time ----------
-  // Core slides first, then the ones this audience cares about, until the time runs out.
+  // Projects are ordered by how well they match the skills asked for. Each project
+  // comes in whole (its core slides) or not at all, so a short deck never ends on a
+  // lone cover. Leftover time goes to the slides this audience cares about most.
   function build() {
-    const chosen = D.projects.filter((p) => cfg.projects.includes(p.id));
-    const flat = [];
-    chosen.forEach((p) => p.slides.forEach((s) => flat.push({ ...s, project: p })));
     const lensOn = cfg.lens !== 'all';
+    const hits = (s) => (s.skills || []).filter((k) => cfg.skills.includes(k)).length;
+    const score = (s) => (s.must ? 100 : 0) + (4 - s.pri) * 2 +
+      (lensOn && (s.lens || []).includes(cfg.lens) ? 2.5 : 0) + (hits(s) ? 2 + hits(s) : 0);
+    const intro = D.projects.filter((p) => p.id === 'intro');
+    const cases = D.projects.filter((p) => p.id !== 'intro')
+      .map((p, i) => ({ p, i, fit: p.slides.reduce((a, s) => a + hits(s), 0) }))
+      .sort((a, b) => b.fit - a.fit || a.i - b.i).map((x) => x.p);
+    const order = intro.concat(cases);
+    const flat = [];
+    order.forEach((p) => p.slides.forEach((s) => flat.push({ ...s, project: p, sc: score(s) - flat.length * 0.001 })));
     let budget = cfg.t === 'all' ? Infinity : cfg.t - MIN.welcome - MIN.agenda;
-    const score = (s, i) => (s.must ? 100 : 0) + (4 - s.pri) * 2 +
-      (lensOn && (s.lens || []).includes(cfg.lens) ? 2.5 : 0) - i * 0.001;
     const keep = new Set();
-    flat.map((s, i) => ({ s, i, sc: score(s, i) })).sort((a, b) => b.sc - a.sc)
-      .forEach(({ s, i }) => { if (s.must || s.min <= budget) { keep.add(i); budget -= s.min; } });
-    const picked = flat.filter((_, i) => keep.has(i));
+    const take = (s) => { keep.add(s); budget -= s.min; };
+    const byScore = (list) => list.slice().sort((a, b) => b.sc - a.sc);
+    const core = (p) => flat.filter((s) => s.project === p && (s.must || s.pri === 1));
+
+    intro.forEach((p) => core(p).forEach(take));
+    const shown = new Set(intro);
+    cases.forEach((p, n) => {
+      const c = core(p), need = c.reduce((a, s) => a + s.min, 0);
+      if (need <= budget) { c.forEach(take); shown.add(p); }
+      else if (n === 0) { // Not even one full case fits: show the best of the first one
+        shown.add(p);
+        byScore(c).forEach((s) => { if (s.must || s.min <= budget) take(s); });
+      }
+    });
+    byScore(flat.filter((s) => shown.has(s.project) && !keep.has(s)))
+      .forEach((s) => { if (s.min <= budget) take(s); });
+    const picked = flat.filter((s) => keep.has(s));
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
     if (!locked) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
@@ -59,9 +79,15 @@
     picked.forEach((s) => seq.push({ ...s, type: 'content' }));
     seq.push({ type: 'end', id: 'end', min: MIN.end });
 
-    const per = chosen.map((p) => ({ p, min: seq.filter((s) => s.project === p).reduce((a, s) => a + s.min, 0) }))
+    const per = order.filter((p) => shown.has(p))
+      .map((p) => {
+        const mine = picked.filter((s) => s.project === p);
+        const skills = allSkills.filter((k) => cfg.skills.includes(k) && mine.some((s) => (s.skills || []).includes(k)));
+        return { p, skills, min: mine.reduce((a, s) => a + s.min, 0) };
+      })
       .filter((x) => x.min > 0);
-    return { seq, picked, total: flat.length, used: seq.reduce((a, s) => a + s.min, 0), per };
+    const skipped = cases.filter((p) => !shown.has(p));
+    return { seq, picked, total: flat.length, used: seq.reduce((a, s) => a + s.min, 0), per, skipped };
   }
   let plan = build();
   let cur = 0;
@@ -114,16 +140,15 @@
       D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; rebuild(); })));
       c2.appendChild(chip('No rush, show me everything', cfg.t === 'all', () => { cfg.t = 'all'; rebuild(); }));
       q2.appendChild(c2); n.appendChild(q2);
-      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'What to include'));
+      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Anything you\'d like to see? <span>Pick any, or skip</span>'));
       const c3 = el('div', 'chips');
-      D.projects.forEach((p) => c3.appendChild(chip(p.short, cfg.projects.includes(p.id), () => {
-        const on = cfg.projects.includes(p.id);
-        if (on && cfg.projects.length === 1) return;
-        cfg.projects = on ? cfg.projects.filter((x) => x !== p.id) : allProjects.filter((x) => x === p.id || cfg.projects.includes(x));
+      D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
+        cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
         rebuild();
       }, true)));
       q3.appendChild(c3);
-      q3.appendChild(el('div', 'hint', plan.picked.length + ' of ' + plan.total + ' slides fit, about ' + Math.round(plan.used) + ' min.'));
+      q3.appendChild(el('div', 'hint', plan.per.filter((x) => x.p.id !== 'intro').map((x) => esc(x.p.short)).join(' + ') + ', about ' + Math.round(plan.used) + ' min.' +
+        (plan.skipped.length ? ' ' + esc(plan.skipped.map((p) => p.short).join(', ')) + ' needs more time.' : '')));
       n.appendChild(q3);
       const go = el('button', 'cta', 'Show me →');
       go.onclick = () => goTo(indexOf('agenda'));
@@ -140,6 +165,7 @@
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
         if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc(x.p.focus[cfg.lens] || x.p.focus.all)));
+        if (x.skills.length) mid.appendChild(el('div', 'ag-tags', x.skills.map((k) => '<span>' + esc(D.skills.find((d) => d.id === k).name) + '</span>').join('')));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
@@ -152,7 +178,7 @@
       n = el('div', 'slide hs');
       n.appendChild(el('div', 'dots', '<span></span><span></span><span></span>'));
       n.appendChild(el('h2', 'hs-h', 'Thank you!<br/>Always <em>open to a chat.</em>'));
-      n.appendChild(el('p', 'hs-p', 'Across both projects, the thread is the same: I design the system around the screens. Who does what, when AI should act, and when a human should step in.'));
+      n.appendChild(el('p', 'hs-p', 'The thread through all my work: I design the system around the screens. Who does what, when AI should act, and when a human should step in.'));
       n.appendChild(el('div', 'end-links',
         '<a href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com ↗</a>' +
         '<a href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>' +
@@ -304,7 +330,7 @@
       const p = new URLSearchParams(e.data.q);
       cfg.lens = p.get('for') || 'all';
       cfg.t = p.get('t') === 'all' ? 'all' : +p.get('t');
-      cfg.projects = (p.get('p') || allProjects.join(',')).split(',');
+      cfg.skills = (p.get('s') || '').split(',').filter(Boolean);
       settled = e.data.settled;
       plan = build(); goTo(e.data.i);
     };
