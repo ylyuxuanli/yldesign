@@ -180,13 +180,13 @@
       n.appendChild(el('h2', 'hs-h', 'Thank you!<br/>Always <em>open to a chat.</em>'));
       n.appendChild(el('p', 'hs-p', 'The thread through all my work: I design the system around the screens. Who does what, when AI should act, and when a human should step in.'));
       n.appendChild(el('div', 'end-links',
-        '<a href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com ↗</a>' +
-        '<a href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn ↗</a>' +
-        '<a href="../imgs/yuxuan_resume.pdf" target="_blank">Resume ↗</a>' +
-        '<a href="../index.html">yldesign.me ↗</a>'));
+        '<a href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com</a>' +
+        '<a href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn</a>' +
+        '<a href="../imgs/yuxuan_resume.pdf" target="_blank">Resume</a>' +
+        '<a href="../index.html">yldesign.me</a>'));
       if (live && !audience) {
         const row = el('div', 'cta-row');
-        if (!locked) { const b = el('button', 'cta', 'See another version'); b.onclick = () => goTo(indexOf('setup')); row.appendChild(b); }
+        if (!locked) { const b = el('button', 'link-btn', 'See another version'); b.onclick = () => goTo(indexOf('setup')); row.appendChild(b); }
         const sh = el('button', 'link-btn', 'Share this version'); sh.onclick = openShare; row.appendChild(sh);
         n.appendChild(row);
       }
