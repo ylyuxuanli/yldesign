@@ -60,7 +60,7 @@
     if (!locked) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
     seq.push({ type: 'agenda', id: 'agenda', min: MIN.agenda });
     picked.forEach((s) => {
-      seq.push({ ...s, type: 'img' });
+      seq.push({ ...s, type: 'content' });
       if (lensOn && s.must && s.project.id !== 'intro') seq.push({ type: 'lens', id: 'lens', min: MIN.lens, project: s.project });
     });
     seq.push({ type: 'end', id: 'end', min: MIN.end });
@@ -87,12 +87,7 @@
   function slideNode(s, live) {
     let n;
     if (!s) return el('div', 'slide hs');
-    if (s.type === 'img') {
-      n = el('div', 'slide');
-      const img = el('img', 'slide-img'); img.src = 'slides/' + s.id + '.jpg'; img.alt = s.title;
-      n.appendChild(img);
-      return n;
-    }
+    if (s.type === 'content') return window.renderSlide(s, cfg.lens);
     if (s.type === 'welcome') {
       n = el('div', 'slide hs hs-welcome');
       const t = el('div', 'w-text');
@@ -194,28 +189,21 @@
 
   function fill(frame, s, live) {
     frame.innerHTML = '';
-    frame.classList.toggle('built', s && s.type !== 'img');
     frame.appendChild(slideNode(s, live));
   }
-  function preload(i) { [i + 1, i + 2].forEach((j) => { const s = plan.seq[j]; if (s && s.type === 'img') new Image().src = 'slides/' + s.id + '.jpg'; }); }
 
   // ---------- Viewer ----------
   function draw() {
     const s = plan.seq[cur];
     fill($('frame'), s, true);
-    $('frame').classList.toggle('clickable', s.type === 'img');
-    $('app').classList.toggle('is-img', s.type === 'img');
     $('count').textContent = (cur + 1) + ' / ' + plan.seq.length;
     $('progBar').style.width = ((cur + 1) / plan.seq.length * 100) + '%';
     $('prevBtn').disabled = cur === 0;
     $('nextBtn').disabled = cur === plan.seq.length - 1;
 
     const cap = $('caption'); cap.innerHTML = '';
-    if (s.type === 'img' && !s.must) {
-      cap.appendChild(el('div', null, esc(s.body)));
-      const why = s.why && s.why[cfg.lens];
-      if (why) cap.appendChild(el('div', 'why', '<b>For ' + esc(forWhom()) + ':</b> ' + esc(why)));
-    }
+    const why = s.why && s.why[cfg.lens];
+    if (why) cap.appendChild(el('div', 'why', '<b>For ' + esc(forWhom()) + ':</b> ' + esc(why)));
     cap.classList.toggle('off', !showCaptions);
     $('capBtn').classList.toggle('off', !showCaptions);
 
@@ -223,7 +211,6 @@
     pill.hidden = !settled;
     pill.innerHTML = 'For <b>' + esc(forWhom()) + '</b> · ' + esc(timeLabel()) + (locked ? '' : '<span class="edit">Edit</span>');
     pill.disabled = locked;
-    preload(cur);
     if (!$('presenter').hidden) drawPresenter();
   }
   function goTo(i) {
@@ -242,11 +229,6 @@
 
   $('prevBtn').onclick = () => go(-1);
   $('nextBtn').onclick = () => go(1);
-  $('frame').addEventListener('click', (e) => {
-    if (!e.target.classList.contains('slide-img')) return;
-    const r = $('frame').getBoundingClientRect();
-    go(e.clientX < r.left + r.width / 3 ? -1 : 1);
-  });
   $('settingsPill').onclick = () => { if (!locked) goTo(indexOf('setup')); };
   $('capBtn').onclick = () => { showCaptions = !showCaptions; draw(); };
   $('fullBtn').onclick = toggleFull;
@@ -319,7 +301,7 @@
     $('prCount').textContent = (cur + 1) + ' / ' + plan.seq.length;
     const until = plan.seq.slice(0, cur + 1).reduce((a, x) => a + x.min, 0) * 60;
     $('prSlideTime').textContent = s.min ? 'About ' + fmtClock(s.min * 60) + ' here · move on by ' + fmtClock(until) : 'Not timed';
-    const n = (notes && notes[s.type === 'img' ? s.id : s.type]) || {};
+    const n = (notes && notes[s.type === 'content' ? s.id : s.type]) || {};
     const box = $('prNotes');
     box.innerHTML = n.base ? esc(n.base) : '<span class="none">No notes for this slide.</span>';
     const extra = (n.lens && n.lens[cfg.lens]) || (s.why && s.why[cfg.lens]);
