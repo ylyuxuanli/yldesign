@@ -130,6 +130,7 @@ window.DECK = {
     // ------------------------------------------------------------------ QuickBooks
     {
       id: 'qb',
+      talk: { 45: 20, 60: 25 }, // minutes when she presents, by session length
       name: 'QuickBooks: AI + Embedded Human Expertise',
       short: 'QuickBooks AI + Human',
       theme: 'navy',
@@ -382,6 +383,7 @@ window.DECK = {
     // ------------------------------------------------------------------ Business formation
     {
       id: 'bf',
+      talk: { 45: 10, 60: 15 },
       name: 'Business formation',
       short: 'Business formation',
       theme: 'green',
