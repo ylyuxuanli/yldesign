@@ -212,3 +212,10 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-grip { color: var(--muted); font-size: 13px; }
 .set-min { font-size: 13px; color: var(--muted); }
 @media (max-width: 560px) { .set-checks { grid-template-columns: 1fr 1fr; } }
+/* Presenting agenda: a quiet schedule */
+.ag-block { display: flex; flex-direction: column; gap: calc(1.6 * var(--u)); }
+.ag-sched .ag-row { grid-template-columns: calc(6 * var(--u)) 1fr auto; }
+.ag-sched .ag-n { font-variant-numeric: tabular-nums; }
+.ag-qa { cursor: default; }
+.ag-qa .ag-name { font-size: clamp(13px, calc(1.4 * var(--u)), 18px); color: var(--muted); }
+.ag-qa:hover .ag-name { color: var(--muted); }

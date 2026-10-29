@@ -176,17 +176,31 @@
     if (s.type === 'agenda') {
       n = el('div', 'slide hs');
       n.appendChild(el('h2', 'hs-h', 'Here\'s our plan'));
-      const ag = el('div', 'ag');
+      const ag = el('div', 'ag' + (presenting() ? ' ag-sched' : ''));
+      // When she presents, the agenda reads as a schedule: start times, with Q&A as its own stop
+      let at = SESSION.intro;
+      const clock = (m) => Math.floor(m / 60) + ':' + String(Math.round(m % 60)).padStart(2, '0');
       plan.per.forEach((x, i) => {
+        const block = el('div', 'ag-block');
         const r = el('div', 'ag-row');
-        r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
+        r.appendChild(el('div', 'ag-n', presenting() ? clock(at) : '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
         // A few keywords set expectations better than a sentence
         if (x.p.keywords) mid.appendChild(el('div', 'ag-why', x.p.keywords.map(esc).join('<span>·</span>')));
         r.appendChild(mid);
-        r.appendChild(el('div', 'ag-m', fmtMin(x.min) + (presenting() ? '<small>+ ' + SESSION.qa + ' min Q&amp;A</small>' : '')));
+        r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
-        ag.appendChild(r);
+        block.appendChild(r);
+        at += x.min;
+        if (presenting()) {
+          const qa = el('div', 'ag-row ag-qa');
+          qa.appendChild(el('div', 'ag-n', clock(at)));
+          qa.appendChild(el('div', 'ag-name', 'Q&A'));
+          qa.appendChild(el('div', 'ag-m', SESSION.qa + ' min'));
+          block.appendChild(qa);
+          at += SESSION.qa;
+        }
+        ag.appendChild(block);
       });
       n.appendChild(ag);
       return n;
