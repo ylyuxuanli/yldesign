@@ -118,9 +118,8 @@
 .c-groups { display: grid; gap: calc(1.4 * var(--u)); }
 .c-gh { font-size: clamp(14px, calc(1.2 * var(--u)), 19px); font-weight: 500; }
 .c-gp { font-size: clamp(13px, calc(1.1 * var(--u)), 17px); color: var(--sub); font-weight: 300; margin-top: calc(0.3 * var(--u)); line-height: 1.5; }
-.c-gl { list-style: none; display: grid; gap: calc(0.35 * var(--u)); margin-top: calc(0.6 * var(--u)); }
-.c-gl li { position: relative; padding-left: calc(1.3 * var(--u)); font-size: clamp(13px, calc(1.1 * var(--u)), 17px); line-height: 1.5; }
-.c-gl li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 5px; height: 5px; border-radius: 50%; background: var(--primary); }
+.c-gl { list-style: none; display: grid; gap: calc(0.25 * var(--u)); margin-top: calc(0.8 * var(--u)); }
+.c-gl li { font-size: clamp(13px, calc(1.1 * var(--u)), 17px); color: var(--sub); font-weight: 300; line-height: 1.6; }
 .c-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(12 * var(--u))), 1fr)); gap: calc(1.6 * var(--u)) calc(2.4 * var(--u)); }
 .c-stats.row { grid-auto-flow: column; grid-template-columns: none; grid-auto-columns: 1fr; }
 .c-sk { font-size: clamp(10px, calc(0.85 * var(--u)), 13px); font-weight: 500; color: var(--muted); margin-bottom: calc(0.4 * var(--u)); }
