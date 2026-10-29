@@ -79,7 +79,10 @@
 .l-title.stacked .c-title-media { flex: 1; padding: 0 0 0 calc(6 * var(--u)); overflow: hidden; }
 .l-title.stacked .c-media { flex: 1; border-radius: calc(1 * var(--u)) calc(1 * var(--u)) 0 0; }
 .l-title.side .c-media { flex: 1; border-radius: 0; }
-.l-title.wide .c-title-media { padding: 0 calc(4 * var(--u)) calc(5 * var(--u)); }
+/* One wide cover image: title and image sit together as one centered group */
+.l-title.wide { display: flex; flex-direction: column; justify-content: center; gap: calc(3.5 * var(--u)); padding-top: calc(3 * var(--u)); }
+.l-title.wide .c-title-text { padding: 0 calc(6 * var(--u)); }
+.l-title.wide .c-title-media { flex: none; height: 52%; padding: 0 calc(4 * var(--u)); }
 .l-title.wide .c-media { border-radius: 0; }
 .l-title .c-media.ph { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.75); }
 .c-check { position: absolute; left: -calc(6 * var(--u)); top: 26%; background: #fff; color: var(--text); border-radius: calc(1 * var(--u)); padding: calc(1.4 * var(--u)) calc(1.8 * var(--u)); box-shadow: 0 calc(1 * var(--u)) calc(3 * var(--u)) rgba(0,0,0,0.2); min-width: calc(24 * var(--u)); }
