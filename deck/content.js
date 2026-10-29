@@ -47,32 +47,45 @@ window.DECK = {
       name: 'About me',
       short: 'About me',
       slides: [
-        // Who she is and what she brings: her three brand words, each tied to where it comes from
-        { id: 'intro-who', min: 0.75, pri: 1, title: 'What I bring',
-          layout: 'values', h: 'What I bring to a team',
+        // About me: the same for everyone, like a studio's about page
+        { id: 'intro-who', min: 0.5, pri: 1, title: 'About me',
+          layout: 'values', h: 'I started as a reporter',
+          p: 'I learned to ask why, listen closely, and make a complicated story easy to follow. Design turned out to be the same job, with products instead of articles.',
           items: [
-            { name: 'Curious', color: '#FFC715',
-              text: { all: 'I was a reporter first. I still start by asking why.',
-                      pm: 'I ask why before we build, so we solve the right problem.',
-                      design: 'Reporter first. I still start with people, not screens.',
-                      dm: 'I ask the questions that get partner teams to agree on the problem.',
-                      eng: 'I want to know how things work, so I write HTML, CSS and JS myself.',
-                      ds: 'Reporter first. I size a problem with data before I design for it.' } },
-            { name: 'Delightful', color: '#FF8B22',
-              text: { all: 'I care how things feel, not just whether they work.',
-                      pm: 'I make complex flows feel simple, which is what gets them used.',
-                      design: 'I care how it feels, from design systems at Lytx to AI moments at Intuit.',
-                      dm: 'I\'ve built design systems and managed three designers at a startup.',
-                      eng: 'I build design systems with engineers, light and dark mode included.',
-                      ds: 'I turn dense data into a few things people can act on.' } },
-            { name: 'Thoughtful', color: '#ED5148',
-              text: { all: 'I think past launch: what AI should do, and when a person steps in.',
-                      pm: 'I think past launch: what to ship first, what to cut, what to measure.',
-                      design: 'I design the system behind the screens, not just the screens.',
-                      dm: 'I think about who owns what after launch, not just the UI.',
-                      eng: 'I spell out the logic: what AI does alone, what needs a human, the edge cases.',
-                      ds: 'I decide what a model should do alone, and what needs a human check.' } }
+            { name: 'Curious', color: '#FFC715', text: 'I ask why a lot, before drawing anything.' },
+            { name: 'Delightful', color: '#FF8B22', text: 'I care how things feel, not just whether they work.' },
+            { name: 'Thoughtful', color: '#ED5148', text: 'I think about what happens after launch, not just on launch day.' }
           ] },
+
+        // What I bring: written for each role
+        { id: 'intro-bring', min: 0.5, pri: 1, title: 'What I bring',
+          layout: 'full', center: true,
+          blocks: [{ h: 'What I bring to a team' },
+                   { cards: { all: [
+                       { h: 'Find the real problem', p: 'Research and journey maps that get teams aligned' },
+                       { h: 'Design AI and people together', p: 'What AI does alone, and when a person steps in' },
+                       { h: 'Prove it early', p: 'Prototypes in code and small pilots' } ],
+                     pm: [
+                       { h: 'Frame the problem', p: 'So we build the right thing, and know what to cut' },
+                       { h: 'Ship in steps', p: 'MVPs that test one idea, with clear signals' },
+                       { h: 'Align partners', p: 'One service model across seven teams' } ],
+                     design: [
+                       { h: 'Systems, not just screens', p: 'How work moves between AI, customers and experts' },
+                       { h: 'Research that changes direction', p: 'Interviews and co-design that reframed both projects' },
+                       { h: 'Craft', p: 'Design systems, prototypes and the details' } ],
+                     dm: [
+                       { h: 'Align teams with different goals', p: 'Through shared journeys and clear tradeoffs' },
+                       { h: 'Move without waiting', p: 'Ran a pilot with no engineering support' },
+                       { h: 'Grow designers', p: 'Managed three designers at Offerland.ai' } ],
+                     eng: [
+                       { h: 'Speaks code', p: 'I prototype in HTML, CSS and JS' },
+                       { h: 'Clear logic', p: 'What AI does alone, and when a person steps in' },
+                       { h: 'Shippable scope', p: 'MVPs that don\'t block on other teams' } ],
+                     ds: [
+                       { h: 'Evidence first', p: 'Surveys and interviews before design' },
+                       { h: 'Trust over scores', p: 'A 90+ eval doesn\'t mean ready to automate' },
+                       { h: 'Measure what matters', p: 'Trust, completion and safety, not just accuracy' } ]
+                   } }] },
 
         // Work experience comes as a set: all three when there's time, none when there isn't.
         { id: 'intro-intuit', group: 'work', skills: ['ai', 'strategy'], min: 0.5, pri: 2, lens: ['pm', 'dm'], title: 'Intuit',

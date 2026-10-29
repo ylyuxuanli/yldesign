@@ -149,7 +149,7 @@
     },
     cards(b) {
       const w = el('div', 'c-cards');
-      b.cards.forEach((c) => w.appendChild(el('div', 'c-card', (c.color ? '<span class="sq" style="background:' + c.color + '"></span>' : '<div class="c-icon">' + c.icon + '</div>') + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
+      T(b.cards).forEach((c) => w.appendChild(el('div', 'c-card', (c.color ? '<span class="sq" style="background:' + c.color + '"></span>' : c.icon ? '<div class="c-icon">' + c.icon + '</div>' : '') + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
       return w;
     },
     pick(b) {
@@ -229,7 +229,10 @@
     },
     values(s, n) {
       n.classList.add('l-values');
-      if (s.h) n.appendChild(el('h2', 'c-h', T(s.h)));
+      const head = el('div', 'c-vhead');
+      if (s.h) head.appendChild(el('h2', 'c-h', T(s.h)));
+      if (s.p) head.appendChild(el('p', 'c-p', T(s.p)));
+      if (s.h || s.p) n.appendChild(head);
       const w = el('div', 'c-values');
       s.items.forEach((v) => {
         const d = el('div', 'c-value', '<span class="sq"></span><div class="c-vn">' + T(v.name) + '</div>' + (v.text ? '<div class="c-np">' + T(v.text) + '</div>' : ''));
