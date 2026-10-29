@@ -149,7 +149,7 @@
     },
     cards(b) {
       const w = el('div', 'c-cards');
-      b.cards.forEach((c) => w.appendChild(el('div', 'c-card', '<div class="c-icon">' + c.icon + '</div>' + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
+      b.cards.forEach((c) => w.appendChild(el('div', 'c-card', (c.color ? '<span class="sq" style="background:' + c.color + '"></span>' : '<div class="c-icon">' + c.icon + '</div>') + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
       return w;
     },
     pick(b) {
