@@ -151,12 +151,11 @@ window.DECK = {
           layout: 'title',
           h: 'QuickBooks: AI + Embedded Human Expertise',
           sub: 'Where should human experts show up in an AI-powered QuickBooks, and how?',
-          media: [{ src: '../imgs/deck/qb-title-1.webp', pos: 'left', ph: 'Owner on a video call with an expert' },
-                  { src: '../imgs/deck/qb-title-2.webp', pos: 'left', ph: 'Owner with an expense insight card' },
-                  { src: '../imgs/deck/qb-title-3.webp', pos: 'right', ph: 'Contractor with "246 tasks done" AI card' }] },
+          wide: true,
+          media: [{ src: '../imgs/deck/qb-title.webp', fit: 'contain', ph: 'Owners working with AI and QuickBooks experts' }] },
 
         { id: 'qb-context', section: 'Context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], title: 'My role and the team',
-          layout: 'split', ratio: 40,
+          layout: 'split', ratio: 34,
           left: [
             { groups: [
               { h: 'Role', p: 'End-to-end product designer' },
@@ -291,7 +290,7 @@ window.DECK = {
           } }] },
 
         { id: 'qb-codesign', section: 'What I did', skills: ['research', 'ai', 'ixd'], min: 0.75, pri: 3, lens: ['design', 'dm'], title: 'How much do you show?',
-          layout: 'split', ratio: 40,
+          layout: 'split', ratio: 36,
           left: [{ h: 'If AI works in the background, how much do you show?' },
                  { p: 'Show everything and it\'s overwhelming. Show too little and it\'s a black box. I ran co-design sessions with customers to find the line.' }],
           right: [{ media: { src: '../imgs/deck/qb-codesign.webp', fit: 'contain', ph: 'Co-design board with sticky notes and concept sketches' } }] },

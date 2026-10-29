@@ -270,7 +270,8 @@
       n.appendChild(w);
     },
     title(s, n) {
-      n.classList.add('l-title', s.media.length > 1 ? 'stacked' : 'side');
+      n.classList.add('l-title', s.media.length > 1 || s.wide ? 'stacked' : 'side');
+      if (s.wide) n.classList.add('wide');
       const t = el('div', 'c-title-text', '<h1 class="c-th">' + T(s.h) + '</h1><p class="c-ts">' + T(s.sub) + '</p>');
       n.appendChild(t);
       const m = el('div', 'c-title-media');

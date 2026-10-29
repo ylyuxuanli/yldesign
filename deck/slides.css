@@ -79,6 +79,8 @@
 .l-title.stacked .c-title-media { flex: 1; padding: 0 0 0 calc(6 * var(--u)); overflow: hidden; }
 .l-title.stacked .c-media { flex: 1; border-radius: calc(1 * var(--u)) calc(1 * var(--u)) 0 0; }
 .l-title.side .c-media { flex: 1; border-radius: 0; }
+.l-title.wide .c-title-media { padding: 0 calc(4 * var(--u)) calc(5 * var(--u)); }
+.l-title.wide .c-media { border-radius: 0; }
 .l-title .c-media.ph { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.75); }
 .c-check { position: absolute; left: -calc(6 * var(--u)); top: 26%; background: #fff; color: var(--text); border-radius: calc(1 * var(--u)); padding: calc(1.4 * var(--u)) calc(1.8 * var(--u)); box-shadow: 0 calc(1 * var(--u)) calc(3 * var(--u)) rgba(0,0,0,0.2); min-width: calc(24 * var(--u)); }
 .c-check-k { font-size: clamp(10px, calc(0.8 * var(--u)), 12px); font-weight: 500; color: var(--muted); margin-bottom: calc(0.8 * var(--u)); }
@@ -95,6 +97,7 @@
 .ph-in { display: flex; flex-direction: column; align-items: center; gap: calc(0.6 * var(--u)); text-align: center; padding: calc(1.4 * var(--u)); font-size: clamp(11px, calc(0.95 * var(--u)), 15px); line-height: 1.45; max-width: calc(34 * var(--u)); }
 .c-col.right > .c-media { flex: 0 1 auto; aspect-ratio: 16 / 11; max-height: 100%; }
 .c-col.right.fill > .c-media { aspect-ratio: auto; }
+.c-col.right > .c-media.contain { aspect-ratio: auto; flex: 1 1 auto; height: 100%; border-radius: 0; }
 .c-mgrid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); grid-auto-rows: 1fr; gap: calc(1.2 * var(--u)); flex: 1; min-height: 0; }
 .c-mgrid .c-media { height: 100%; min-height: 0; }
 .l-full.center .c-tl { flex: none; }
@@ -238,7 +241,7 @@
 
 /* A row of screenshots sitting on top of their table columns */
 .c-tr.imgs { border-bottom: 0; padding-bottom: calc(0.4 * var(--u)); align-items: end; }
-.c-table.has-imgs .c-tr { grid-template-columns: 1fr repeat(var(--cols), 1.25fr); }
+.c-table.has-imgs .c-tr { grid-template-columns: 0.55fr repeat(var(--cols), 1.4fr); column-gap: calc(1.4 * var(--u)); }
 .c-tr.imgs .c-media { flex: none; aspect-ratio: 4 / 3; border-radius: 0; }
 .c-media.contain img { object-fit: contain; }
 
