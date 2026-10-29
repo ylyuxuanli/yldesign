@@ -72,7 +72,9 @@
     const byScore = (list) => list.slice().sort((a, b) => b.sc - a.sc);
     const core = (p) => flat.filter((s) => s.project === p && (s.must || s.pri === 1));
 
-    intro.forEach((p) => core(p).forEach(take));
+    // When she presents, the whole intro always comes first, on top of the time she set
+    if (presenting()) flat.filter((s) => s.project.id === 'intro').forEach((s) => keep.add(s));
+    else intro.forEach((p) => core(p).forEach(take));
     const shown = new Set(intro);
     cases.forEach((p, n) => {
       const c = core(p), need = c.reduce((a, s) => a + s.min, 0);
@@ -96,11 +98,13 @@
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
     if (!locked && !presenting()) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
+    const content = (s) => seq.push({ ...s, type: 'content' });
+    if (presenting()) picked.filter((s) => s.project.id === 'intro').forEach(content);
     seq.push({ type: 'agenda', id: 'agenda', min: MIN.agenda });
-    picked.forEach((s) => seq.push({ ...s, type: 'content' }));
+    picked.filter((s) => !presenting() || s.project.id !== 'intro').forEach(content);
     seq.push({ type: 'end', id: 'end', min: MIN.end });
 
-    const per = order.filter((p) => shown.has(p))
+    const per = order.filter((p) => shown.has(p) && !(presenting() && p.id === 'intro'))
       .map((p) => {
         const mine = picked.filter((s) => s.project === p);
         const skills = allSkills.filter((k) => cfg.skills.includes(k) && mine.some((s) => (s.skills || []).includes(k)));
@@ -141,7 +145,7 @@
         : 'Tell me a little about you, and this deck will shape itself around what you care about.'));
       const row = el('div', 'cta-row');
       const go = el('button', 'cta', settled ? 'Start →' : 'Let\'s go →');
-      go.onclick = () => goTo(settled ? indexOf('agenda') : indexOf('setup'));
+      go.onclick = () => goTo(presenting() ? 1 : settled ? indexOf('agenda') : indexOf('setup'));
       row.appendChild(go);
       if (settled && !locked && !presenting()) { const ch = el('button', 'link-btn', 'Change role or time'); ch.onclick = () => goTo(indexOf('setup')); row.appendChild(ch); }
       t.appendChild(row);
@@ -410,39 +414,51 @@
     c1.appendChild(chip('I\'m presenting', draft.mode === 'present', () => { draft.mode = 'present'; drawSetup(); }, true));
     c1.appendChild(chip('They pick their role', draft.mode === 'read', () => { draft.mode = 'read'; drawSetup(); }, true));
     q1.appendChild(c1); box.appendChild(q1);
-    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Time'));
+    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', draft.mode === 'present' ? 'Time for projects, after the intro' : 'Time'));
     const c2 = el('div', 'chips');
     D.times.forEach((m) => c2.appendChild(chip(m + ' min', draft.t === m, () => { draft.t = m; drawSetup(); }, true)));
     c2.appendChild(chip('All', draft.t === 'all', () => { draft.t = 'all'; drawSetup(); }, true));
     q2.appendChild(c2); box.appendChild(q2);
     if (draft.mode !== 'present') return;
-    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Projects, in order'));
+    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Projects, drag to reorder'));
     const list = el('div', 'set-list');
-    const order = draft.proj.concat(projIds.filter((id) => !draft.proj.includes(id)));
-    order.forEach((id) => {
-      const p = D.projects.find((x) => x.id === id), on = draft.proj.includes(id), i = draft.proj.indexOf(id);
+    let dragId = null;
+    draft.order.forEach((id) => {
+      const p = D.projects.find((x) => x.id === id), on = draft.on.includes(id);
       const r = el('div', 'set-row' + (on ? '' : ' off'));
+      r.draggable = true;
+      r.appendChild(el('span', 'set-grip', '⠿'));
       const cb = el('label', 'check', '<input type="checkbox"' + (on ? ' checked' : '') + '/> ' + esc(p.name));
-      cb.querySelector('input').onchange = () => { draft.proj = on ? draft.proj.filter((x) => x !== id) : draft.proj.concat(id); drawSetup(); };
+      cb.querySelector('input').onchange = () => { draft.on = on ? draft.on.filter((x) => x !== id) : draft.on.concat(id); drawSetup(); };
       r.appendChild(cb);
-      if (on && draft.proj.length > 1) {
-        const mv = (d) => { const a = draft.proj.slice(); [a[i], a[i + d]] = [a[i + d], a[i]]; draft.proj = a; drawSetup(); };
-        const up = el('button', 'link-btn', '↑'); up.disabled = i === 0; up.onclick = () => mv(-1);
-        const dn = el('button', 'link-btn', '↓'); dn.disabled = i === draft.proj.length - 1; dn.onclick = () => mv(1);
-        r.appendChild(up); r.appendChild(dn);
-      }
+      r.addEventListener('dragstart', (e) => { dragId = id; r.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+      r.addEventListener('dragend', () => { dragId = null; drawSetup(); });
+      r.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (!dragId || dragId === id) return;
+        const a = draft.order.filter((x) => x !== dragId);
+        const box2 = r.getBoundingClientRect(), after = e.clientY > box2.top + box2.height / 2;
+        a.splice(a.indexOf(id) + (after ? 1 : 0), 0, dragId);
+        if (a.join() === draft.order.join()) return;
+        draft.order = a;
+        const rows = [...list.children], moving = rows.find((x) => x.classList.contains('dragging'));
+        if (after) r.after(moving); else r.before(moving);
+      });
       list.appendChild(r);
     });
     q3.appendChild(list); box.appendChild(q3);
   }
   function openSetup() {
-    draft = { mode: cfg.mode === 'present' || !settled ? 'present' : 'read', t: cfg.t, proj: cfg.proj.length ? cfg.proj.slice() : projIds.slice() };
+    const proj = cfg.proj.length ? cfg.proj : projIds;
+    draft = { mode: cfg.mode === 'present' || !settled ? 'present' : 'read', t: cfg.t,
+      order: proj.concat(projIds.filter((id) => !proj.includes(id))), on: proj.slice() };
     drawSetup();
     $('setupModal').hidden = false;
   }
   $('setupApply').onclick = () => {
-    if (draft.mode === 'present' && !draft.proj.length) return;
-    Object.assign(cfg, { mode: draft.mode, t: draft.t, proj: draft.mode === 'present' ? draft.proj : [] });
+    const proj = draft.order.filter((id) => draft.on.includes(id));
+    if (draft.mode === 'present' && !proj.length) return;
+    Object.assign(cfg, { mode: draft.mode, t: draft.t, proj: draft.mode === 'present' ? proj : [] });
     if (presenting()) { cfg.lens = 'all'; cfg.skills = []; }
     settled = presenting() || settled;
     $('setupModal').hidden = true;

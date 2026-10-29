@@ -186,8 +186,10 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-row { display: flex; align-items: center; gap: 6px; }
 .set-row .check { flex: 1; margin: 0; padding: 6px 0; }
 .set-row.off .check { color: #999; }
-.set-row .link-btn { padding: 2px 8px; }
-.set-row .link-btn:disabled { opacity: 0.25; cursor: default; }
+.set-row { cursor: grab; border-radius: 8px; padding: 0 8px; margin: 0 -8px; }
+.set-row:hover { background: rgba(0,0,0,0.03); }
+.set-row.dragging { opacity: 0.5; }
+.set-grip { color: var(--muted); font-size: 14px; }
 #setupApply { margin-top: 4px; }
 #setupBody { margin-top: 20px; }
 #setupBody .chip { padding: 7px 14px; font-size: 14px; }
