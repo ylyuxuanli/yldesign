@@ -79,7 +79,7 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 /* Welcome */
 .hs-welcome { flex-direction: row; align-items: stretch; padding: 0; }
 .hs-welcome .w-text { flex: 1; padding: calc(6 * var(--u)) calc(6 * var(--u)) calc(6 * var(--u)) calc(7 * var(--u)); display: flex; flex-direction: column; justify-content: center; }
-.hs-welcome .w-photo { width: 38%; background: url(../imgs/about-yuxuan.jpg) center/cover; }
+.hs-welcome .w-photo { width: 50%; background: url(../imgs/about-yuxuan.jpg) center 85%/cover; }
 
 /* Setup */
 .q { margin-top: calc(2.6 * var(--u)); }
