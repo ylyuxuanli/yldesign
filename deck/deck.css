@@ -178,9 +178,13 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
   .presenter { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
 }
 
-/* Yuxuan's setup panel */
-.side { position: absolute; top: 0; right: 0; bottom: 0; z-index: 30; width: 320px; padding: 20px 24px; background: #fff; border-left: 1px solid var(--border); box-shadow: -12px 0 32px rgba(0,0,0,0.06); overflow-y: auto; }
-.app.with-side .stage, .app.with-side .top, .app.with-side .bottom, .app.with-side .progress { right: 320px; }
+/* Setup panel: a floating card; the deck shrinks into a framed preview beside it */
+.side { position: absolute; top: 20px; right: 20px; bottom: 20px; z-index: 30; width: 300px; padding: 22px 24px; background: #fff; border-radius: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08); overflow-y: auto; }
+.app.with-side { background: #EEECE8; }
+.app.with-side .stage { inset: 20px 340px 20px 20px; display: flex; align-items: center; justify-content: center; }
+.app.with-side .stage > .frame { width: min(100cqw, calc(100cqh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08); }
+.app.with-side .top, .app.with-side .progress { display: none; }
+.app.with-side .bottom { right: 340px; bottom: 20px; padding: 0 24px 18px; }
 .side-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 .side-title { font-size: 15px; font-weight: 500; }
 .side-x { border: none; background: none; font-size: 22px; line-height: 1; color: var(--muted); cursor: pointer; padding: 4px; }
@@ -198,6 +202,17 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-grip { color: var(--muted); font-size: 13px; }
 .set-min { font-size: 13px; color: var(--muted); }
 .set-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
-@media (max-width: 700px) { .side { width: 100%; } .app.with-side .stage { right: 0; } }
+@media (max-width: 700px) {
+  .side { top: auto; left: 12px; right: 12px; bottom: 12px; width: auto; max-height: 75dvh; }
+  .app.with-side { background: var(--bg); }
+  .app.with-side .stage { inset: auto; }
+  .app.with-side .stage > .frame { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; box-shadow: none; }
+  .app.with-side .top { display: flex; }
+}
 .set-hr { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
-#setupBody > .set-note:first-child { margin-bottom: 20px; font-size: 13px; }
+#setupBody > .set-note { margin-bottom: 22px; font-size: 13px; }
+#setupBody .chip { background: transparent; border-color: rgba(0,0,0,0.1); }
+#setupBody .chip:hover { border-color: rgba(0,0,0,0.3); }
+#setupBody .chip.on { background: var(--text); border-color: var(--text); color: #fff; }
+#setupBody .chip.multi { border-radius: 999px; }
+#setupBody .chip.multi::before { display: none; }
