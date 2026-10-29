@@ -121,9 +121,7 @@
     if (s.type === 'welcome') {
       n = el('div', 'slide hs hs-welcome');
       const t = el('div', 'w-text');
-      t.appendChild(el('div', 'dots', '<span></span><span></span><span></span>'));
-      t.appendChild(el('div', 'hs-k', 'Portfolio review'));
-      t.appendChild(el('h1', 'hs-h', 'Hi, I\'m Yuxuan.<br/>Thanks for <em>stopping by.</em>'));
+      t.appendChild(el('h1', 'hs-h', 'Hi, I\'m Yuxuan.<br/>Thanks for stopping by.'));
       t.appendChild(el('p', 'hs-p', settled
         ? 'I put together a version of my work for ' + esc(forWhom()) + ', ' + (cfg.t === 'all' ? '' : 'about ') + esc(timeLabel()) + '.'
         : 'I\'m a product designer who makes complex things simple. Tell me a little about you, and this deck will shape itself around what you care about.'));
@@ -139,8 +137,7 @@
     }
     if (s.type === 'setup') {
       n = el('div', 'slide hs');
-      n.appendChild(el('div', 'hs-k', 'Before we start'));
-      n.appendChild(el('h2', 'hs-h', 'Let\'s tailor this <em>for you</em>'));
+      n.appendChild(el('h2', 'hs-h', 'Let\'s tailor this for you'));
       const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'What\'s your role?'));
       const c1 = el('div', 'chips');
       D.lenses.forEach((l) => c1.appendChild(chip(l.name, cfg.lens === l.id, () => { cfg.lens = l.id; rebuild(); })));
@@ -150,7 +147,7 @@
       D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; rebuild(); })));
       c2.appendChild(chip('No rush, show me everything', cfg.t === 'all', () => { cfg.t = 'all'; rebuild(); }));
       q2.appendChild(c2); n.appendChild(q2);
-      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Anything you\'d like to see? <span>Pick any, or skip</span>'));
+      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Anything you\'d like to see?'));
       const c3 = el('div', 'chips');
       D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
         cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
@@ -167,7 +164,6 @@
     }
     if (s.type === 'agenda') {
       n = el('div', 'slide hs');
-      n.appendChild(el('div', 'hs-k', 'Agenda · ' + esc(timeLabel()) + (cfg.lens !== 'all' ? ' · for ' + esc(forWhom()) : '')));
       n.appendChild(el('h2', 'hs-h', 'Here\'s our plan'));
       const ag = el('div', 'ag');
       plan.per.forEach((x, i) => {
@@ -175,7 +171,6 @@
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
         if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc(x.p.focus[cfg.lens] || x.p.focus.all)));
-        if (x.skills.length) mid.appendChild(el('div', 'ag-tags', x.skills.map((k) => '<span>' + esc(D.skills.find((d) => d.id === k).name) + '</span>').join('')));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
@@ -186,8 +181,7 @@
     }
     if (s.type === 'end') {
       n = el('div', 'slide hs');
-      n.appendChild(el('div', 'dots', '<span></span><span></span><span></span>'));
-      n.appendChild(el('h2', 'hs-h', 'Thank you!<br/>Always <em>open to a chat.</em>'));
+      n.appendChild(el('h2', 'hs-h', 'Thank you!<br/>Always open to a chat.'));
       n.appendChild(el('p', 'hs-p', 'The thread through all my work: I design the system around the screens. Who does what, when AI should act, and when a human should step in.'));
       n.appendChild(el('div', 'end-links',
         '<a href="mailto:yl.yuxuanli@gmail.com">yl.yuxuanli@gmail.com</a>' +

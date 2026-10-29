@@ -53,7 +53,7 @@ window.DECK = {
       slides: [
         { id: 'intro-who', min: 0.75, pri: 1, title: 'About me',
           layout: 'full', center: true,
-          blocks: [{ h: 'Making complex things <em>simple</em>', size: 'xl' },
+          blocks: [{ h: 'Making complex things simple', size: 'xl' },
                    { p: { all: 'I\'m a product designer with 7+ years at startups and big companies. Before design, I was a reporter.',
                           eng: 'I\'m a product designer who also writes HTML, CSS and JS. 7+ years at startups and big companies. Before design, I was a reporter.',
                           pm: 'I\'m a product designer with 7+ years at startups and big companies. Before design, I was a reporter. I care about solving the right problem, then shipping it.',
@@ -133,10 +133,7 @@ window.DECK = {
         { id: 'qb-context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], title: 'My role and the team',
           layout: 'split', ratio: 40,
           left: [
-            { groups: [
-              { h: 'Role', p: 'End-to-end product designer' },
-              { h: 'Worked with', p: 'PM · Engineering · Data Science · Service Design · Service Delivery · Core QuickBooks · Expert platform' }
-            ] },
+            { h: 'End-to-end designer, seven partner teams' },
             { p: { all: 'My job went beyond the interface: framing the problem, aligning teams on a service model, and setting the boundaries between AI and people.',
                    pm: 'My job went beyond the interface. I helped frame the problem, aligned teams on one service model, and pushed for where the AI and human boundaries should sit.',
                    dm: 'My job went beyond the interface. Seven partner teams each had their own goals, and a lot of the work was getting them to one shared service model.',
@@ -148,7 +145,6 @@ window.DECK = {
         { id: 'qb-from', min: 0.75, pri: 3, title: 'Help only came after something went wrong',
           layout: 'split', ratio: 46,
           left: [{ h: 'Help only came after something went wrong' },
-                 { chain: ['Owner does the books alone', 'Notices a problem', 'Pays an expert to fix it'], vertical: true },
                  { p: 'Small business owners did most of their bookkeeping on their own, with very little AI help. They had to spot problems themselves.' }],
           right: [{ media: { ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
@@ -157,13 +153,12 @@ window.DECK = {
           left: [{ h: 'Can we help before problems happen?' },
                  { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
                         pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
-                        design: 'With AI, the mental model changes: support isn\'t a line you call at the end, it surrounds the customer. That shaped every screen after this.' } },
-                 { chain: ['Customers', 'Manual workflow', 'Expert services $$'], vertical: true, dim: true }],
+                        design: 'With AI, the mental model changes: support isn\'t a line you call at the end, it surrounds the customer. That shaped every screen after this.' } }],
           right: [{ orbit: { center: 'Customer + QuickBooks', nodes: ['Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI'] } }] },
 
         { id: 'qb-why', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], title: '"I don\'t know what I don\'t know"',
-          layout: 'split', ratio: 50,
-          left: [
+          layout: 'full', center: true,
+          blocks: [
             { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview' },
             { stats: [{ v: '59%', l: 'worry their books are inaccurate' },
                       { v: '65%', l: 'worry they are not tax ready' },
@@ -171,22 +166,20 @@ window.DECK = {
             { p: { all: 'Most owners can\'t spot problems on their own. You can\'t ask for help with a problem you don\'t see.',
                    pm: 'Most owners can\'t spot problems on their own, so a help button isn\'t enough. You can\'t ask for help with a problem you don\'t see.',
                    ds: 'We sized the trust gap with survey data before building anything. The pattern: owners can\'t spot problems, so they can\'t ask for help.' } }
-          ],
-          right: [{ media: { ph: 'Business owners reviewing their books together', fill: true } }] },
+          ] },
 
         { id: 'qb-challenge', skills: ['align', 'strategy', 'hai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], title: 'AI first or human first?',
           layout: 'split', ratio: 42,
-          left: [{ h: 'AI first or <em>human first?</em>', size: 'xl' },
-                 { note: '<b>The real problem wasn\'t AI versus human. It was trust,</b> and a human is only one way to build it.' }],
+          left: [{ h: 'AI first or human first?', size: 'xl' },
+                 { p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
             { h: 'Customers wanted a person', p: 'Our paid services showed people want to talk to a human. Even in free support, people didn\'t like chatting with AI.' },
             { h: 'The business wanted scale', p: 'Humans are expensive and hard to scale, and AI had gotten much better.' },
             { h: { all: 'Teams pulled in different directions', dm: 'Teams pulled in different directions', pm: 'No shared definition, no shared roadmap' },
               p: { all: 'Expert services worried AI would replace experts. Core QuickBooks cared most about the overall experience.',
                    dm: 'Expert services worried AI would replace experts and their services. Core QuickBooks cared most about the overall experience. Each was right about their part.',
-                   pm: 'Expert services worried about their revenue. Core QuickBooks cared about the overall experience. We needed one definition before a roadmap.' } },
-            { h: 'So I dug into why', p: 'People didn\'t need a person for everything. They didn\'t trust AI to get their books right.' }
-          ] }], rightPanel: true },
+                   pm: 'Expert services worried about their revenue. Core QuickBooks cared about the overall experience. We needed one definition before a roadmap.' } }
+          ] }] },
 
         { id: 'qb-journey', skills: ['service', 'research', 'align'], min: 1, pri: 3, lens: ['design', 'dm'], title: 'Mapping the journey together',
           layout: 'full',
@@ -203,15 +196,15 @@ window.DECK = {
                           design: 'The need for experts wasn\'t spread evenly. These moments became the anchors for where experts show up in the product.',
                           dm: 'The need for experts wasn\'t spread evenly. This gave every team the same small set of moments to agree on, instead of arguing about AI versus human in general.' } },
                    { timeline: [
-                     { h: 'Onboarding', p: 'Setting up the books and making early decisions. <b>Peak need.</b>' },
+                     { h: 'Onboarding', p: 'Setting up the books and making early decisions. Peak need.' },
                      { h: 'Critical decisions', p: 'High-risk choices that affect accuracy and compliance' },
                      { h: 'Ongoing', p: 'Unexpected issues over time. Usually needs trust, not a call.' },
-                     { h: 'Year-end', p: 'Accuracy and taxes matter most. <b>Peak need.</b>' }
+                     { h: 'Year-end', p: 'Accuracy and taxes matter most. Peak need.' }
                    ] }] },
 
         { id: 'qb-levels', skills: ['agentic', 'hai', 'systems'], min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], title: 'Who holds the missing piece?',
           layout: 'split', ratio: 38,
-          left: [{ h: 'Who holds the <em>missing piece?</em>' },
+          left: [{ h: 'Who holds the missing piece?' },
                  { p: { all: 'To decide who owns each decision, we sorted bookkeeping jobs by one question.',
                         eng: 'Each level is a different handling path in the system, sorted by one question.',
                         pm: 'This gave every team one shared language for prioritizing, sorted by one question.',
@@ -238,7 +231,7 @@ window.DECK = {
 
         { id: 'qb-should', skills: ['agentic', 'hai', 'strategy'], min: 1.5, pri: 1, lens: ['ds', 'pm', 'eng', 'dm'], title: 'AI can do it. Should it?',
           layout: 'split', ratio: 50,
-          left: [{ h: 'AI can do it. <em>Should it?</em>', size: 'xl' },
+          left: [{ h: 'AI can do it. Should it?', size: 'xl' },
                  { p: { all: 'Our agent scored over 90 when AI and accountants evaluated it, so PM and engineering wanted to automate more. I pushed back, for two reasons.',
                         pm: 'Our agent scored over 90 in evals, and the obvious move was to automate more. I pushed back, because one wrong tax answer costs more trust than many correct auto-fixes earn.',
                         eng: 'Our agent scored over 90 in evals, so the team wanted to widen what runs on its own. I pushed back on where that score came from.',
@@ -251,16 +244,14 @@ window.DECK = {
                    { h: 'Trust breaks fast', p: 'If customers already doubt AI, one confident wrong answer, maybe one that ends up in a tax filing, breaks that trust.' }
                  ] }],
           right: [
-            { k: 'What moved' },
             { swap: { cols: ['Level 1: AI does it', 'Level 2: AI suggests, owner confirms'], rows: [
               ['A charge from a vendor you always use', 'Stays at Level 1'],
               ['A Home Depot charge for a contractor', 'Job materials, office supplies or personal? Only James knows.']
             ] } },
             { p: { all: 'Level 2 builds trust without the cost of an expert. AI does the work and shows its evidence, the customer confirms, and tasks earn their way to Level 1 on real data.',
                    eng: 'Level 2 is cheap to run: AI does the work and attaches its evidence, the customer confirms. Confirmed outcomes are the signal that promotes a task to Level 1.',
-                   ds: 'Every Level 2 confirmation is labeled data from real customers. Tasks graduate to Level 1 when outcomes hold up on that data, not on the eval set.' } },
-            { note: '<b>The boundary isn\'t fixed.</b> It moves as trust is earned.' }
-          ], rightPanel: true },
+                   ds: 'Every Level 2 confirmation is labeled data from real customers. Tasks graduate to Level 1 when outcomes hold up on that data, not on the eval set.' } }
+          ] },
 
         { id: 'qb-system', skills: ['agentic', 'systems', 'service'], min: 1.5, pri: 1, lens: ['eng', 'ds'], title: 'How the system works',
           layout: 'full',
@@ -283,8 +274,7 @@ window.DECK = {
         { id: 'qb-codesign', skills: ['research', 'hai'], min: 0.75, pri: 3, lens: ['design', 'dm'], title: 'How much do you show?',
           layout: 'split', ratio: 40,
           left: [{ h: 'If AI works in the background, how much do you show?' },
-                 { p: 'Show everything and it\'s overwhelming. Show too little and it\'s a black box. I ran co-design sessions with customers to find the line.' },
-                 { list: ['How support fits into the experience', 'What they wanted visibility into', 'Signals that built confidence', 'What made the service feel worth it'], title: 'What we explored' }],
+                 { p: 'Show everything and it\'s overwhelming. Show too little and it\'s a black box. I ran co-design sessions with customers to find the line.' }],
           right: [{ media: { ph: 'Co-design board with sticky notes and concept sketches' } }] },
 
         { id: 'qb-prototypes', skills: ['proto', 'hai'], min: 1, pri: 2, lens: ['design', 'pm'], title: 'Four interaction models',
@@ -294,7 +284,7 @@ window.DECK = {
                      { h: 'Everything happens in', cells: ['A conversation', 'AI vs human', 'L1, L2, L3', 'The owner\'s books'] },
                      { h: 'Matches how customers think', cells: [false, false, false, true] }
                    ] } },
-                   { p: { all: 'AI versus human and the three levels are how <b>we</b> think about the system. Customers think about their books: what\'s done, and what needs them. So AI and experts show up inside the workflow, and chat is a helper, not the main surface.',
+                   { p: { all: 'AI versus human and the three levels are how we think about the system. Customers think about their books: what\'s done, and what needs them. So AI and experts show up inside the workflow, and chat is a helper, not the main surface.',
                           pm: 'The levels were great for us internally, but customers don\'t think that way. We organized around their workflow, which also meant AI and expert features could ship into one surface.',
                           design: 'The lesson: don\'t ship your internal model as the IA. Customers think about their books, so AI and experts show up inside the workflow, and chat is a helper, not the main surface.' } },
                    { mediaGrid: [{ ph: 'Your bookkeeping team' }, { ph: 'Overview with tasks' }, { ph: 'Overview with insights' }, { ph: 'Overview with AI chat' }], cols: 4 }] },
@@ -307,25 +297,18 @@ window.DECK = {
                    { h: 'What needs my attention?', p: 'What AI found, each with one action' },
                    { h: 'What is QuickBooks handling?', p: 'The work AI and experts already did' }
                  ] },
-                 { link: { href: 'https://qb-aihi-demo.vercel.app/', text: 'Try the clickable prototype' } },
-                 { p: { all: 'This is the target experience. What we launched first comes right after.',
-                        eng: 'Each item under Needs attention is a routed issue from the system you just saw.',
-                        design: 'Notice how the expert card changes across the customer lifecycle.' } }],
+                 { link: { href: 'https://qb-aihi-demo.vercel.app/', text: 'Try the clickable prototype' } }],
           right: [{ media: { video: '../imgs/qbl-overview.mp4', poster: '../imgs/qbl-overview-poster.jpg', ph: 'Prototype of the Books Health overview and AI chat' } }] },
 
         { id: 'qb-james', skills: ['hai', 'service'], min: 1.5, pri: 2, lens: ['design', 'pm'], title: 'A year with James',
           layout: 'split', ratio: 36, leftTheme: true,
-          left: [{ h: 'Meet James Porter' }, { p: 'He runs Porter General Contracting, and wants to grow his business, not manage books.' },
-                 { stats: [{ v: '2', l: 'Years in business' }, { v: '5', l: 'Employees' }, { v: '$675K', l: 'Revenue' }], row: true }],
+          left: [{ h: 'Meet James Porter' }, { p: 'He runs Porter General Contracting: two years in, five employees, $675K in revenue. He wants to grow his business, not manage books.' }],
           right: [{ steps: [
-            { h: 'Onboarding', p: '$12K in receivables may be unmatched. AI matched 14 deposits to invoices, and James reviews them before anything changes. <b>Level 2.</b>' },
+            { h: 'Onboarding', p: '$12K in receivables may be unmatched. AI matched 14 deposits to invoices, and James reviews them before anything changes. Level 2.' },
             { h: 'After the call', p: 'His score rises to 78, and he gets a call summary: what we covered, what was decided, what to do next.' },
-            { h: 'During the year', p: 'He asks AI what to charge for a new solar service. That\'s judgment, so an expert joins right in the chat. <b>Level 3.</b>' },
+            { h: 'During the year', p: 'He asks AI what to charge for a new solar service. That\'s judgment, so an expert joins right in the chat. Level 3.' },
             { h: 'Year-end', p: 'His books are ready, and he books his year-end review.' }
-          ] },
-            { note: { all: 'AI prepares the work, customers decide what matters, and experts bring judgment where it counts.',
-                      pm: 'We didn\'t start from how many calls to offer. We started from when an expert creates the most value.',
-                      dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } }] },
+          ] }] },
 
         { id: 'qb-mvp', skills: ['strategy', 'align'], min: 1.5, pri: 1, lens: ['pm', 'eng', 'dm', 'ds'], title: 'What we shipped first, and why',
           layout: 'split', ratio: 36,
@@ -333,8 +316,7 @@ window.DECK = {
                  { p: { all: 'We couldn\'t ship it all at once. The MVP tested one thing: does this way of bringing AI and experts together actually work for customers?',
                         pm: 'The MVP tested one thing: does this way of bringing AI and experts together work? Every cut kept that test intact.',
                         eng: 'The MVP shipped the core framework and nothing that blocked on another team.',
-                        dm: 'Two of three tradeoffs came from other teams\' plans. Instead of blocking the launch, we sequenced around them.' } },
-                 { note: 'Sometimes building trust means being careful about what the system claims to know.' }],
+                        dm: 'Two of three tradeoffs came from other teams\' plans. Instead of blocking the launch, we sequenced around them.' } }],
           right: [{ numbered: [
             { h: 'The score stayed in the target state',
               p: { all: 'Customers loved the Books Health Score. But our data wasn\'t always complete, and what does 65 mean? In a financial product, that\'s false precision. The MVP used a status backed by specific issues.',
@@ -344,26 +326,24 @@ window.DECK = {
             { h: 'The call summary went out by email first',
               p: { all: 'Expert services wanted it across all their services, which turned a feature into a platform capability. Email got customers the value right away.',
                    eng: 'Once expert services wanted it everywhere, it became a platform capability. Email shipped the value now, and the platform version could be built properly.' } }
-          ] }], rightPanel: true },
+          ] }] },
 
         { id: 'qb-results', skills: ['strategy'], min: 1, pri: 1, lens: ['pm', 'ds'], title: 'Early signals',
-          layout: 'split', ratio: 58,
-          left: [{ h: 'Early signals' },
+          layout: 'full', center: true,
+          blocks: [{ h: 'Early signals' },
                  { stats: [{ v: '55%', l: 'engagement' }, { v: '~24%', l: 'engaged with expert calls' }, { v: '30%', l: 'less manual work' },
-                           { v: '+3.2%', l: 'monthly books close' }, { v: '~80', l: 'tNPS' }], small: true },
+                           { v: '+3.2%', l: 'monthly books close' }, { v: '~80', l: 'tNPS' }], row: true },
                  { p: { all: 'Most importantly, customers said they felt more confident after expert sessions. That\'s the problem we started with.',
                         pm: 'Most importantly, customers felt more confident after expert sessions, which is the problem we started with. Next: personalize the signals and add more entry points across QuickBooks.',
-                        ds: 'I measured trust, completion and safety, not model accuracy. Next step: track Level 2 acceptance to decide what moves to Level 1.' } }],
-          right: [{ media: { ph: 'Contractor smiling on site', fill: true } }] },
+                        ds: 'I measured trust, completion and safety, not model accuracy. Next step: track Level 2 acceptance to decide what moves to Level 1.' } }] },
 
         { id: 'qb-learned', skills: ['systems', 'align'], min: 0.75, pri: 2, lens: ['dm', 'design'], title: 'What I learned',
-          layout: 'full',
-          blocks: [{ cards: [
+          layout: 'full', center: true,
+          blocks: [{ h: 'What I learned' }, { cards: [
             { icon: '🧭', h: 'Move without a defined problem', p: 'Use the customer journey to align teams, not just as research.' },
             { icon: '🧩', h: 'From screens to systems', p: 'Design how work moves between AI, customers and experts.' },
             { icon: '🎯', h: 'Don\'t claim more than you know', p: 'That\'s why we kept a human in the loop, and why we held the score back.' }
-          ] },
-            { note: 'Designing AI products is as much about drawing the boundaries as designing the AI itself.' }] }
+          ] }] }
       ]
     },
 
@@ -391,15 +371,14 @@ window.DECK = {
 
         { id: 'bf-context', skills: ['strategy', 'zero'], min: 1, pri: 2, lens: ['pm', 'ds'], title: 'Start with us, stay with us',
           layout: 'split', ratio: 40,
-          left: [{ h: 'Start with us, <em>stay with us</em>' },
-                 { p: { all: 'QuickBooks wanted to expand into new services. I owned business formation from the very first concept through the pilot.',
-                        pm: 'QuickBooks was exploring four new services in parallel. Business formation stood out on cost, market and ecosystem. I owned it from first concept through the pilot.' } },
-                 { pick: ['Business formation', 'Tax advisory', 'Marketing', 'CFO advisory'], on: 0 }],
+          left: [{ h: 'Start with us, stay with us' },
+                 { p: { all: 'QuickBooks was exploring four new services, and business formation stood out. I owned it from the very first concept through the pilot.',
+                        pm: 'QuickBooks was exploring four new services in parallel. Business formation stood out on cost, market and ecosystem. I owned it from first concept through the pilot.' } }],
           right: [{ numbered: [
             { h: 'A big audience already here', p: '8.6M sole props in QuickBooks, many who know they should incorporate but haven\'t, plus 1 to 1.2M new filers a year' },
             { h: 'Low investment', p: 'Our experts already know small businesses, and only needed focused training' },
             { h: 'It\'s the very start of a business', p: 'If owners start with us, they\'re likely to stay for bookkeeping and more' }
-          ] }], rightPanel: true },
+          ] }] },
 
         { id: 'bf-research', skills: ['research'], min: 0.75, pri: 2, lens: ['ds', 'design'], title: 'How we learned what owners needed',
           layout: 'full',
@@ -407,22 +386,17 @@ window.DECK = {
                    { stats: [{ v: '1,500+', l: 'Surveys' },
                              { v: '250+', l: 'Hours of interviews' },
                              { v: '45+', l: 'Sessions with experts' }], row: true },
-                   { p: { all: 'Surveys for breadth, interviews for depth, and expert sessions to check what we heard.',
-                          ds: 'Surveys for breadth, interviews for depth, and expert sessions to check what we heard against how formation really works.' } },
                    { mediaRow: [{ ph: 'Workshop with the team' }, { ph: 'Remote interview' }, { ph: 'Interview guide' }] }] },
 
         { id: 'bf-steps', skills: ['research'], min: 0.5, pri: 1, title: 'Four clear steps',
           layout: 'full', center: true,
-          blocks: [{ h: 'On paper, forming a business is <em>four clear steps</em>' },
+          blocks: [{ h: 'On paper, forming a business is four clear steps' },
                    { chain: ['Choose entity type', 'File articles', 'Get an EIN', 'Ongoing compliance'], nums: true },
                    { p: 'Each step has clear rules. Some owners even file on their own to save money.' }] },
 
         { id: 'bf-decision', skills: ['research', 'strategy'], min: 1, pri: 1, lens: ['pm', 'design'], title: 'Step 1 hides the hard questions',
           layout: 'full',
-          blocks: [{ h: 'But step 1 hides <em>the hard questions</em>' },
-                   { p: { all: 'Choosing an entity type decides your taxes, your liability and whether you can raise money. And it\'s hard to undo.',
-                          pm: 'Choosing an entity type decides taxes, liability and fundraising, and it\'s hard to undo. That moved the product from a filing tool to an advisory service.',
-                          design: 'Choosing an entity type decides taxes, liability and fundraising, and it\'s hard to undo. So the design focus moved to the decision, not the form.' } },
+          blocks: [{ h: 'But step 1 hides the hard questions' },
                    { chain: ['Choose entity type', 'File articles', 'Get an EIN', 'Ongoing compliance'], nums: true, on: 0 },
                    { risks: {
                      cols: ['What\'s really under step 1', 'If it\'s wrong'],
@@ -436,16 +410,16 @@ window.DECK = {
 
         { id: 'bf-cost', skills: ['research', 'hai'], min: 0.75, pri: 2, lens: ['design', 'ds', 'eng'], title: 'A wrong start costs for years',
           layout: 'split', ratio: 52,
-          left: [{ h: 'A wrong start <em>costs for years</em>' },
+          left: [{ h: 'A wrong start costs for years' },
                  { p: 'One owner set up the wrong structure at the start. Now he pays a few hundred dollars extra every year. Can\'t he fix it? Yes, but it would cost thousands in CPA fees, so he just lives with it.' },
-                 { note: { all: 'And AI doesn\'t make this safer. Ask "how do I pay the least tax?" and you can get an answer that saves money but doesn\'t fit your business, or isn\'t even allowed.',
+                 { p: { all: 'And AI doesn\'t make this safer. Ask "how do I pay the least tax?" and you can get an answer that saves money but doesn\'t fit your business, or isn\'t even allowed.',
                            eng: 'And a chatbot doesn\'t make this safer. "How do I pay the least tax?" can get a confident answer that doesn\'t fit the business, or isn\'t allowed. A wrong answer here is expensive.',
                            ds: 'And a model doesn\'t make this safer. "How do I pay the least tax?" can get an answer that optimizes the wrong thing, or isn\'t allowed. A confident wrong answer here is expensive.' } }],
-          right: [{ stats: [{ v: '$100s', l: 'extra, every year' }, { v: '$1,000s', l: 'in CPA fees, once' }], row: true }], rightPanel: true },
+          right: [{ stats: [{ v: '$100s', l: 'extra, every year' }, { v: '$1,000s', l: 'in CPA fees, once' }], row: true }] },
 
         { id: 'bf-who', skills: ['research', 'service'], min: 1, pri: 1, lens: ['design', 'pm', 'dm'], title: 'Owners don\'t know who to ask',
           layout: 'full',
-          blocks: [{ h: 'Owners don\'t know <em>who to ask</em>' },
+          blocks: [{ h: 'Owners don\'t know who to ask' },
                    { p: { all: 'Everyone holds a piece, nobody holds the whole picture, so owners get stuck in between. Even their CPA isn\'t a great fit: state formation rules aren\'t their area, and they charge hundreds an hour.',
                           design: 'Remember "who holds the missing piece" from the first project? Here the missing piece was split across three professions, and owners got stuck in between.',
                           pm: 'Everyone holds a piece, nobody holds the whole picture. Even their CPA is poor value for both sides: formation isn\'t their area, and they charge tax-advice rates.' } },
@@ -461,7 +435,7 @@ window.DECK = {
 
         { id: 'bf-gap', skills: ['strategy', 'zero'], min: 1, pri: 1, lens: ['pm', 'dm', 'design'], title: 'Where we could win',
           layout: 'full',
-          blocks: [{ h: 'Where we <em>could win</em>' },
+          blocks: [{ h: 'Where we could win' },
                    { table: { cols: ['DIY', 'Filing services', 'CPA', 'QuickBooks'], hi: 3, rows: [
                      { h: 'Helps you decide', cells: [false, false, true, true] },
                      { h: 'Affordable', cells: [true, true, false, true] },
@@ -476,21 +450,20 @@ window.DECK = {
         { id: 'bf-prototype', skills: ['proto', 'craft'], min: 0.75, pri: 2, lens: ['design'], title: 'A roadmap that prepares you for the expert',
           layout: 'split', ratio: 34,
           left: [{ h: 'A roadmap that prepares you for the expert' },
-                 { p: 'Based on your goals, you see the recommended path, the cost and the timeline, with an expert one tap away.' },
-                 { note: 'Because the decision is high stakes, the roadmap doesn\'t hand you an answer. It prepares you for the conversation.' }],
+                 { p: 'Based on your goals, you see the recommended path, the cost and the timeline, with an expert one tap away. The decision is high stakes, so the roadmap doesn\'t hand you an answer. It prepares you for the conversation.' }],
           right: [{ media: { ph: '"Welcome back, John" formation roadmap with cost, timeline and expert contact' } }] },
 
         { id: 'bf-new', skills: ['service'], min: 1, pri: 2, lens: ['design', 'pm', 'eng'], title: 'Two audiences, two front doors',
-          layout: 'split', ratio: 50,
-          left: [{ k: 'New businesses' },
+          layout: 'split', ratio: 50, top: true,
+          left: [{ h: 'New businesses' },
                  { steps: [{ h: 'Fast onboarding', p: 'Just enough to get them formed' },
                            { h: 'Expert advice', p: 'A call to choose the right structure' },
                            { h: 'Formed', p: 'File with the expert or on their own' },
                            { h: 'The right QuickBooks plan', p: 'Recommended from what we learned' }] }],
-          right: [{ k: 'Existing QuickBooks customers' },
+          right: [{ h: 'Existing QuickBooks customers' },
                   { steps: [{ h: 'Proactive reminder', p: { all: 'When it\'s time to change, like adding a partner or profit growing enough for an S-Corp', eng: 'Triggered from signals we already have, like a new partner or profit crossing an S-Corp threshold' } },
                             { h: 'Nothing to re-enter', p: 'We already know their business' },
-                            { h: 'Expert already prepped', p: 'The expert knows their situation before the call' }] }], rightPanel: true },
+                            { h: 'Expert already prepped', p: 'The expert knows their situation before the call' }] }] },
 
         { id: 'bf-blueprint', skills: ['service', 'systems'], min: 0.75, pri: 3, lens: ['design', 'dm', 'eng'], title: 'The relationship continues after filing',
           layout: 'full',
@@ -498,12 +471,11 @@ window.DECK = {
                    { p: { all: 'This is a service as much as a product, so I mapped what the customer sees, what the expert does, and what happens behind the scenes.',
                           eng: 'The blueprint shows which steps are product, partner platform, or expert work, and what has to happen behind the scenes.',
                           dm: 'The blueprint is how service delivery and product agreed on one plan.' } },
-                   { branch: { from: 'Advisory call', to: ['DIY', 'DIY with a partner platform', 'Expert files it'], note: 'Then into bookkeeping and compliance, with the same expert relationship' } },
                    { media: { ph: 'Service blueprint, zoomed into the after-filing lane', grow: true } }] },
 
         { id: 'bf-pilot', skills: ['zero', 'proto', 'align'], min: 1.25, pri: 1, lens: ['dm', 'eng', 'pm'], title: 'No engineering, so we built it ourselves',
           layout: 'split', ratio: 44,
-          left: [{ h: 'No engineering, so we <em>built it ourselves</em>' },
+          left: [{ h: 'No engineering, so we built it ourselves' },
                  { p: { all: 'We lost engineering support for the pilot. Instead of waiting, I designed the pilot around what we had: 6 experts, 20 customers, 4 states.',
                         dm: 'We lost engineering support for the pilot. We could have paused. Instead I designed the pilot around what we had: 6 experts, 20 customers, 4 states.',
                         eng: 'No engineering, so nothing on the expert platform. My PM and I built a simple tool ourselves, using Claude to write the code. It\'s rules-based, not AI: for legal requirements you want predictable and easy to check.',
@@ -513,23 +485,20 @@ window.DECK = {
                    ['In-product flows', 'Email + Zoom'],
                    ['Expert platform', 'A tool we built with Claude'],
                    ['Broad state coverage', '4 states, set up by hand']
-                 ] } },
-                 { note: 'Same pattern as the first project: <b>the system prepares, the expert decides.</b>' }],
+                 ] } }],
           right: [{ mediaGrid: [{ ph: 'Expert tool: client information' }, { ph: 'Expert tool: state rules' }, { ph: 'Expert tool: entity options' }, { ph: 'Customer summary' }], cols: 2 }] },
 
         { id: 'bf-results', skills: ['zero', 'strategy'], min: 0.75, pri: 1, lens: ['pm', 'ds', 'dm'], title: 'The pilot proved the demand',
-          layout: 'split', ratio: 50,
-          left: [{ h: 'The pilot proved the demand' },
+          layout: 'full', center: true,
+          blocks: [{ h: 'The pilot proved the demand' },
                  { stats: [{ v: '4.6/5', l: 'satisfaction' }, { v: '100%', l: 'would recommend' }], row: true },
-                 { p: 'People kept mentioning the <b>human connection</b> and the <b>personalized guidance</b>, which is exactly the gap we set out to fill.' },
-                 { p: { all: 'That got us resources to move toward MVP and launch, and raised the project\'s priority in the org.',
-                        ds: 'Twenty customers is a small sample, so we read it as a demand signal, not a final number. It was enough to get resources for MVP and launch.',
-                        dm: 'Early proof did what a deck couldn\'t: it got resources for MVP and launch, and raised the project\'s priority in the org.' } }],
-          right: [{ media: { ph: 'Owner smiling at her phone, with formation checklist', fill: true } }] },
+                 { p: { all: 'People kept mentioning the human connection and the personalized guidance, the gap we set out to fill. That got us resources for MVP and launch.',
+                        ds: 'People kept mentioning the human connection and the personalized guidance. Twenty customers is a small sample, so we read it as a demand signal, and it was enough to get resources for MVP and launch.',
+                        dm: 'People kept mentioning the human connection and the personalized guidance. Early proof did what a deck couldn\'t: it got resources for MVP and launch.' } }] },
 
         { id: 'bf-learned', skills: ['zero', 'align'], min: 0.5, pri: 2, lens: ['dm', 'pm'], title: 'What I learned',
-          layout: 'full',
-          blocks: [{ cards: [
+          layout: 'full', center: true,
+          blocks: [{ h: 'What I learned' }, { cards: [
             { icon: '🔎', h: 'Research decides where to play', p: 'In zero to one, research isn\'t a phase.' },
             { icon: '🧪', h: 'Validate before you build', p: 'You can prove the core value without full product support, if you\'re creative.' },
             { icon: '🌱', h: 'Clarity and momentum', p: 'Influence comes from those, not from waiting for permission.' }

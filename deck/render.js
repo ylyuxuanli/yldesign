@@ -254,9 +254,10 @@
     split(s, n) {
       n.classList.add('l-split');
       n.style.setProperty('--left', (s.ratio || 42) + '%');
+      if (s.top) n.classList.add('top');
       const L = blocks(s.left, el('div', 'c-col left' + (s.leftTheme ? ' themed' : '')));
       const onlyFill = s.right.length === 1 && s.right[0].media && s.right[0].media.fill;
-      const R = blocks(s.right, el('div', 'c-col right' + (onlyFill ? ' fill' : '') + (s.rightPanel ? ' panel' : '')));
+      const R = blocks(s.right, el('div', 'c-col right' + (onlyFill ? ' fill' : '')));
       n.appendChild(L); n.appendChild(R);
     },
     full(s, n) {
