@@ -52,7 +52,7 @@ window.DECK = {
           layout: 'full', center: true,
           blocks: [{ h: 'I enjoy solving complex problems. Here\'s how I do it.' },
                    { cards: [
-            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Years as a reporter taught me to dig past the request to the real cause.' },
+            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Working as a reporter taught me to dig past the request to the real cause.' },
             { k: 'Delightful', color: '#FF8B22', h: 'I design for how people feel', p: 'Solving the problem is half of it. I want people to leave calmer, and a little happier.' },
             { k: 'Thoughtful', color: '#ED5148', h: 'I balance needs with what\'s real', p: 'I write code and know the business side, so I find what works within technical and business limits.' }
           ] }] },
