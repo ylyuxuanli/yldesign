@@ -66,9 +66,9 @@ window.DECK = {
           layout: 'split', ratio: 40, zone: 'left',
           left: [{ h: 'What I bring<br/>to a team', size: 'xl' }],
           right: [{ rows: { all: [
-                       { h: 'Make complex things simple', p: 'Products that feel easy, even when the problem isn\'t' },
-                       { h: 'Design AI and people together', p: 'What AI does alone, and when a person steps in' },
-                       { h: 'Prove it early', p: 'Prototypes in code and small pilots' } ],
+                       { h: 'Make complex things simple', p: 'I turn messy, high-stakes problems into experiences people understand and trust' },
+                       { h: 'Design AI and people together', p: 'I decide what AI should do, what people should do, and how they hand off' },
+                       { h: 'Prove it early', p: 'I test ideas with real users and working prototypes before teams commit' } ],
                      pm: [
                        { h: 'Frame the problem', p: 'So we build the right thing, and know what to cut' },
                        { h: 'Ship in steps', p: 'MVPs that test one idea, with clear signals' },
