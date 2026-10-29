@@ -57,6 +57,11 @@
         (s.k ? '<div class="c-sk">' + T(s.k) + '</div>' : '') + '<div class="c-sv">' + T(s.v) + '</div><div class="c-sl">' + T(s.l) + '</div>')));
       return w;
     },
+    rows(b) {
+      const w = el('div', 'c-rows');
+      T(b.rows).forEach((x) => w.appendChild(el('div', 'c-row', '<div class="c-rh">' + T(x.h) + '</div><div class="c-rp">' + T(x.p) + '</div>')));
+      return w;
+    },
     numbered(b) {
       const w = el('div', 'c-num');
       T(b.numbered).forEach((x, i) => w.appendChild(el('div', 'c-ni', '<span class="c-n">' + (i + 1) + '</span><div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div></div>')));

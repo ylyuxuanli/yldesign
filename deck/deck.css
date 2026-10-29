@@ -19,18 +19,20 @@ button { font-family: inherit; }
 .app { position: relative; height: 100vh; height: 100dvh; overflow: hidden; }
 .top { position: absolute; top: 0; left: 0; right: 0; z-index: 10; display: flex; align-items: center; gap: 16px; padding: 16px 24px; pointer-events: none; }
 .top > * { pointer-events: auto; }
-.logo img { width: 28px; height: 28px; object-fit: contain; display: block; }
-.pill { border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8); backdrop-filter: blur(8px); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: var(--sub); cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60vw; }
-.pill b { color: var(--text); font-weight: 500; }
-.pill:hover { border-color: var(--accent); color: var(--text); }
-.pill .edit { margin-left: 8px; text-decoration: underline; text-underline-offset: 3px; }
-.top-actions { margin-left: auto; display: flex; gap: 4px; }
+.menu-btn { margin-left: auto; width: 38px; height: 38px; border-radius: 50%; border: none; background: none; color: var(--sub); font-size: 20px; line-height: 1; cursor: pointer; }
+.menu-btn:focus:not(:focus-visible) { outline: none; }
+.menu-btn:hover, .menu-btn[aria-expanded="true"] { background: rgba(0,0,0,0.05); color: var(--text); }
+.app.dark .menu-btn { color: rgba(255,255,255,0.8); }
+.app.dark .menu-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
 .icon-btn { white-space: nowrap; border: none; background: none; color: var(--sub); font-size: 13px; padding: 8px 10px; border-radius: 8px; cursor: pointer; }
 .icon-btn:hover { color: var(--accent); }
 .icon-btn.off { color: var(--muted); text-decoration: line-through; }
 .app.dark .icon-btn { color: rgba(255,255,255,0.75); }
 .app.dark .icon-btn:hover { color: #fff; }
-.toc { position: absolute; top: 56px; right: 24px; z-index: 20; min-width: 220px; padding: 8px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+.toc { position: absolute; top: 58px; right: 20px; max-height: calc(100dvh - 80px); overflow-y: auto; z-index: 20; min-width: 220px; padding: 8px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+.toc-k { font-size: 12px; color: var(--muted); padding: 8px 12px 4px; }
+.toc a { display: block; font-size: 14px; color: var(--sub); text-decoration: none; padding: 9px 12px; border-radius: 8px; }
+.toc a:hover { background: #F5F3EF; }
 .toc button { display: flex; justify-content: space-between; gap: 16px; width: 100%; border: none; background: none; text-align: left; font: inherit; font-size: 14px; color: var(--text); padding: 9px 12px; border-radius: 8px; cursor: pointer; }
 .toc button:hover { background: #F5F3EF; }
 .toc button span { color: var(--muted); }
@@ -160,8 +162,6 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 /* ---------- Phones: built slides fill the screen, image slides stay 16:9 ---------- */
 @media (max-width: 700px) {
   .top { padding: 10px 16px; gap: 10px; }
-  .pill { max-width: 52vw; padding: 6px 12px; }
-  #fullBtn { display: none; }
   .hs { padding: 28px 22px; justify-content: flex-start; }
   .hs-p { max-width: none; }
   .hs-welcome { flex-direction: column-reverse; padding: 0; }

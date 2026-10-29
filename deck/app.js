@@ -200,7 +200,10 @@
 
   function fill(frame, s, live) {
     frame.innerHTML = '';
-    frame.appendChild(slideNode(s, live));
+    const n = slideNode(s, live);
+    // Small section label in the top-left corner, as in the PDF deck
+    if (s && s.section) n.appendChild(el('div', 'sec-label' + (s.leftTheme ? ' on-dark' : ''), esc(s.section)));
+    frame.appendChild(n);
   }
 
   // ---------- Viewer ----------
@@ -213,10 +216,6 @@
     $('prevBtn').disabled = cur === 0;
     $('nextBtn').disabled = cur === plan.seq.length - 1;
 
-    const pill = $('settingsPill');
-    pill.hidden = !settled;
-    pill.innerHTML = 'For <b>' + esc(forWhom()) + '</b> · ' + esc(timeLabel()) + (locked ? '' : '<span class="edit">Edit</span>');
-    pill.disabled = locked;
     if (!$('presenter').hidden) drawPresenter();
   }
   function goTo(i) {
@@ -235,8 +234,6 @@
 
   $('prevBtn').onclick = () => go(-1);
   $('nextBtn').onclick = () => go(1);
-  $('settingsPill').onclick = () => { if (!locked) goTo(indexOf('setup')); };
-  $('fullBtn').onclick = toggleFull;
   function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen?.(); }
 
   // Swipe on phones
@@ -352,27 +349,34 @@
     $('shareDesc').textContent = 'For ' + forWhom() + ', ' + timeLabel() + ', ' + plan.picked.length + ' slides. They will need the site password.';
   }
   function openShare() { drawShare(); $('shareModal').hidden = false; }
-  $('shareBtn').onclick = openShare;
 
-  // ---------- Jump to ----------
+  // ---------- Menu: this version, jump to, share, full screen ----------
   function toggleToc(open) {
     const toc = $('toc');
     open = open == null ? toc.hidden : open;
     toc.hidden = !open;
-    $('tocBtn').setAttribute('aria-expanded', open);
+    $('menuBtn').setAttribute('aria-expanded', open);
     if (!open) return;
     toc.innerHTML = '';
-    const item = (label, i, extra) => {
+    const item = (label, fn, extra) => {
       const b = el('button', null, esc(label) + (extra ? '<span>' + esc(extra) + '</span>' : ''));
-      b.onclick = () => { toggleToc(false); goTo(i); };
+      b.onclick = () => { toggleToc(false); fn(); };
       toc.appendChild(b);
     };
-    item('Start over', 0);
-    item('Agenda', indexOf('agenda'));
+    if (settled) {
+      toc.appendChild(el('div', 'toc-k', 'For ' + esc(forWhom()) + ' · ' + esc(timeLabel())));
+      if (!locked) item('Change role or time', () => goTo(indexOf('setup')));
+      toc.appendChild(el('hr'));
+    }
+    item('Start over', () => goTo(0));
+    item('Agenda', () => goTo(indexOf('agenda')));
+    plan.per.forEach((x) => item(x.p.short, () => goTo(firstOf(x.p)), fmtMin(x.min)));
     toc.appendChild(el('hr'));
-    plan.per.forEach((x) => item(x.p.short, firstOf(x.p), fmtMin(x.min)));
+    item('Share this version', openShare);
+    item('Full screen', toggleFull, 'F');
+    const home = el('a', null, 'yldesign.me'); home.href = '../index.html'; toc.appendChild(home);
   }
-  $('tocBtn').onclick = (e) => { e.stopPropagation(); toggleToc(); };
+  $('menuBtn').onclick = (e) => { e.stopPropagation(); toggleToc(); };
   document.addEventListener('click', (e) => { if (!$('toc').hidden && !$('toc').contains(e.target)) toggleToc(false); });
   $('shareAdjust').onchange = drawShare; $('shareSkip').onchange = drawShare;
   $('shareCopy').onclick = async () => {
