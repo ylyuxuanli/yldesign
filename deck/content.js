@@ -211,7 +211,7 @@ window.DECK = {
           layout: 'full',
           blocks: [{ h: 'Defining where expertise matters most' },
                    { sub: 'With core QuickBooks teams, service design and service delivery' },
-                   { pins: { src: '../imgs/deck/qb-journey.webp', alt: 'Customer journey map across onboarding, ongoing use and year-end', at: [
+                   { pins: { reveal: true, color: '#003E31', src: '../imgs/deck/qb-journey.webp', alt: 'Customer journey map across onboarding, ongoing use and year-end', at: [
                      { x: 30.6, y: 44, h: 'Onboarding', p: 'Customers are unsure how to set up and make initial decisions' },
                      { x: 49, y: 44, up: true, h: 'Critical financial decisions', p: 'High-risk decisions impacting accuracy and compliance' },
                      { x: 65.4, y: 44, h: 'Ongoing support', p: 'Unexpected issues and anomalies over time' },

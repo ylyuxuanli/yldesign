@@ -143,7 +143,7 @@
     return { seq, picked, total: flat.length, used: seq.reduce((a, s) => a + dur(s), 0), per, skipped };
   }
   let plan = build();
-  let cur = 0;
+  let cur = 0, step = 0; // step: how many click-to-reveal parts of this slide are showing (presenting only)
   const indexOf = (type) => plan.seq.findIndex((s) => s.type === type);
   const firstOf = (p) => plan.seq.findIndex((s) => s.project === p);
 
@@ -232,12 +232,19 @@
     // Small section label in the top-left corner, as in the PDF deck
     if (s && s.section) n.appendChild(el('div', 'sec-label' + (s.leftTheme ? ' on-dark' : ''), esc(s.section)));
     frame.appendChild(n);
+    showSteps(frame, live ? step : 0);
   }
+  // Parts marked data-step wait for a click when she presents. Everyone else sees the whole slide.
+  function showSteps(frame, k) {
+    frame.querySelectorAll('[data-step]').forEach((e) => e.classList.toggle('pending', presenting() && +e.dataset.step > k));
+  }
+  const stepsIn = (frame) => Math.max(0, ...[...frame.querySelectorAll('[data-step]')].map((e) => +e.dataset.step));
 
   // ---------- Viewer ----------
   function draw() {
     const s = plan.seq[cur];
     fill($('frame'), s, true);
+    step = Math.min(step, stepsIn($('frame')));
     $('app').classList.toggle('dark', s.layout === 'title');
     $('count').textContent = (cur + 1) + ' / ' + plan.seq.length;
     $('progBar').style.width = ((cur + 1) / plan.seq.length * 100) + '%';
@@ -246,11 +253,19 @@
 
     if (!$('presenter').hidden) drawPresenter();
   }
-  function goTo(i) {
+  function goTo(i, atEnd) {
     cur = Math.max(0, Math.min(plan.seq.length - 1, i));
+    step = atEnd ? Infinity : 0; // going back lands on the slide fully revealed
     draw();
   }
-  function go(d) { goTo(cur + d); }
+  function go(d) {
+    const n = presenting() ? stepsIn($('frame')) : 0;
+    if (d > 0 && step < n) { step++; draw(); return; }
+    if (d < 0 && step > 0) { step--; draw(); return; }
+    goTo(cur + d, d < 0);
+  }
+  // Clicking a part that's waiting reveals it, same as the next key
+  $('frame').addEventListener('click', (e) => { if (presenting() && e.target.closest('.c-pins') && step < stepsIn($('frame'))) go(1); });
 
   $('prevBtn').onclick = () => go(-1);
   $('nextBtn').onclick = () => go(1);
@@ -334,7 +349,7 @@
     const extra = !presenting() && n.lens && n.lens[cfg.lens];
     if (extra) box.appendChild(el('span', 'lens-note', '<b>' + esc(lens(cfg.lens).name) + ':</b> ' + esc(extra)));
     drawTimer();
-    if (bc) bc.postMessage({ type: 'go', i: cur, q: query(cfg), settled });
+    if (bc) bc.postMessage({ type: 'go', i: cur, step, q: query(cfg), settled });
   }
   $('prPrev').onclick = () => go(-1);
   $('prNext').onclick = () => go(1);
@@ -355,7 +370,7 @@
       if (e.data.type !== 'go') return;
       Object.assign(cfg, readCfg(new URLSearchParams(e.data.q)));
       settled = e.data.settled;
-      plan = build(); goTo(e.data.i);
+      plan = build(); goTo(e.data.i); step = e.data.step || 0; draw();
     };
   }
 
