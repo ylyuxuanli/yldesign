@@ -158,7 +158,7 @@ window.DECK = {
           layout: 'split', ratio: 34,
           left: [
             { h: 'As an end-to-end product designer' },
-            { lines: ['The real problem', 'Service model', 'AI and human boundaries', 'Concept to prototype', 'Team alignment'] },
+            { lines: ['Find the real problem', 'Design the service', 'Set what AI and people own', 'Prototype and test early', 'Align the teams'] },
             { groups: [
               { h: 'Scope', p: 'Across 4 QuickBooks Online plans' },
               { h: 'Cross-functional teams', p: 'PM · Engineering · Data Science · Service Design · Service Delivery · Core QuickBooks · Expert platform' }
