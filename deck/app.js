@@ -23,13 +23,17 @@
   function readCfg(p) {
     return {
       lens: D.lenses.some((l) => l.id === p.get('for')) ? p.get('for') : 'all',
-      t: p.get('t') === 'all' ? 'all' : (parseInt(p.get('t'), 10) || (p.get('m') === 'present' ? 45 : 20)),
+      t: p.get('t') === 'all' ? 'all' : (parseInt(p.get('t'), 10) || (p.get('m') === 'present' ? 60 : 20)),
       skills: (p.get('s') || '').split(',').filter((id) => allSkills.includes(id)),
       mode: p.get('m') === 'present' ? 'present' : 'read',
       proj: (p.get('p') || '').split(',').filter((id) => projIds.includes(id))
     };
   }
   const cfg = readCfg(q);
+  // Opening the plain link in her own browser means she's presenting: default to her 60 min session
+  let ownerAtStart = false;
+  try { ownerAtStart = localStorage.getItem('deck_owner') === '1'; } catch (e) {}
+  if (ownerAtStart && !q.has('m') && !q.has('for') && !q.has('t')) Object.assign(cfg, { mode: 'present', t: 60 });
   const presenting = () => cfg.mode === 'present';
   const preset = q.has('for') || q.has('t') || presenting();
   const locked = q.get('lock') === '1';
@@ -295,7 +299,7 @@
 
   function openPresenter() {
     if (!presenting()) { // presenter view always means her presenting version
-      Object.assign(cfg, { mode: 'present', lens: 'all', skills: [], proj: [], t: SESSION.lengths.includes(cfg.t) ? cfg.t : SESSION.lengths[0] });
+      Object.assign(cfg, { mode: 'present', lens: 'all', skills: [], proj: [], t: SESSION.lengths.includes(cfg.t) ? cfg.t : 60 });
       settled = true; plan = build(); syncUrl(); cur = 0; draw();
     }
     $('presenter').hidden = false;
@@ -457,7 +461,7 @@
     $('side').querySelector('.side-title').textContent = owner ? 'Setup' : 'Tell me a little about you';
     if (owner) group(box, 'Who\'s driving', pills([['present', 'I\'m presenting'], ['read', 'They pick their role']], (m) => d.mode === m, (m) => {
       d.mode = m;
-      if (m === 'present' && !SESSION.lengths.includes(d.t)) d.t = SESSION.lengths[0];
+      if (m === 'present' && !SESSION.lengths.includes(d.t)) d.t = 60;
       if (m === 'read' && d.t !== 'all' && !D.times.includes(d.t)) d.t = 20;
     }));
     if (!pres) { viewerSettings(box); confirmBtn(box); return; }
