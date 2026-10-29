@@ -160,8 +160,8 @@
       return w;
     },
     cards(b) {
-      const w = el('div', 'c-cards' + (b.big ? ' big' : ''));
-      T(b.cards).forEach((c) => w.appendChild(el('div', 'c-card', (c.k ? '<div class="c-k" style="color:' + c.color + '">' + T(c.k) + '</div>' : c.color ? '<span class="sq" style="background:' + c.color + '"></span>' : c.icon ? '<div class="c-icon">' + c.icon + '</div>' : '') + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + (c.sub ? '<div class="c-cs">' + T(c.sub) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
+      const w = el('div', 'c-cards' + (b.mid ? ' mid' : ''));
+      T(b.cards).forEach((c) => w.appendChild(el('div', 'c-card', (c.k ? '<div class="c-k" style="color:' + c.color + '">' + T(c.k) + '</div>' : c.color ? '<span class="sq" style="background:' + c.color + '"></span>' : c.icon ? '<div class="c-icon">' + c.icon + '</div>' : '') + (c.h ? '<div class="c-nh">' + T(c.h) + '</div>' : '') + '<div class="c-cp">' + T(c.p) + '</div>')));
       return w;
     },
     pick(b) {
