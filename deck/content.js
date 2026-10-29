@@ -56,11 +56,10 @@ window.DECK = {
           blocks: [{ h: 'Making complex things <em>simple</em>' },
                    { p: 'I\'m a product designer with 7+ years of experience, at both startups and large organizations. What I enjoy most is solving ambiguous problems, and turning complex systems into experiences that feel intuitive.' },
                    { journey: [
-                     { when: 'Before design', h: 'Reporter', p: 'Ask thoughtful questions, find what matters, explain it clearly.', on: ['all', 'design', 'pm'] },
-                     { when: '2018 – 2020', h: 'M.A. Interaction Design', p: 'Academy of Art University. Switched to design, with a sponsored project for Audi.' },
-                     { when: '2021 – 2022', h: 'Lytx', p: 'Complex data and very different users. Built design systems.', on: ['eng', 'ds'] },
-                     { when: '2022 – now', h: 'Intuit', p: 'AI + human experiences in QuickBooks, and a 0 to 1 service.', on: ['all', 'pm', 'dm', 'eng', 'ds', 'design'] },
-                     { when: '2021 – 2024 · side project', h: 'Offerland.ai', p: 'An AI career platform, built with friends. 40K+ users.', side: [3, 5], on: ['dm', 'pm'] }
+                     { when: 'Where I started', h: 'A storyteller', p: 'As a reporter, I learned to ask thoughtful questions, find what matters, and make complex stories clear.', at: 'Reporter', on: ['all', 'design', 'pm'] },
+                     { when: 'Where I grew', h: 'Designing for complexity', p: 'Dense data, very different users, and the design systems behind them.', at: 'Design school · Lytx', on: ['eng', 'ds', 'design'] },
+                     { when: 'Where I am now', h: 'AI and people, working together', p: 'Deciding what AI should do, where a human expert steps in, and making it feel like one product.', at: 'Intuit', on: ['all', 'pm', 'dm', 'eng', 'ds', 'design'] },
+                     { when: 'On the side', h: 'Building from zero', p: 'An AI career platform, built with friends. 40K+ users, and my first time managing designers.', at: 'Offerland.ai', side: true, on: ['dm', 'pm'] }
                    ] },
                    { note: { all: 'Thoughtful but pragmatic: I care about craft, and just as much about solving the right problem.',
                              eng: 'Along the way: HTML, CSS and JavaScript. Today I use Claude Code to build working prototypes and send PRs that engineering reviews. This deck is built in code, too.',

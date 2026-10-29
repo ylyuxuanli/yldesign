@@ -194,14 +194,12 @@
       return w;
     },
     journey(b) {
-      const main = b.journey.filter((x) => !x.side);
-      const w = el('div', 'c-journey'); w.style.setProperty('--cols', main.length);
+      const w = el('div', 'c-journey'); w.style.setProperty('--cols', b.journey.length);
       b.journey.forEach((x) => {
         const on = (x.on || []).includes(lens);
-        const d = el('div', 'c-stop' + (x.side ? ' side' : '') + (on ? ' on' : ''),
-          '<span class="c-sdot"></span><div class="c-when">' + T(x.when) + '</div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div>');
-        if (x.side) d.style.gridColumn = x.side[0] + ' / ' + x.side[1];
-        w.appendChild(d);
+        w.appendChild(el('div', 'c-stop' + (x.side ? ' side' : '') + (on ? ' on' : ''),
+          '<div class="c-when">' + T(x.when) + '</div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div>' +
+          (x.at ? '<div class="c-at">' + T(x.at) + '</div>' : '')));
       });
       return w;
     },
