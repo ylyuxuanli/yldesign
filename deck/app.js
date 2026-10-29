@@ -76,28 +76,38 @@
     const byScore = (list) => list.slice().sort((a, b) => b.sc - a.sc);
     const core = (p) => flat.filter((s) => s.project === p && (s.must || s.pri === 1));
 
-    // When she presents, the whole intro always comes first, on top of the time she set
-    if (presenting()) flat.filter((s) => s.project.id === 'intro').forEach((s) => keep.add(s));
-    else intro.forEach((p) => core(p).forEach(take));
     const shown = new Set(intro);
-    cases.forEach((p, n) => {
-      const c = core(p), need = c.reduce((a, s) => a + s.min, 0);
-      if (need + qa <= budget) { c.forEach(take); shown.add(p); budget -= qa; }
-      else if (n === 0) { // Not even one full case fits: show the best of the first one
-        shown.add(p); budget -= qa;
-        byScore(c).forEach((s) => { if (s.must || s.min <= budget) take(s); });
-      }
-    });
-    // Grouped slides (like work experience) come in together or not at all
-    const units = [], groups = new Set();
-    const rest = flat.filter((s) => shown.has(s.project) && !keep.has(s));
-    byScore(rest).forEach((s) => {
-      if (!s.group) { units.push([s]); return; }
-      if (groups.has(s.group)) return;
-      groups.add(s.group);
-      units.push(rest.filter((x) => x.group === s.group));
-    });
-    units.forEach((u) => { if (u.reduce((a, s) => a + s.min, 0) <= budget) u.forEach(take); });
+    if (presenting()) {
+      // She presents every slide of the projects she picked, and adjusts by talking. The pacing
+      // is stretched so intro, projects and Q&A fill the session exactly.
+      flat.forEach((s) => keep.add(s));
+      cases.forEach((p) => shown.add(p));
+      const T = SESSION.lengths.includes(cfg.t) ? cfg.t : SESSION.lengths[0];
+      const proj = flat.filter((s) => s.project.id !== 'intro');
+      const room = T - SESSION.intro - qa * cases.length - MIN.agenda - MIN.end;
+      const k = room / proj.reduce((a, s) => a + s.min, 0);
+      proj.forEach((s) => { s.min *= k; });
+    } else {
+      intro.forEach((p) => core(p).forEach(take));
+      cases.forEach((p, n) => {
+        const c = core(p), need = c.reduce((a, s) => a + s.min, 0);
+        if (need + qa <= budget) { c.forEach(take); shown.add(p); budget -= qa; }
+        else if (n === 0) { // Not even one full case fits: show the best of the first one
+          shown.add(p); budget -= qa;
+          byScore(c).forEach((s) => { if (s.must || s.min <= budget) take(s); });
+        }
+      });
+      // Grouped slides (like work experience) come in together or not at all
+      const units = [], groups = new Set();
+      const rest = flat.filter((s) => shown.has(s.project) && !keep.has(s));
+      byScore(rest).forEach((s) => {
+        if (!s.group) { units.push([s]); return; }
+        if (groups.has(s.group)) return;
+        groups.add(s.group);
+        units.push(rest.filter((x) => x.group === s.group));
+      });
+      units.forEach((u) => { if (u.reduce((a, s) => a + s.min, 0) <= budget) u.forEach(take); });
+    }
     const picked = flat.filter((s) => keep.has(s));
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
@@ -308,6 +318,10 @@
   $('presInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock($('presInput').value); });
 
   function openPresenter() {
+    if (!presenting()) { // presenter view always means her presenting version
+      Object.assign(cfg, { mode: 'present', lens: 'all', skills: [], proj: [], t: SESSION.lengths.includes(cfg.t) ? cfg.t : SESSION.lengths[0] });
+      settled = true; plan = build(); syncUrl(); cur = 0; draw();
+    }
     $('presenter').hidden = false;
     drawPresenter();
     if (!tick) tick = setInterval(drawTimer, 500);
