@@ -359,6 +359,27 @@
   }
   function openShare() { drawShare(); $('shareModal').hidden = false; }
   $('shareBtn').onclick = openShare;
+
+  // ---------- Jump to ----------
+  function toggleToc(open) {
+    const toc = $('toc');
+    open = open == null ? toc.hidden : open;
+    toc.hidden = !open;
+    $('tocBtn').setAttribute('aria-expanded', open);
+    if (!open) return;
+    toc.innerHTML = '';
+    const item = (label, i, extra) => {
+      const b = el('button', null, esc(label) + (extra ? '<span>' + esc(extra) + '</span>' : ''));
+      b.onclick = () => { toggleToc(false); goTo(i); };
+      toc.appendChild(b);
+    };
+    item('Start over', 0);
+    item('Agenda', indexOf('agenda'));
+    toc.appendChild(el('hr'));
+    plan.per.forEach((x) => item(x.p.short, firstOf(x.p), fmtMin(x.min)));
+  }
+  $('tocBtn').onclick = (e) => { e.stopPropagation(); toggleToc(); };
+  document.addEventListener('click', (e) => { if (!$('toc').hidden && !$('toc').contains(e.target)) toggleToc(false); });
   $('shareAdjust').onchange = drawShare; $('shareSkip').onchange = drawShare;
   $('shareCopy').onclick = async () => {
     try { await navigator.clipboard.writeText($('shareUrl').value); } catch (e) { $('shareUrl').select(); document.execCommand('copy'); }
@@ -368,6 +389,7 @@
 
   // ---------- Keys ----------
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('toc').hidden) { toggleToc(false); return; }
     if (e.target.tagName === 'INPUT' || document.querySelector('.modal:not([hidden])')) return;
     if (e.key === 'P' && e.shiftKey) { e.preventDefault(); if ($('presenter').hidden) askPresenter(); else closePresenter(); return; }
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(1); }

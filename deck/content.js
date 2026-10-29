@@ -54,17 +54,12 @@ window.DECK = {
         { id: 'intro-who', min: 0.75, pri: 1, title: 'About me',
           layout: 'full', center: true,
           blocks: [{ h: 'Making complex things <em>simple</em>', size: 'xl' },
-                   { p: { all: 'I\'m a product designer. 7+ years at startups and big companies, and a reporter before that.',
-                          eng: 'I\'m a product designer who also writes HTML, CSS and JS. 7+ years at startups and big companies, and a reporter before that.',
-                          pm: 'I\'m a product designer. 7+ years at startups and big companies, and a reporter before that. I care about solving the right problem, then shipping it.',
-                          dm: 'I\'m a product designer. 7+ years at startups and big companies, and a reporter before that. I\'ve also managed a small design team.',
-                          ds: 'I\'m a product designer. 7+ years at startups and big companies, and a reporter before that. Lately, a lot of AI + human work.' } },
-                   { journey: [
-                     { when: 'Started', h: 'Reporter', p: 'Asking questions, telling clear stories', on: ['all', 'design', 'pm'] },
-                     { when: 'Then', h: 'Lytx', p: 'Complex data, design systems', on: ['eng', 'ds', 'design'] },
-                     { when: 'Now', h: 'Intuit', p: 'AI and human experts in QuickBooks', on: ['all', 'pm', 'dm', 'eng', 'ds', 'design'] },
-                     { when: 'On the side', h: 'Offerland.ai', p: 'An AI startup with friends', side: true, on: ['dm', 'pm'] }
-                   ] }] },
+                   { p: { all: 'I\'m a product designer with 7+ years at startups and big companies. Before design, I was a reporter.',
+                          eng: 'I\'m a product designer who also writes HTML, CSS and JS. 7+ years at startups and big companies. Before design, I was a reporter.',
+                          pm: 'I\'m a product designer with 7+ years at startups and big companies. Before design, I was a reporter. I care about solving the right problem, then shipping it.',
+                          dm: 'I\'m a product designer with 7+ years at startups and big companies, and I\'ve managed a small design team. Before design, I was a reporter.',
+                          ds: 'I\'m a product designer with 7+ years at startups and big companies, lately a lot of AI + human work. Before design, I was a reporter.' } },
+                   { sub: 'Now at Intuit. Previously Lytx. Offerland.ai on the side.' }] },
 
         { id: 'intro-values', min: 0.5, pri: 3, title: 'Curious, delightful, thoughtful',
           layout: 'values',
@@ -330,8 +325,7 @@ window.DECK = {
           ] },
             { note: { all: 'AI prepares the work, customers decide what matters, and experts bring judgment where it counts.',
                       pm: 'We didn\'t start from how many calls to offer. We started from when an expert creates the most value.',
-                      dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } },
-            { link: { href: 'https://qb-aihi-demo.vercel.app/', text: 'Walk through James\'s year in the prototype' } }] },
+                      dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } }] },
 
         { id: 'qb-mvp', skills: ['strategy', 'align'], min: 1.5, pri: 1, lens: ['pm', 'eng', 'dm', 'ds'], title: 'What we shipped first, and why',
           layout: 'split', ratio: 36,
