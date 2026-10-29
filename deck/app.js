@@ -400,100 +400,95 @@
   const OWNER_KEY = 'deck_owner';
   const isOwner = () => { try { return localStorage.getItem(OWNER_KEY) === '1'; } catch (e) { return false; } };
   const markOwner = () => { try { localStorage.setItem(OWNER_KEY, '1'); } catch (e) {} };
+  // Choices stay in a draft until Done (or Start), so the deck behind doesn't keep redrawing
+  let d = null;
   function apply() {
-    if (presenting()) { cfg.lens = 'all'; cfg.skills = []; }
+    const was = cfg.mode;
+    Object.assign(cfg, { mode: d.mode, t: d.t, lens: d.lens, skills: d.skills, proj: d.order.filter((x) => d.on.includes(x)) });
+    if (presenting()) { cfg.lens = 'all'; cfg.skills = []; } else cfg.proj = [];
     settled = true;
-    const at = plan.seq[cur] && plan.seq[cur].id;
+    const at = was === cfg.mode && plan.seq[cur] ? plan.seq[cur].id : null;
     plan = build(); syncUrl();
     cur = Math.max(0, plan.seq.findIndex((x) => x.id === at));
-    draw(); drawSetup();
+    draw();
+  }
+  function group(box, label, node) {
+    const q = el('div', 'q'); q.appendChild(el('div', 'q-label', label)); q.appendChild(node); box.appendChild(q);
+  }
+  function pills(items, isOn, pick) {
+    const c = el('div', 'chips');
+    items.forEach(([id, label]) => c.appendChild(chip(label, isOn(id), () => { pick(id); drawSetup(); }, true)));
+    return c;
   }
   function viewerSettings(box) {
-    box.appendChild(el('p', 'set-note', 'Tell me a little about you, and this deck will shape itself around what you care about.'));
-    const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Your role'));
-    const c1 = el('div', 'chips');
-    D.lenses.forEach((l) => c1.appendChild(chip(l.name, cfg.lens === l.id, () => { cfg.lens = l.id; apply(); }, true)));
-    q1.appendChild(c1); box.appendChild(q1);
-    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Time'));
-    const c2 = el('div', 'chips');
-    D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; apply(); }, true)));
-    c2.appendChild(chip('All', cfg.t === 'all', () => { cfg.t = 'all'; apply(); }, true));
-    q2.appendChild(c2); box.appendChild(q2);
-    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Interested in'));
-    const c3 = el('div', 'chips');
-    D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
-      cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
-      apply();
-    }, true, true)));
-    q3.appendChild(c3); box.appendChild(q3);
+    group(box, 'Your role', pills(D.lenses.map((l) => [l.id, l.name]), (id) => d.lens === id, (id) => { d.lens = id; }));
+    group(box, 'Time', pills(D.times.map((m) => [m, m + ' min']).concat([['all', 'All']]), (m) => d.t === m, (m) => { d.t = m; }));
+    const c = el('div', 'set-checks');
+    D.skills.forEach((k) => {
+      const on = d.skills.includes(k.id);
+      const b = el('button', 'set-check' + (on ? ' on' : ''), '<span></span>' + esc(k.name));
+      b.setAttribute('role', 'checkbox'); b.setAttribute('aria-checked', on);
+      b.onclick = () => { d.skills = on ? d.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || d.skills.includes(x)); drawSetup(); };
+      c.appendChild(b);
+    });
+    group(box, 'Interested in, pick any', c);
   }
   function confirmBtn(box) {
     const first = cur === 0 && !isOwner();
     const b = el('button', 'pw-btn', first ? 'Start →' : 'Done');
-    b.onclick = () => { openSetup(false); if (first) { settled = true; syncUrl(); goTo(1); } };
+    b.onclick = () => { apply(); openSetup(false); if (first) goTo(1); };
     box.appendChild(b);
   }
   function drawSetup() {
     const box = $('setupBody');
     box.innerHTML = '';
-    const pres = presenting(), owner = isOwner();
-    $('side').querySelector('.side-title').textContent = owner ? 'Setup' : 'Make it yours';
-    if (!owner) { viewerSettings(box); confirmBtn(box); return; }
-    const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Who\'s driving'));
-    const c1 = el('div', 'chips');
-    c1.appendChild(chip('I\'m presenting', pres, () => {
-      cfg.mode = 'present';
-      if (!SESSION.lengths.includes(cfg.t)) cfg.t = SESSION.lengths[0];
-      apply();
-    }, true));
-    c1.appendChild(chip('They pick their role', !pres, () => { cfg.mode = 'read'; cfg.proj = []; if (cfg.t !== 'all' && !D.times.includes(cfg.t)) cfg.t = 20; apply(); }, true));
-    q1.appendChild(c1); box.appendChild(q1);
-    if (!pres) { box.appendChild(el('hr', 'set-hr')); viewerSettings(box); confirmBtn(box); return; }
-    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Session'));
-    const c2 = el('div', 'chips');
-    SESSION.lengths.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; apply(); }, true)));
-    q2.appendChild(c2); box.appendChild(q2);
-    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Projects, drag to reorder'));
+    const pres = d.mode === 'present', owner = isOwner();
+    $('side').querySelector('.side-title').textContent = owner ? 'Setup' : 'Tell me a little about you';
+    if (owner) group(box, 'Who\'s driving', pills([['present', 'I\'m presenting'], ['read', 'They pick their role']], (m) => d.mode === m, (m) => {
+      d.mode = m;
+      if (m === 'present' && !SESSION.lengths.includes(d.t)) d.t = SESSION.lengths[0];
+      if (m === 'read' && d.t !== 'all' && !D.times.includes(d.t)) d.t = 20;
+    }));
+    if (!pres) { viewerSettings(box); confirmBtn(box); return; }
+    group(box, 'Session', pills(SESSION.lengths.map((m) => [m, m + ' min']), (m) => d.t === m, (m) => { d.t = m; }));
     const list = el('div', 'set-list');
-    const on = cfg.proj.length ? cfg.proj : projIds;
-    let order = on.concat(projIds.filter((id) => !on.includes(id))), dragId = null;
-    const mins = Object.fromEntries(plan.per.map((x) => [x.p.id, x.min]));
-    order.forEach((id) => {
-      const p = D.projects.find((x) => x.id === id), checked = on.includes(id);
-      const r = el('div', 'set-row' + (checked ? '' : ' off'));
+    let dragId = null;
+    d.order.forEach((id) => {
+      const p = D.projects.find((x) => x.id === id), on = d.on.includes(id);
+      const r = el('div', 'set-row' + (on ? '' : ' off'));
       r.draggable = true;
+      const b = el('button', 'set-check' + (on ? ' on' : ''), '<span></span>' + esc(p.short || p.name));
+      b.onclick = () => { if (on && d.on.length === 1) return; d.on = on ? d.on.filter((x) => x !== id) : d.on.concat(id); drawSetup(); };
+      r.appendChild(b);
+      r.appendChild(el('span', 'set-min', on && p.talk && p.talk[d.t] ? p.talk[d.t] + ' min' : ''));
       r.appendChild(el('span', 'set-grip', '⠿'));
-      const cb = el('label', 'check', '<input type="checkbox"' + (checked ? ' checked' : '') + '/> ' + esc(p.short || p.name));
-      cb.querySelector('input').onchange = () => {
-        const next = checked ? on.filter((x) => x !== id) : order.filter((x) => x === id || on.includes(x));
-        if (!next.length) { drawSetup(); return; }
-        cfg.proj = next; apply();
-      };
-      r.appendChild(cb);
-      r.appendChild(el('span', 'set-min', checked && mins[id] ? fmtMin(mins[id]) : ''));
       r.addEventListener('dragstart', (e) => { dragId = id; r.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
-      r.addEventListener('dragend', () => { dragId = null; cfg.proj = order.filter((x) => on.includes(x)); apply(); });
+      r.addEventListener('dragend', () => { dragId = null; drawSetup(); });
       r.addEventListener('dragover', (e) => {
         e.preventDefault();
         if (!dragId || dragId === id) return;
-        const a = order.filter((x) => x !== dragId);
+        const a = d.order.filter((x) => x !== dragId);
         const rect = r.getBoundingClientRect(), after = e.clientY > rect.top + rect.height / 2;
         a.splice(a.indexOf(id) + (after ? 1 : 0), 0, dragId);
-        if (a.join() === order.join()) return;
-        order = a;
+        if (a.join() === d.order.join()) return;
+        d.order = a;
         const moving = [...list.children].find((x) => x.classList.contains('dragging'));
         if (after) r.after(moving); else r.before(moving);
       });
       list.appendChild(r);
     });
-    q3.appendChild(list); box.appendChild(q3);
-    box.appendChild(el('p', 'set-note', 'Intro 5 min, then each project with 5 min of Q&A.'));
+    group(box, 'Projects', list);
     confirmBtn(box);
   }
   function openSetup(open) {
     open = open == null ? $('side').hidden : open;
     if (open && locked && !isOwner()) return;
-    if (open) drawSetup();
+    if (open) {
+      const on = cfg.proj.length ? cfg.proj : projIds;
+      d = { mode: cfg.mode, t: cfg.t, lens: cfg.lens, skills: cfg.skills.slice(),
+        order: on.concat(projIds.filter((x) => !on.includes(x))), on: on.slice() };
+      drawSetup();
+    }
     $('side').hidden = !open;
     $('app').classList.toggle('with-side', open);
   }
