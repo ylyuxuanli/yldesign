@@ -40,7 +40,8 @@ window.DECK = {
     { id: 'strategy', name: 'Product strategy' },
     { id: 'zero',     name: '0 to 1' },
     { id: 'proto',    name: 'Prototyping' },
-    { id: 'align',    name: 'Cross-team alignment' }
+    { id: 'align',    name: 'Cross-team alignment' },
+    { id: 'craft',    name: 'Design systems & craft' }
   ],
 
   projects: [
@@ -50,9 +51,21 @@ window.DECK = {
       name: 'About me',
       short: 'About me',
       slides: [
-        { id: 'intro-tagline', min: 0.5, pri: 2, title: 'Making complex things simple',
-          layout: 'statement', text: 'Making complex things simple',
-          sub: 'Before design, I was a journalist. My job was to take a messy situation and make it clear for readers. I still do the same thing, just with products.' },
+        { id: 'intro-who', min: 1, pri: 1, label: 'About me', title: 'Who I am',
+          layout: 'split', ratio: 56,
+          left: [{ h: 'Making complex things <em>simple</em>' },
+                 { p: 'I\'m a product designer with 7+ years of experience designing complex products, at both startups and large organizations. What I enjoy most is solving ambiguous problems, and turning complex systems into experiences that feel intuitive.' },
+                 { p: { all: 'Before design, I was a reporter. It taught me to ask thoughtful questions, find what truly matters, and explain complex ideas clearly.',
+                        eng: 'I have a foundation in HTML, CSS and JavaScript. Today I use AI coding tools like Claude Code to build working prototypes, refine UI directly in code, and send PRs that engineering reviews. This deck is built in code, too.',
+                        pm: 'I\'d call myself thoughtful but pragmatic. I care about craft, and just as much about solving the right problem and shipping something that works in the real world.',
+                        design: 'Before design, I was a reporter. It taught me to ask thoughtful questions, find what truly matters, and explain complex ideas clearly. I still care a lot about craft.',
+                        dm: 'I\'ve led design end to end inside a large org, and I\'ve managed and mentored designers on a side startup. I\'d call myself thoughtful but pragmatic.',
+                        ds: 'I use AI throughout my process, from research synthesis to functional prototypes. So I think a lot about what a model should decide, and what it shouldn\'t.' } }],
+          right: [{ groups: [
+                    { h: 'Now', p: 'Sr. Product Designer, Intuit' },
+                    { h: 'Before', p: 'Lytx · Offerland.ai (side project) · reporter' },
+                    { h: { all: 'Toolbox', eng: 'Toolbox', ds: 'Toolbox' }, p: { all: 'AI + human UX · research · prototyping · design systems · HTML/CSS/JS', eng: 'HTML/CSS/JS · Claude Code · design systems · prototyping in code', ds: 'AI + human UX · research synthesis · data visualization · AI prototyping' } }
+                  ] }], rightPanel: true },
 
         { id: 'intro-values', min: 0.5, pri: 3, title: 'Curious, delightful, thoughtful',
           layout: 'values',
@@ -62,42 +75,47 @@ window.DECK = {
             { name: 'Thoughtful', color: '#ED5148', text: 'I think about what happens after launch, not just on launch day.' }
           ] },
 
-        { id: 'intro-intuit', min: 1, pri: 1, label: 'Now', title: 'Intuit, QuickBooks Live Expert',
-          layout: 'split', ratio: 38,
-          left: [{ k: 'Intuit' }, { h: 'QuickBooks Live Expert' },
-                 { p: { all: 'QuickBooks Live is where AI and human bookkeeping experts work together for small businesses. I design how those two kinds of help fit into one product.',
-                        pm: 'QuickBooks Live is a paid expert service inside QuickBooks. I design how AI and human bookkeepers work together, and where that creates value for customers and the business.',
-                        eng: 'QuickBooks Live is where AI and human bookkeeping experts work together. I design how work is routed between AI, customers and experts, and what each one sees.',
-                        ds: 'QuickBooks Live is where AI and human bookkeeping experts work together. A lot of my work is deciding what the model can do on its own, and what needs a person.' } },
-                 { p: 'It\'s the first project in this deck.' }],
-          right: [{ media: { ph: 'QuickBooks overview with Books Health and a live expert video call' } }] },
+        { id: 'intro-intuit', skills: ['hai', 'strategy'], min: 0.75, pri: 2, lens: ['pm', 'dm'], label: 'Now', title: 'Intuit',
+          layout: 'split', ratio: 46,
+          left: [{ k: 'Intuit · Sr. Product Designer' }, { h: 'AI + human experiences across QuickBooks' },
+                 { p: { all: 'I lead end-to-end design for how AI and human experts help small businesses with complex financial work, in QuickBooks and in new areas like Business Formation.',
+                        eng: 'I lead end-to-end design for AI + human experiences in QuickBooks. I also build: functional prototypes in code, and production changes through PRs reviewed by engineering.',
+                        dm: 'I lead end-to-end design for AI + human experiences in QuickBooks, working across product, service and expert platform teams.' } },
+                 { stats: [{ v: '2.6M', l: 'customers reached by QuickBooks Live Priority' }, { v: '85%', l: '31-day retention' }, { v: '0 → 1', l: 'Business Formation, from first concept' }], row: true, small: true }],
+          right: [{ media: { src: '../imgs/qbl-overview-poster.jpg', ph: 'QuickBooks overview with Books Health' } }] },
 
-        { id: 'intro-offerland', skills: ['zero'], min: 0.75, pri: 3, lens: ['pm', 'design'], label: 'Side project', title: 'Offerland.ai',
-          layout: 'split', ratio: 38,
-          left: [{ h: 'Offerland.ai' },
-                 { p: 'On the side, I lead design for Offerland, a tool that helps job seekers share interview experiences and track applications.' },
-                 { p: { all: 'It\'s my 0 to 1 playground.',
-                        pm: 'It\'s my 0 to 1 playground, where I help decide scope and priorities, not just screens.',
-                        design: 'It\'s my 0 to 1 playground for trying AI interaction patterns fast, without a big company\'s process.' } }],
-          right: [{ media: { ph: 'Offerland job dashboard and interview experience page' } }] },
+        { id: 'intro-offerland', skills: ['zero', 'align'], min: 0.75, pri: 2, lens: ['pm', 'design', 'dm'], label: 'Side project', title: 'Offerland.ai',
+          layout: 'split', ratio: 46,
+          left: [{ k: 'Offerland.ai · Design lead · with friends' }, { h: 'An AI career platform, built from zero' },
+                 { p: 'Friends and I built Offerland to help job seekers through a stressful, high-stakes process: tracking applications, writing resumes with AI, practicing interviews, and finding referrals.' },
+                 { stats: [{ v: '40K+', l: 'users across web and a browser extension' }, { v: '3', l: 'designers I managed and mentored' }], row: true, small: true },
+                 { p: { all: 'It was my 0 to 1 playground.',
+                        pm: 'I set design and product direction, and decided what to build next with the team.',
+                        design: 'It was where I tried AI interaction patterns fast, like helping people weigh offers and make big career decisions with more confidence.',
+                        dm: 'It was where I first managed designers: setting direction, reviewing work, and helping them grow.' } }],
+          right: [{ media: { ph: 'Offerland job tracker and AI interview coach' } }] },
 
-        { id: 'intro-lytx', skills: ['systems'], min: 0.75, pri: 3, lens: ['eng', 'design'], label: 'Before', title: 'Lytx',
-          layout: 'split', ratio: 38,
-          left: [{ h: 'Lytx' },
-                 { list: ['Fleet management system', 'Driver app', 'The design system behind both'] },
-                 { p: { all: 'That\'s where I learned to design for complex data and very different users.',
-                        eng: 'I built the design system with engineering, so I think in components, tokens and states, not just mockups.',
-                        design: 'Designing for fleet managers at a desk and drivers in a truck taught me to design for very different users at once.' } }],
-          right: [{ media: { ph: 'Driver app screens and fleet dashboard components' } }] },
+        { id: 'intro-lytx', skills: ['systems', 'craft'], min: 0.75, pri: 2, lens: ['eng', 'design', 'ds'], label: 'Before', title: 'Lytx',
+          layout: 'split', ratio: 42,
+          left: [{ k: 'Lytx · Product Designer' }, { h: 'Fleet safety for 5.5M+ drivers' },
+                 { p: { all: 'I designed the Driver App, the fleet manager dashboard, platform navigation and the design systems behind them. Across that work, I reduced workflow complexity by up to 30%.',
+                        design: 'I was asked to digitize paper vehicle inspections. Along the way I found the app was Dark Mode only, and hard to read in bright sun. So I added Light Mode, and built a Driver App design system for what came next.',
+                        eng: 'I built design systems for mobile and web with engineering: colors, type, reusable components and interaction patterns, including Light and Dark Mode. I think in components and states, not just mockups.',
+                        pm: 'I went beyond my original scope. A paper-to-digital inspection feature turned into Light Mode and a design system that future Driver App work could build on.',
+                        dm: 'I went beyond my original scope. A paper-to-digital inspection feature turned into Light Mode and a design system that future Driver App work could build on.',
+                        ds: 'Fleet managers had to make sense of safety events, driver behavior, AI insights and video. I worked on dashboards and data visualization that turn that into the few things to act on.' } },
+                 { note: { all: 'Designing for drivers taught me to design for the world beyond the screen: bright sun, busy routines, real constraints.', ds: 'Presenting data clearly isn\'t enough. You have to know what decision it supports.', eng: 'A design system should grow out of real product needs, not ahead of them.' } }],
+          right: [{ mediaGrid: [{ src: '../imgs/lytx-insight1.png' }, { src: '../imgs/lytx-insight2.png' }, { src: '../imgs/lytx-hero.png' }, { src: '../imgs/lytx-insight3.png' }], cols: 2 }] },
 
-        { id: 'intro-life', min: 0.5, pri: 2, label: 'Outside work', title: 'Yoyo, ceramics, travel and bouldering',
+        { id: 'intro-life', min: 0.5, pri: 2, label: 'Delightful moments', title: 'Yoyo, ceramics, bouldering and travel',
           layout: 'full',
-          blocks: [{ p: 'Outside work, you\'ll find me with Yoyo, my Chief Happiness Officer, bouldering, or at the ceramics studio. Ceramics taught me something useful for design: there\'s no undo button, so you think before you commit.' },
+          blocks: [{ h: 'My delightful moments' },
+                   { p: 'Yoyo is my Chief Happiness Officer. Ceramics taught me there\'s no undo button, so you think before you commit. Bouldering is problem solving with your whole body. And travel keeps me curious.' },
                    { gallery: [
                      { src: '../imgs/oow-yoyo.jpg', cap: 'Yoyo' },
                      { src: '../imgs/oow-ceramics.jpg', cap: 'Ceramics' },
-                     { src: '../imgs/oow-travelling.jpg', cap: 'Travel' },
-                     { src: '../imgs/oow-bouldering.jpg', cap: 'Bouldering' }
+                     { src: '../imgs/oow-bouldering.jpg', cap: 'Bouldering' },
+                     { src: '../imgs/oow-travelling.jpg', cap: 'Travel' }
                    ] }] }
       ]
     },
@@ -294,7 +312,7 @@ window.DECK = {
                           design: 'The lesson: don\'t ship your internal model as the IA. Customers think about their books, so AI and experts show up inside the workflow, and chat is a helper, not the main surface.' } },
                    { mediaGrid: [{ ph: 'Your bookkeeping team' }, { ph: 'Overview with tasks' }, { ph: 'Overview with insights' }, { ph: 'Overview with AI chat' }], cols: 4 }] },
 
-        { id: 'qb-solution', skills: ['hai'], min: 1, pri: 1, lens: ['design', 'eng'], label: 'Target experience', title: 'One overview, AI and experts built in',
+        { id: 'qb-solution', skills: ['hai', 'craft'], min: 1, pri: 1, lens: ['design', 'eng'], label: 'Target experience', title: 'One overview, AI and experts built in',
           layout: 'split', ratio: 34,
           left: [{ h: 'Three questions, one page' },
                  { groups: [
@@ -302,6 +320,7 @@ window.DECK = {
                    { h: 'What needs my attention?', p: 'What AI found, each with one action' },
                    { h: 'What is QuickBooks handling?', p: 'The work AI and experts already did' }
                  ] },
+                 { link: { href: 'https://qb-aihi-demo.vercel.app/', text: 'Try the clickable prototype' } },
                  { p: { all: 'This is the target experience. What we launched first comes right after.',
                         eng: 'Each item under Needs attention is a routed issue from the system you just saw.',
                         design: 'Notice how the expert card changes across the customer lifecycle.' } }],
@@ -319,7 +338,8 @@ window.DECK = {
           ] },
             { note: { all: 'AI prepares the work, customers decide what matters, and experts bring judgment where it counts.',
                       pm: 'We didn\'t start from how many calls to offer. We started from when an expert creates the most value.',
-                      dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } }] },
+                      dm: 'Experts aren\'t replaced by AI. AI handles the prep, so experts focus on the moments where their judgment matters.' } },
+            { link: { href: 'https://qb-aihi-demo.vercel.app/', text: 'Walk through James\'s year in the prototype' } }] },
 
         { id: 'qb-mvp', skills: ['strategy', 'align'], min: 1.5, pri: 1, lens: ['pm', 'eng', 'dm', 'ds'], label: 'What we shipped first', title: 'What we shipped first, and why',
           layout: 'split', ratio: 36,
@@ -462,7 +482,7 @@ window.DECK = {
                           design: 'Competitors have a polished filing flow. We designed around the conversation instead: advice first, filing as part of the service.',
                           dm: 'This is where the project became a product decision, not a design task: advice first, with filing as part of the service.' } }] },
 
-        { id: 'bf-prototype', skills: ['proto'], min: 0.75, pri: 2, lens: ['design'], label: 'Prototype', title: 'A roadmap that prepares you for the expert',
+        { id: 'bf-prototype', skills: ['proto', 'craft'], min: 0.75, pri: 2, lens: ['design'], label: 'Prototype', title: 'A roadmap that prepares you for the expert',
           layout: 'split', ratio: 34,
           left: [{ h: 'A roadmap that prepares you for the expert' },
                  { p: 'Based on your goals, you see the recommended path, the cost and the timeline, with an expert one tap away.' },

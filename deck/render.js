@@ -31,6 +31,11 @@
     p: (b) => el('p', 'c-p', T(b.p)),
     sub: (b) => el('p', 'c-sub', T(b.sub)),
     note: (b) => el('div', 'c-note', T(b.note)),
+    link(b) {
+      const a = el('a', 'c-link', T(b.link.text) + ' ↗');
+      a.href = b.link.href; a.target = '_blank'; a.rel = 'noopener';
+      return a;
+    },
     quote: (b) => el('blockquote', 'c-quote', '<span>' + T(b.quote) + '</span>' + (b.by ? '<cite>' + T(b.by) + '</cite>' : '')),
 
     list(b) {
