@@ -193,6 +193,18 @@
       x.rows.forEach((r) => w.appendChild(el('div', 'c-tr', '<span class="c-trh">' + T(r.h) + '</span>' + r.cells.map(cell).join(''))));
       return w;
     },
+    journey(b) {
+      const main = b.journey.filter((x) => !x.side);
+      const w = el('div', 'c-journey'); w.style.setProperty('--cols', main.length);
+      b.journey.forEach((x) => {
+        const on = (x.on || []).includes(lens);
+        const d = el('div', 'c-stop' + (x.side ? ' side' : '') + (on ? ' on' : ''),
+          '<span class="c-sdot"></span><div class="c-when">' + T(x.when) + '</div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div>');
+        if (x.side) d.style.gridColumn = x.side[0] + ' / ' + x.side[1];
+        w.appendChild(d);
+      });
+      return w;
+    },
     swap(b) {
       const x = b.swap;
       const w = el('div', 'c-swap');

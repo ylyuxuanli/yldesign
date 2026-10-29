@@ -193,6 +193,18 @@
 .c-sw.head { font-size: clamp(10px, calc(0.85 * var(--u)), 13px); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom-color: var(--text); }
 .c-sw .was { color: var(--muted); }
 
+/* Journey */
+.c-journey { display: grid; grid-template-columns: repeat(var(--cols), 1fr); column-gap: calc(2 * var(--u)); row-gap: calc(2.4 * var(--u)); position: relative; }
+.c-journey::before { content: ''; position: absolute; left: 0; right: 0; top: calc(0.6 * var(--u)); height: 2px; background: var(--border); }
+.c-stop { position: relative; padding-top: calc(2.4 * var(--u)); }
+.c-sdot { position: absolute; top: 0; left: 0; width: calc(1.2 * var(--u)); height: calc(1.2 * var(--u)); min-width: 10px; min-height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid #C9C6C0; }
+.c-stop.on .c-sdot { background: var(--accent); border-color: var(--accent); }
+.c-stop .c-when { font-size: clamp(10px, calc(0.85 * var(--u)), 13px); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: calc(0.4 * var(--u)); }
+.c-stop:not(.on) .c-nh { color: var(--sub); }
+.c-stop.side { grid-row: 2; padding-top: calc(1.6 * var(--u)); border-top: 2px dashed #D6D3CC; }
+.c-stop.side .c-sdot { display: none; }
+.c-stop.side.on { border-top-color: var(--accent); }
+
 /* Callouts, quotes and comparison tables */
 .c-link { align-self: flex-start; font-size: clamp(13px, calc(1.1 * var(--u)), 16px); color: var(--theme); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
 .c-link:hover { opacity: 0.7; }
@@ -238,6 +250,11 @@
   .c-route::after { display: none; }
   .c-sys-loop { flex-direction: column; align-items: flex-start; gap: 4px; }
   .c-rr { grid-template-columns: 1fr; gap: 2px; }
+  .l-full.center { justify-content: flex-start; }
+  .c-journey { grid-template-columns: 1fr; row-gap: 18px; padding-left: 22px; }
+  .c-journey::before { left: 5px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+  .c-stop, .c-stop.side { grid-row: auto; grid-column: auto !important; padding-top: 0; border-top: none; }
+  .c-sdot, .c-stop.side .c-sdot { display: block; left: -22px; top: 4px; }
   .c-tr { grid-template-columns: 1.4fr repeat(var(--cols), 1fr); gap: 4px; font-size: 12px; }
   .c-mx { grid-template-columns: 110px repeat(var(--cols), 1fr); gap: 6px; }
   .c-orbit { width: 80%; margin-bottom: 30px; }
