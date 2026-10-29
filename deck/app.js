@@ -427,12 +427,18 @@
     }, true, true)));
     q3.appendChild(c3); box.appendChild(q3);
   }
+  function confirmBtn(box) {
+    const first = cur === 0 && !isOwner();
+    const b = el('button', 'pw-btn', first ? 'Start →' : 'Done');
+    b.onclick = () => { openSetup(false); if (first) { settled = true; syncUrl(); goTo(1); } };
+    box.appendChild(b);
+  }
   function drawSetup() {
     const box = $('setupBody');
     box.innerHTML = '';
     const pres = presenting(), owner = isOwner();
     $('side').querySelector('.side-title').textContent = owner ? 'Setup' : 'Make it yours';
-    if (!owner) { viewerSettings(box); return; }
+    if (!owner) { viewerSettings(box); confirmBtn(box); return; }
     const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Who\'s driving'));
     const c1 = el('div', 'chips');
     c1.appendChild(chip('I\'m presenting', pres, () => {
@@ -442,7 +448,7 @@
     }, true));
     c1.appendChild(chip('They pick their role', !pres, () => { cfg.mode = 'read'; cfg.proj = []; if (cfg.t !== 'all' && !D.times.includes(cfg.t)) cfg.t = 20; apply(); }, true));
     q1.appendChild(c1); box.appendChild(q1);
-    if (!pres) { box.appendChild(el('hr', 'set-hr')); viewerSettings(box); return; }
+    if (!pres) { box.appendChild(el('hr', 'set-hr')); viewerSettings(box); confirmBtn(box); return; }
     const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Session'));
     const c2 = el('div', 'chips');
     SESSION.lengths.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; apply(); }, true)));
@@ -482,6 +488,7 @@
     });
     q3.appendChild(list); box.appendChild(q3);
     box.appendChild(el('p', 'set-note', 'Intro 5 min, then each project with 5 min of Q&A.'));
+    confirmBtn(box);
   }
   function openSetup(open) {
     open = open == null ? $('side').hidden : open;
@@ -491,11 +498,13 @@
     $('app').classList.toggle('with-side', open);
   }
   $('sideClose').onclick = () => openSetup(false);
+  document.addEventListener('mousedown', (e) => { if (!$('side').hidden && !$('side').contains(e.target) && !$('toc').contains(e.target)) openSetup(false); });
   $('prSetup').onclick = () => { closePresenter(); openSetup(true); };
 
   // ---------- Keys ----------
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !$('toc').hidden) { toggleToc(false); return; }
+    if (e.key === 'Escape' && !$('side').hidden) { openSetup(false); return; }
     if (e.target.tagName === 'INPUT' || document.querySelector('.modal:not([hidden])')) return;
     if (e.key === 'S' && e.shiftKey) { e.preventDefault(); markOwner(); openSetup(); return; }
     if (e.key === 'P' && e.shiftKey) { e.preventDefault(); if ($('presenter').hidden) askPresenter(); else closePresenter(); return; }
