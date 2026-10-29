@@ -50,11 +50,11 @@ window.DECK = {
         // About me: the same for everyone. What kind of designer, and why; the reporter years are a bonus, not the story
         { id: 'intro-who', min: 0.5, pri: 1, title: 'About me',
           layout: 'full', center: true,
-          blocks: [{ h: 'I\'m a product designer who solves the problem behind the request' },
+          blocks: [{ h: 'I enjoy solving complex problems. Here\'s how I do it.' },
                    { cards: [
-            { color: '#FFC715', h: 'I ask the right questions', p: 'Years as a reporter taught me to listen, dig, and check what I hear.' },
-            { color: '#FF8B22', h: 'I work well with engineers', p: 'I write HTML, CSS and JS, so I know what\'s easy, what\'s hard, and how to hand off.' },
-            { color: '#ED5148', h: 'I look for the real cause', p: 'Before jumping to a solution, I find out why the problem exists.' }
+            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Years as a reporter taught me to listen, dig, and check what I hear.' },
+            { k: 'Delightful', color: '#FF8B22', h: 'I make it feel simple', p: 'I care how it feels, and I write HTML, CSS and JS, so the details survive the build.' },
+            { k: 'Thoughtful', color: '#ED5148', h: 'I look for the real cause', p: 'Before jumping to a solution, I find out why the problem exists.' }
           ] }] },
 
         // What I bring: written for each role
