@@ -157,8 +157,9 @@ window.DECK = {
         { id: 'qb-context', section: 'Context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], title: 'My role and the team',
           layout: 'split', ratio: 34,
           left: [
+            { h: 'As an end-to-end product designer' },
+            { lines: ['Understanding the real problem', 'Designing the service model', 'Setting AI and human boundaries', 'Designing from concept to prototype', 'Aligning teams on one plan'] },
             { groups: [
-              { h: 'Role', p: 'End-to-end product designer', list: ['Understanding the real problem', 'Designing the service model', 'Setting AI and human boundaries', 'Designing from concept to prototype', 'Aligning teams on one plan'] },
               { h: 'Scope', p: 'Across 4 QuickBooks Online plans' },
               { h: 'Cross-functional teams', p: 'PM · Engineering · Data Science · Service Design · Service Delivery · Core QuickBooks · Expert platform' }
             ] }

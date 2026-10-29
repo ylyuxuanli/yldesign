@@ -47,6 +47,11 @@
       w.appendChild(ul);
       return w;
     },
+    lines(b) {
+      const ul = el('ul', 'c-gl');
+      T(b.lines).forEach((i) => ul.appendChild(el('li', null, T(i))));
+      return ul;
+    },
     groups(b) {
       const w = el('div', 'c-groups');
       b.groups.forEach((g) => w.appendChild(el('div', 'c-g', '<div class="c-gh">' + T(g.h) + '</div><div class="c-gp">' + T(g.p) + '</div>' +
