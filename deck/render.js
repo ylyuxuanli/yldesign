@@ -47,6 +47,15 @@
       w.appendChild(ul);
       return w;
     },
+    // People and tools in a vertical chain; a dashed link means help that only comes later
+    flow(b) {
+      const w = el('div', 'c-flow');
+      b.flow.forEach((x, i) => {
+        if (i) w.appendChild(el('span', 'c-fl' + (x.dashed ? ' dash' : '')));
+        w.appendChild(el('div', 'c-fn', '<img src="' + x.img + '" alt=""/><span>' + T(x.t) + '</span>'));
+      });
+      return w;
+    },
     lines(b) {
       const ul = el('ul', 'c-gl');
       T(b.lines).forEach((i) => ul.appendChild(el('li', null, T(i))));

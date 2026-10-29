@@ -168,9 +168,11 @@ window.DECK = {
 
         { id: 'qb-from', section: 'Context', min: 0.75, pri: 3, title: 'Help only came after something went wrong',
           layout: 'split', ratio: 46,
-          left: [{ h: 'Help only came after something went wrong' },
-                 { p: 'Small business owners did most of their bookkeeping on their own, with very little AI help. They had to spot problems themselves.' }],
-          right: [{ media: { ph: 'Contractor on a job site checking a tablet', fill: true } }] },
+          left: [{ h: 'From' },
+                 { flow: [{ img: '../imgs/deck/from-customer.png', t: 'Customers' },
+                          { img: '../imgs/deck/from-qb.png', t: 'Manual workflow' },
+                          { img: '../imgs/deck/from-expert.png', t: 'Expert services $$', dashed: true }] }],
+          right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
         { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], title: 'Help before problems happen',
           layout: 'split', ratio: 40, zone: 'right',

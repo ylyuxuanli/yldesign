@@ -267,6 +267,13 @@
 .c-pin.up .c-pin-card { bottom: calc(8 * var(--u)); } .c-pin.down .c-pin-card { top: calc(8 * var(--u)); }
 .c-pin-card .c-np { margin-top: calc(0.4 * var(--u)); }
 
+/* Vertical flow of people and tools */
+.c-flow { display: flex; flex-direction: column; margin-top: calc(3 * var(--u)); }
+.c-fn { display: flex; align-items: center; gap: calc(1.6 * var(--u)); font-size: clamp(18px, calc(2.2 * var(--u)), 34px); font-weight: 500; }
+.c-fn img { width: calc(6.4 * var(--u)); height: calc(6.4 * var(--u)); flex: none; }
+.c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
+.c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
+
 /* Phones: slides become scrollable pages */
 @media (max-width: 700px) {
   .c-pins { margin: 0; padding: 0; }
