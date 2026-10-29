@@ -59,7 +59,7 @@
     },
     numbered(b) {
       const w = el('div', 'c-num');
-      b.numbered.forEach((x, i) => w.appendChild(el('div', 'c-ni', '<span class="c-n">' + (i + 1) + '</span><div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div></div>')));
+      T(b.numbered).forEach((x, i) => w.appendChild(el('div', 'c-ni', '<span class="c-n">' + (i + 1) + '</span><div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div></div>')));
       return w;
     },
     steps(b) {

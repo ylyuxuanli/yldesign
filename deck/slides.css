@@ -230,6 +230,7 @@
   .l-split { display: flex; flex-direction: column; padding: 0; }
   .c-col, .c-col.right, .l-split.top .c-col { padding: 44px 20px 20px; gap: 14px; justify-content: flex-start; flex: none; }
   .c-col.right { padding-top: 0; }
+  .c-col.right.zone { padding-top: 20px; }
   .c-col.right.fill { padding: 0 20px 20px; }
   .c-col.right.fill .c-media, .c-col.right > .c-media { height: auto; aspect-ratio: 4 / 3; border-radius: 10px; flex: none; }
   .c-col.themed { padding-bottom: 24px; }
