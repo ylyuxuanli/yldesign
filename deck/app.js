@@ -184,7 +184,7 @@
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
         // A few keywords set expectations better than a sentence
-        if (x.p.keywords) mid.appendChild(el('div', 'ag-why', x.p.keywords.map(esc).join('<span>·</span>')));
+        if (x.p.keywords) mid.appendChild(el('div', 'ag-tags', x.p.keywords.map((k) => '<span class="ag-tag">' + esc(k) + '</span>').join('')));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
@@ -192,7 +192,7 @@
         if (presenting()) {
           const qa = el('div', 'ag-row ag-qa');
           qa.appendChild(el('div', 'ag-n', ''));
-          qa.appendChild(el('div', null, '<span class="ag-tag">Q&amp;A</span>'));
+          qa.appendChild(el('div', 'ag-name', 'Q&amp;A'));
           qa.appendChild(el('div', 'ag-m', SESSION.qa + ' min'));
           block.appendChild(qa);
         }
