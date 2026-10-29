@@ -162,7 +162,7 @@
   function slideNode(s, live) {
     let n;
     if (!s) return el('div', 'slide hs');
-    if (s.type === 'content') return window.renderSlide(s, presenting() ? 'all' : cfg.lens);
+    if (s.type === 'content') return window.renderSlide(s, presenting() ? 'all' : cfg.lens, presenting());
     if (s.type === 'welcome') {
       n = el('div', 'slide hs hs-welcome');
       const t = el('div', 'w-text');

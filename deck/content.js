@@ -197,7 +197,7 @@ window.DECK = {
         { id: 'qb-challenge', section: 'Challenge', skills: ['align', 'strategy', 'ai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], title: 'AI first or human first?',
           layout: 'split', ratio: 42, zone: 'right',
           left: [{ h: 'AI first or human first?', size: 'xl' },
-                 { p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
+                 { read: true, p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
             { h: 'Customers wanted a person', p: 'Our paid services showed people want to talk to a human. Even in free support, people didn\'t like chatting with AI.' },
             { h: 'The business wanted scale', p: 'Humans are expensive and hard to scale, and AI had gotten much better.' },

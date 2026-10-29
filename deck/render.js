@@ -1,7 +1,7 @@
 // Draws content slides from DECK data. See content.js for the fields each layout uses.
 // Content strings are written by the site owner and may contain simple HTML (<em>, <b>).
 (function () {
-  let lens = 'all';
+  let lens = 'all', live = false;
   // Text can be a string or { all, pm, design, ... }: pick the viewer's version
   const T = (x) => (x && typeof x === 'object' && !Array.isArray(x) && 'all' in x) ? (x[lens] != null ? x[lens] : x.all) : x;
   function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
@@ -257,6 +257,7 @@
 
   function blocks(list, parent) {
     (list || []).forEach((b) => {
+      if (b.read && live) return; // read: true blocks are for the self-read version only
       const kind = Object.keys(B).find((k) => k in b);
       if (kind) add(parent, B[kind](b));
     });
@@ -315,8 +316,8 @@
     }
   };
 
-  window.renderSlide = function (s, viewerLens) {
-    lens = viewerLens || 'all';
+  window.renderSlide = function (s, viewerLens, presenting) {
+    lens = viewerLens || 'all'; live = !!presenting;
     const n = el('div', 'slide cs theme-' + (s.project.theme || 'site'));
     (LAYOUT[s.layout] || LAYOUT.full)(s, n);
     return n;
