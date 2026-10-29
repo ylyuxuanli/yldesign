@@ -115,7 +115,7 @@ window.DECK = {
                  { p: { all: 'An AI career platform I built with friends: job tracking, resumes, interview practice.',
                         dm: 'An AI career platform I built with friends. My first time managing designers.' } },
                  { stats: [{ v: '40K+', l: 'users' }, { v: '3', l: 'designers I managed' }], row: true, small: true }],
-          right: [{ media: { ph: 'Offerland job tracker and AI interview coach' } }] },
+          right: [{ media: { src: '../imgs/deck/intro-offerland.webp', fit: 'contain', ph: 'Offerland job tracker and AI interview coach' } }] },
 
         { id: 'intro-life', section: 'Outside of work', min: 0.5, pri: 2, title: 'Delightful moments',
           layout: 'full',
