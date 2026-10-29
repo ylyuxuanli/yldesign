@@ -93,21 +93,21 @@ window.DECK = {
 
         // Work experience comes as a set: all three when there's time, none when there isn't.
         { id: 'intro-intuit', section: 'Work experience', group: 'work', skills: ['ai', 'strategy'], min: 0.5, pri: 2, lens: ['pm', 'dm'], title: 'Intuit',
-          layout: 'split', ratio: 42,
+          layout: 'split', ratio: 36,
           left: [{ h: 'Intuit' },
                  { p: { all: 'I lead design for AI + human experiences in QuickBooks, and a new Business Formation service.',
                         eng: 'I lead design for AI + human experiences in QuickBooks. I also prototype in code and send PRs.' } },
                  { stats: [{ v: '2.6M', l: 'customers reached' }, { v: '85%', l: '31-day retention' }], row: true, small: true }],
-          right: [{ media: { src: '../imgs/qbl1-insight3.jpg', ph: 'Launch timeline of expert services' } }] },
+          right: [{ media: { src: '../imgs/deck/intro-intuit.webp', fit: 'contain', ph: 'Intuit Experts services inside QuickBooks' } }] },
 
         { id: 'intro-lytx', section: 'Work experience', group: 'work', skills: ['systems', 'proto', 'ixd'], min: 0.5, pri: 2, lens: ['eng', 'design', 'ds'], title: 'Lytx',
-          layout: 'split', ratio: 42,
+          layout: 'split', ratio: 36,
           left: [{ h: 'Lytx' },
                  { p: { all: 'Fleet safety software for 5.5M+ drivers. I designed the driver app, dashboards and the design systems behind them.',
                         design: 'Fleet safety software for 5.5M+ drivers. The driver app was dark-only and hard to read in the sun, so I added light mode and built its design system.',
                         eng: 'Fleet safety software for 5.5M+ drivers. I built the mobile and web design systems with engineering, light and dark mode included.',
                         ds: 'Fleet safety software for 5.5M+ drivers. I designed dashboards that turn safety data into a few things to act on.' } }],
-          right: [{ media: { src: '../imgs/lytx-insight1.png', ph: 'Driver app in light and dark mode, with chart components' } }] },
+          right: [{ media: { src: '../imgs/deck/intro-lytx.webp', fit: 'contain', ph: 'Driver app in light and dark mode, with chart components' } }] },
 
         { id: 'intro-offerland', section: 'Work experience', group: 'work', skills: ['zero', 'align'], min: 0.5, pri: 2, lens: ['pm', 'design', 'dm'], title: 'Offerland.ai',
           layout: 'split', ratio: 36,
