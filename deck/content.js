@@ -151,9 +151,9 @@ window.DECK = {
           layout: 'title',
           h: 'QuickBooks: AI + Embedded Human Expertise',
           sub: 'Where should human experts show up in an AI-powered QuickBooks, and how?',
-          media: [{ ph: 'Owner on a video call with an expert' },
-                  { ph: 'Owner with an expense insight card' },
-                  { ph: 'Contractor with "246 tasks done" AI card' }] },
+          media: [{ src: '../imgs/deck/qb-title-1.webp', pos: 'left', ph: 'Owner on a video call with an expert' },
+                  { src: '../imgs/deck/qb-title-2.webp', pos: 'left', ph: 'Owner with an expense insight card' },
+                  { src: '../imgs/deck/qb-title-3.webp', pos: 'right', ph: 'Contractor with "246 tasks done" AI card' }] },
 
         { id: 'qb-context', section: 'Context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], title: 'My role and the team',
           layout: 'split', ratio: 40,
@@ -169,7 +169,7 @@ window.DECK = {
                    eng: 'My job went beyond the interface. I didn\'t own the model. I owned how its decisions show up for customers and experts, and where the boundaries sit.',
                    ds: 'My job went beyond the interface. Data science owned the model. I owned how its work reaches customers, and what it should and shouldn\'t do on its own.' } }
           ],
-          right: [{ media: { ph: 'QuickBooks overview: Books Health, Needs attention, expert video call' } }] },
+          right: [{ media: { src: '../imgs/deck/qb-context.webp', fit: 'contain', ph: 'QuickBooks overview: Books Health, Needs attention, expert video call' } }] },
 
         { id: 'qb-from', section: 'Context', min: 0.75, pri: 3, title: 'Help only came after something went wrong',
           layout: 'split', ratio: 46,
@@ -183,7 +183,7 @@ window.DECK = {
                  { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
                         pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
                         design: 'With AI, the mental model changes: support isn\'t a line you call at the end, it surrounds the customer. That shaped every screen after this.' } }],
-          right: [{ orbit: { center: 'Customer + QuickBooks', nodes: ['Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI', 'Expert', 'AI'] } }] },
+          right: [{ media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', ph: 'AI and experts around the customer' } }] },
 
         { id: 'qb-why', section: 'Why this matters', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], title: '"I don\'t know what I don\'t know"',
           layout: 'full', center: true,
@@ -210,26 +210,16 @@ window.DECK = {
                    pm: 'Expert services worried about their revenue. Core QuickBooks cared about the overall experience. We needed one definition before a roadmap.' } }
           ] }] },
 
-        { id: 'qb-journey', section: 'What I did', skills: ['service', 'research', 'align'], min: 1, pri: 3, lens: ['design', 'dm'], title: 'Mapping the journey together',
+        { id: 'qb-journey', section: 'What I did', skills: ['service', 'research', 'align', 'ai'], min: 1.75, pri: 2, lens: ['design', 'dm', 'pm'], title: 'Where expertise matters most',
           layout: 'full',
-          blocks: [{ h: 'Mapping the journey together' },
-                   { sub: { all: 'With core QuickBooks, service design and service delivery',
-                            dm: 'Mapping it together is how three teams started to share one picture' } },
-                   { media: { ph: 'Customer journey map across onboarding, ongoing use and year-end', grow: true } }] },
-
-        { id: 'qb-journey-moments', section: 'What I did', skills: ['service', 'ai'], min: 1, pri: 2, lens: ['design', 'dm', 'pm'], title: 'Where a human really matters',
-          layout: 'full', center: true,
-          blocks: [{ h: 'Where a human really matters' },
-                   { p: { all: 'The need for experts wasn\'t spread evenly. It peaked at onboarding and year-end. In between, most issues didn\'t need a live call. They needed something they could trust.',
-                          pm: 'The need for experts wasn\'t spread evenly. That told us where to invest expert time first: onboarding and year-end, with lighter support in between.',
-                          design: 'The need for experts wasn\'t spread evenly. These moments became the anchors for where experts show up in the product.',
-                          dm: 'The need for experts wasn\'t spread evenly. This gave every team the same small set of moments to agree on, instead of arguing about AI versus human in general.' } },
-                   { timeline: [
-                     { h: 'Onboarding', p: 'Setting up the books and making early decisions. Peak need.' },
-                     { h: 'Critical decisions', p: 'High-risk choices that affect accuracy and compliance' },
-                     { h: 'Ongoing', p: 'Unexpected issues over time. Usually needs trust, not a call.' },
-                     { h: 'Year-end', p: 'Accuracy and taxes matter most. Peak need.' }
-                   ] }] },
+          blocks: [{ h: 'Defining where expertise matters most' },
+                   { sub: 'With core QuickBooks teams, service design and service delivery' },
+                   { pins: { src: '../imgs/deck/qb-journey.webp', alt: 'Customer journey map across onboarding, ongoing use and year-end', at: [
+                     { x: 30.6, y: 44, h: 'Onboarding', p: 'Customers are unsure how to set up and make initial decisions' },
+                     { x: 49, y: 44, up: true, h: 'Critical financial decisions', p: 'High-risk decisions impacting accuracy and compliance' },
+                     { x: 65.4, y: 44, h: 'Ongoing support', p: 'Unexpected issues and anomalies over time' },
+                     { x: 83, y: 44, up: true, h: 'Year-end review', p: 'Prepare for tax season' }
+                   ] } }] },
 
         { id: 'qb-levels', section: 'What I did', skills: ['ai', 'systems'], min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], title: 'Who holds the missing piece?',
           layout: 'split', ratio: 38, zone: 'left',
@@ -304,19 +294,23 @@ window.DECK = {
           layout: 'split', ratio: 40,
           left: [{ h: 'If AI works in the background, how much do you show?' },
                  { p: 'Show everything and it\'s overwhelming. Show too little and it\'s a black box. I ran co-design sessions with customers to find the line.' }],
-          right: [{ media: { ph: 'Co-design board with sticky notes and concept sketches' } }] },
+          right: [{ media: { src: '../imgs/deck/qb-codesign.webp', fit: 'contain', ph: 'Co-design board with sticky notes and concept sketches' } }] },
 
         { id: 'qb-prototypes', section: 'What I did', skills: ['proto', 'ixd', 'ai'], min: 1, pri: 2, lens: ['design', 'pm'], title: 'Four interaction models',
           layout: 'full',
           blocks: [{ h: 'Four interaction models, one winner' },
-                   { table: { cols: ['Chat first', 'By who does it', 'By level', 'By workflow'], hi: 3, rows: [
+                   { table: { cols: ['Chat first', 'By who does it', 'By level', 'By workflow'], hi: 3,
+                     imgs: [{ src: '../imgs/deck/qb-model-2.webp', ph: 'Overview with AI chat' },
+                            { src: '../imgs/deck/qb-model-6.webp', ph: 'Your bookkeeping team' },
+                            { src: '../imgs/deck/qb-model-3.webp', ph: 'Grouped by AI confidence' },
+                            { src: '../imgs/deck/qb-model-5.webp', ph: 'Close the month, step by step' }],
+                     rows: [
                      { h: 'Everything happens in', cells: ['A conversation', 'AI vs human', 'L1, L2, L3', 'The owner\'s books'] },
                      { h: 'Matches how customers think', cells: [false, false, false, true] }
                    ] } },
                    { p: { all: 'AI versus human and the three levels are how we think about the system. Customers think about their books: what\'s done, and what needs them. So AI and experts show up inside the workflow, and chat is a helper, not the main surface.',
                           pm: 'The levels were great for us internally, but customers don\'t think that way. We organized around their workflow, which also meant AI and expert features could ship into one surface.',
-                          design: 'The lesson: don\'t ship your internal model as the IA. Customers think about their books, so AI and experts show up inside the workflow, and chat is a helper, not the main surface.' } },
-                   { mediaGrid: [{ ph: 'Your bookkeeping team' }, { ph: 'Overview with tasks' }, { ph: 'Overview with insights' }, { ph: 'Overview with AI chat' }], cols: 4 }] },
+                          design: 'The lesson: don\'t ship your internal model as the IA. Customers think about their books, so AI and experts show up inside the workflow, and chat is a helper, not the main surface.' } }] },
 
         { id: 'qb-solution', section: 'Final design', skills: ['ixd', 'ai', 'proto'], min: 1, pri: 1, lens: ['design', 'eng'], title: 'One overview, AI and experts built in',
           layout: 'split', ratio: 34,

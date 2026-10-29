@@ -9,13 +9,14 @@
 
   const ICON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>';
   function media(m, cls) {
-    const box = el('div', 'c-media' + (cls ? ' ' + cls : '') + (m.grow ? ' grow' : ''));
+    const box = el('div', 'c-media' + (cls ? ' ' + cls : '') + (m.grow ? ' grow' : '') + (m.fit ? ' ' + m.fit : ''));
     if (m.video) {
       const v = el('video'); v.src = m.video; if (m.poster) v.poster = m.poster;
       v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('aria-label', m.cap || m.ph || '');
       box.appendChild(v);
     } else if (m.src) {
       const img = el('img'); img.src = m.src; img.alt = m.cap || m.ph || '';
+      if (m.pos) img.style.objectPosition = m.pos;
       box.appendChild(img);
     } else {
       box.classList.add('ph');
@@ -194,6 +195,12 @@
       const w = el('div', 'c-table'); w.style.setProperty('--cols', x.cols.length);
       const cell = (v, i) => '<span class="' + (i === x.hi ? 'hi' : '') + (v === true ? ' yes' : v === false ? ' no' : '') + '">' +
         (v === true ? '✓' : v === false ? '✕' : T(v)) + '</span>';
+      if (x.imgs) {
+        w.classList.add('has-imgs');
+        const r = el('div', 'c-tr imgs', '<span></span>');
+        x.imgs.forEach((m) => r.appendChild(media(m, 'contain')));
+        w.appendChild(r);
+      }
       w.appendChild(el('div', 'c-tr head', '<span></span>' + x.cols.map((c, i) => cell(c, i)).join('')));
       x.rows.forEach((r) => w.appendChild(el('div', 'c-tr', '<span class="c-trh">' + T(r.h) + '</span>' + r.cells.map(cell).join(''))));
       return w;
@@ -206,6 +213,22 @@
           '<div class="c-when">' + T(x.when) + '</div><div class="c-nh">' + T(x.h) + '</div><div class="c-np">' + T(x.p) + '</div>' +
           (x.at ? '<div class="c-at">' + T(x.at) + '</div>' : '')));
       });
+      return w;
+    },
+    // A big map with a few callouts pinned on it. x/y are % of the image; up/down picks the card side.
+    pins(b) {
+      const x = b.pins;
+      const w = el('div', 'c-pins');
+      const map = el('div', 'c-pins-map');
+      const img = el('img'); img.src = x.src; img.alt = T(x.alt || '');
+      map.appendChild(img);
+      x.at.forEach((p) => {
+        const d = el('div', 'c-pin ' + (p.up ? 'up' : 'down'),
+          '<i></i><b></b><div class="c-pin-card"><div class="c-nh">' + T(p.h) + '</div><div class="c-np">' + T(p.p) + '</div></div>');
+        d.style.left = p.x + '%'; d.style.top = p.y + '%';
+        map.appendChild(d);
+      });
+      w.appendChild(map);
       return w;
     },
     swap(b) {
