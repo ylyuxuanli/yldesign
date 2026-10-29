@@ -177,3 +177,17 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
   .count { margin-left: auto; }
   .presenter { grid-template-columns: 1fr; grid-template-rows: 45vh 1fr; }
 }
+
+/* Presenting setup (only Yuxuan opens this) */
+#setupBody .q { margin: 0 0 20px; }
+#setupBody .q-label { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+#setupBody .chips { gap: 8px; }
+.set-list { display: flex; flex-direction: column; gap: 4px; }
+.set-row { display: flex; align-items: center; gap: 6px; }
+.set-row .check { flex: 1; margin: 0; padding: 6px 0; }
+.set-row.off .check { color: #999; }
+.set-row .link-btn { padding: 2px 8px; }
+.set-row .link-btn:disabled { opacity: 0.25; cursor: default; }
+#setupApply { margin-top: 4px; }
+#setupBody { margin-top: 20px; }
+#setupBody .chip { padding: 7px 14px; font-size: 14px; }

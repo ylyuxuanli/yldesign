@@ -14,20 +14,29 @@
   // ---------- Settings, kept in the URL ----------
   const q = new URLSearchParams(location.search);
   const allSkills = D.skills.map((x) => x.id);
-  const cfg = {
-    lens: D.lenses.some((l) => l.id === q.get('for')) ? q.get('for') : 'all',
-    t: q.get('t') === 'all' ? 'all' : (parseInt(q.get('t'), 10) || 20),
-    skills: (q.get('s') || '').split(',').filter((id) => allSkills.includes(id))
-  };
-  const preset = q.has('for') || q.has('t');
+  const projIds = D.projects.filter((p) => p.id !== 'intro').map((p) => p.id);
+  // mode 'present' is Yuxuan's own setup: no questions, her project order, and
+  // slides marked `read` are left out because she tells those parts herself
+  function readCfg(p) {
+    return {
+      lens: D.lenses.some((l) => l.id === p.get('for')) ? p.get('for') : 'all',
+      t: p.get('t') === 'all' ? 'all' : (parseInt(p.get('t'), 10) || 20),
+      skills: (p.get('s') || '').split(',').filter((id) => allSkills.includes(id)),
+      mode: p.get('m') === 'present' ? 'present' : 'read',
+      proj: (p.get('p') || '').split(',').filter((id) => projIds.includes(id))
+    };
+  }
+  const cfg = readCfg(q);
+  const presenting = () => cfg.mode === 'present';
+  const preset = q.has('for') || q.has('t') || presenting();
   const locked = q.get('lock') === '1';
   const audience = q.get('audience') === '1';
 
   function query(c, extra) {
     const p = new URLSearchParams();
-    if (c.lens !== 'all') p.set('for', c.lens);
+    if (c.mode === 'present') { p.set('m', 'present'); if (c.proj.length) p.set('p', c.proj.join(',')); }
+    else { if (c.lens !== 'all') p.set('for', c.lens); if (c.skills.length) p.set('s', c.skills.join(',')); }
     p.set('t', c.t);
-    if (c.skills.length) p.set('s', c.skills.join(','));
     Object.entries(extra || {}).forEach(([k, v]) => p.set(k, v));
     return p.toString();
   }
@@ -42,17 +51,21 @@
   // comes in whole (its core slides) or not at all, so a short deck never ends on a
   // lone cover. Leftover time goes to the slides this audience cares about most.
   function build() {
-    const lensOn = cfg.lens !== 'all';
+    const lensOn = cfg.lens !== 'all' && !presenting();
     const hits = (s) => (s.skills || []).filter((k) => cfg.skills.includes(k)).length;
     const score = (s) => (s.must ? 100 : 0) + (4 - s.pri) * 2 +
       (lensOn && (s.lens || []).includes(cfg.lens) ? 2.5 : 0) + (hits(s) ? 2 + hits(s) : 0);
     const intro = D.projects.filter((p) => p.id === 'intro');
-    const cases = D.projects.filter((p) => p.id !== 'intro')
-      .map((p, i) => ({ p, i, fit: p.slides.reduce((a, s) => a + hits(s), 0) }))
-      .sort((a, b) => b.fit - a.fit || a.i - b.i).map((x) => x.p);
+    const cases = presenting() && cfg.proj.length
+      ? cfg.proj.map((id) => D.projects.find((p) => p.id === id))
+      : D.projects.filter((p) => p.id !== 'intro')
+        .map((p, i) => ({ p, i, fit: p.slides.reduce((a, s) => a + hits(s), 0) }))
+        .sort((a, b) => b.fit - a.fit || a.i - b.i).map((x) => x.p);
     const order = intro.concat(cases);
     const flat = [];
-    order.forEach((p) => p.slides.forEach((s) => flat.push({ ...s, project: p, sc: score(s) - flat.length * 0.001 })));
+    order.forEach((p) => p.slides.forEach((s) => {
+      if (!(s.read && presenting())) flat.push({ ...s, project: p, sc: score(s) - flat.length * 0.001 });
+    }));
     let budget = cfg.t === 'all' ? Infinity : cfg.t - MIN.welcome - MIN.agenda;
     const keep = new Set();
     const take = (s) => { keep.add(s); budget -= s.min; };
@@ -82,7 +95,7 @@
     const picked = flat.filter((s) => keep.has(s));
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
-    if (!locked) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
+    if (!locked && !presenting()) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
     seq.push({ type: 'agenda', id: 'agenda', min: MIN.agenda });
     picked.forEach((s) => seq.push({ ...s, type: 'content' }));
     seq.push({ type: 'end', id: 'end', min: MIN.end });
@@ -117,20 +130,20 @@
   function slideNode(s, live) {
     let n;
     if (!s) return el('div', 'slide hs');
-    if (s.type === 'content') return window.renderSlide(s, cfg.lens);
+    if (s.type === 'content') return window.renderSlide(s, presenting() ? 'all' : cfg.lens);
     if (s.type === 'welcome') {
       n = el('div', 'slide hs hs-welcome');
       const t = el('div', 'w-text');
       t.appendChild(el('div', 'dots', '<span></span><span></span><span></span>'));
       t.appendChild(el('h1', 'hs-h', 'Hi, I\'m Yuxuan.'));
-      t.appendChild(el('p', 'hs-p', settled
+      if (!presenting()) t.appendChild(el('p', 'hs-p', settled
         ? 'I put together a version of my work for ' + esc(forWhom()) + ', ' + (cfg.t === 'all' ? '' : 'about ') + esc(timeLabel()) + '.'
         : 'Tell me a little about you, and this deck will shape itself around what you care about.'));
       const row = el('div', 'cta-row');
       const go = el('button', 'cta', settled ? 'Start →' : 'Let\'s go →');
       go.onclick = () => goTo(settled ? indexOf('agenda') : indexOf('setup'));
       row.appendChild(go);
-      if (settled && !locked) { const ch = el('button', 'link-btn', 'Change role or time'); ch.onclick = () => goTo(indexOf('setup')); row.appendChild(ch); }
+      if (settled && !locked && !presenting()) { const ch = el('button', 'link-btn', 'Change role or time'); ch.onclick = () => goTo(indexOf('setup')); row.appendChild(ch); }
       t.appendChild(row);
       n.appendChild(t);
       n.appendChild(el('div', 'w-photo'));
@@ -169,7 +182,7 @@
         const r = el('div', 'ag-row');
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
-        if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc(x.p.focus[cfg.lens] || x.p.focus.all)));
+        if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc((!presenting() && x.p.focus[cfg.lens]) || x.p.focus.all)));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
@@ -188,7 +201,7 @@
         '<a href="https://linkedin.com/in/yuxuan-yl" target="_blank">LinkedIn</a>' +
         '<a href="../imgs/yuxuan_resume.pdf" target="_blank">Resume</a>' +
         '<a href="../index.html">yldesign.me</a>'));
-      if (live && !audience) {
+      if (live && !audience && !presenting()) {
         const row = el('div', 'cta-row');
         if (!locked) { const b = el('button', 'link-btn', 'See another version'); b.onclick = () => goTo(indexOf('setup')); row.appendChild(b); }
         const sh = el('button', 'link-btn', 'Share this version'); sh.onclick = openShare; row.appendChild(sh);
@@ -306,7 +319,7 @@
     const n = (notes && notes[s.type === 'content' ? s.id : s.type]) || {};
     const box = $('prNotes');
     box.innerHTML = n.base ? esc(n.base) : '<span class="none">No notes for this slide.</span>';
-    const extra = n.lens && n.lens[cfg.lens];
+    const extra = !presenting() && n.lens && n.lens[cfg.lens];
     if (extra) box.appendChild(el('span', 'lens-note', '<b>' + esc(lens(cfg.lens).name) + ':</b> ' + esc(extra)));
     drawTimer();
     if (bc) bc.postMessage({ type: 'go', i: cur, q: query(cfg), settled });
@@ -328,10 +341,7 @@
   if (audience && bc) {
     bc.onmessage = (e) => {
       if (e.data.type !== 'go') return;
-      const p = new URLSearchParams(e.data.q);
-      cfg.lens = p.get('for') || 'all';
-      cfg.t = p.get('t') === 'all' ? 'all' : +p.get('t');
-      cfg.skills = (p.get('s') || '').split(',').filter(Boolean);
+      Object.assign(cfg, readCfg(new URLSearchParams(e.data.q)));
       settled = e.data.settled;
       plan = build(); goTo(e.data.i);
     };
@@ -341,12 +351,13 @@
   function shareUrl() {
     const extra = {};
     if (!$('shareAdjust').checked) extra.lock = 1;
-    const qs = $('shareSkip').checked || extra.lock ? '?' + query(cfg, extra) : '';
+    const c = { ...cfg, mode: 'read' };
+    const qs = $('shareSkip').checked || extra.lock ? '?' + query(c, extra) : '';
     return location.origin + location.pathname + qs;
   }
   function drawShare() {
     $('shareUrl').value = shareUrl();
-    $('shareDesc').textContent = 'For ' + forWhom() + ', ' + timeLabel() + ', ' + plan.picked.length + ' slides. They will need the site password.';
+    $('shareDesc').textContent = 'For ' + (presenting() ? 'everyone' : forWhom()) + ', ' + timeLabel() + ', ' + plan.picked.length + ' slides. They will need the site password.';
   }
   function openShare() { drawShare(); $('shareModal').hidden = false; }
 
@@ -363,7 +374,11 @@
       b.onclick = () => { toggleToc(false); fn(); };
       toc.appendChild(b);
     };
-    if (settled) {
+    if (presenting()) {
+      toc.appendChild(el('div', 'toc-k', 'Presenting · ' + esc(timeLabel())));
+      item('Presenting setup', openSetup, 'S');
+      toc.appendChild(el('hr'));
+    } else if (settled) {
       toc.appendChild(el('div', 'toc-k', 'For ' + esc(forWhom()) + ' · ' + esc(timeLabel())));
       if (!locked) item('Change role or time', () => goTo(indexOf('setup')));
       toc.appendChild(el('hr'));
@@ -385,10 +400,61 @@
   };
   document.querySelectorAll('[data-close]').forEach((b) => { b.onclick = () => { b.closest('.modal').hidden = true; }; });
 
+  // ---------- Presenting setup (hidden: Shift+S, #setup, or the presenter view) ----------
+  let draft = null;
+  function drawSetup() {
+    const box = $('setupBody');
+    box.innerHTML = '';
+    const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Version'));
+    const c1 = el('div', 'chips');
+    c1.appendChild(chip('I\'m presenting', draft.mode === 'present', () => { draft.mode = 'present'; drawSetup(); }, true));
+    c1.appendChild(chip('They pick their role', draft.mode === 'read', () => { draft.mode = 'read'; drawSetup(); }, true));
+    q1.appendChild(c1); box.appendChild(q1);
+    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Time'));
+    const c2 = el('div', 'chips');
+    D.times.forEach((m) => c2.appendChild(chip(m + ' min', draft.t === m, () => { draft.t = m; drawSetup(); }, true)));
+    c2.appendChild(chip('All', draft.t === 'all', () => { draft.t = 'all'; drawSetup(); }, true));
+    q2.appendChild(c2); box.appendChild(q2);
+    if (draft.mode !== 'present') return;
+    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Projects, in order'));
+    const list = el('div', 'set-list');
+    const order = draft.proj.concat(projIds.filter((id) => !draft.proj.includes(id)));
+    order.forEach((id) => {
+      const p = D.projects.find((x) => x.id === id), on = draft.proj.includes(id), i = draft.proj.indexOf(id);
+      const r = el('div', 'set-row' + (on ? '' : ' off'));
+      const cb = el('label', 'check', '<input type="checkbox"' + (on ? ' checked' : '') + '/> ' + esc(p.name));
+      cb.querySelector('input').onchange = () => { draft.proj = on ? draft.proj.filter((x) => x !== id) : draft.proj.concat(id); drawSetup(); };
+      r.appendChild(cb);
+      if (on && draft.proj.length > 1) {
+        const mv = (d) => { const a = draft.proj.slice(); [a[i], a[i + d]] = [a[i + d], a[i]]; draft.proj = a; drawSetup(); };
+        const up = el('button', 'link-btn', '↑'); up.disabled = i === 0; up.onclick = () => mv(-1);
+        const dn = el('button', 'link-btn', '↓'); dn.disabled = i === draft.proj.length - 1; dn.onclick = () => mv(1);
+        r.appendChild(up); r.appendChild(dn);
+      }
+      list.appendChild(r);
+    });
+    q3.appendChild(list); box.appendChild(q3);
+  }
+  function openSetup() {
+    draft = { mode: cfg.mode === 'present' || !settled ? 'present' : 'read', t: cfg.t, proj: cfg.proj.length ? cfg.proj.slice() : projIds.slice() };
+    drawSetup();
+    $('setupModal').hidden = false;
+  }
+  $('setupApply').onclick = () => {
+    if (draft.mode === 'present' && !draft.proj.length) return;
+    Object.assign(cfg, { mode: draft.mode, t: draft.t, proj: draft.mode === 'present' ? draft.proj : [] });
+    if (presenting()) { cfg.lens = 'all'; cfg.skills = []; }
+    settled = presenting() || settled;
+    $('setupModal').hidden = true;
+    plan = build(); syncUrl(); goTo(0);
+  };
+  $('prSetup').onclick = openSetup;
+
   // ---------- Keys ----------
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !$('toc').hidden) { toggleToc(false); return; }
     if (e.target.tagName === 'INPUT' || document.querySelector('.modal:not([hidden])')) return;
+    if (e.key === 'S' && e.shiftKey) { e.preventDefault(); openSetup(); return; }
     if (e.key === 'P' && e.shiftKey) { e.preventDefault(); if ($('presenter').hidden) askPresenter(); else closePresenter(); return; }
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
@@ -399,9 +465,11 @@
   function start() {
     if (audience) { document.body.classList.add('audience'); goTo(+q.get('at') || 0); return; }
     const wantsPresenter = location.hash === '#presenter';
+    const wantsSetup = location.hash === '#setup';
     syncUrl();
     goTo(0);
     if (wantsPresenter) askPresenter();
+    else if (wantsSetup) openSetup();
   }
   const overlay = $('pwOverlay');
   let ok = false;
