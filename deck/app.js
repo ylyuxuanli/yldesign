@@ -69,8 +69,16 @@
         byScore(c).forEach((s) => { if (s.must || s.min <= budget) take(s); });
       }
     });
-    byScore(flat.filter((s) => shown.has(s.project) && !keep.has(s)))
-      .forEach((s) => { if (s.min <= budget) take(s); });
+    // Grouped slides (like work experience) come in together or not at all
+    const units = [], groups = new Set();
+    const rest = flat.filter((s) => shown.has(s.project) && !keep.has(s));
+    byScore(rest).forEach((s) => {
+      if (!s.group) { units.push([s]); return; }
+      if (groups.has(s.group)) return;
+      groups.add(s.group);
+      units.push(rest.filter((x) => x.group === s.group));
+    });
+    units.forEach((u) => { if (u.reduce((a, s) => a + s.min, 0) <= budget) u.forEach(take); });
     const picked = flat.filter((s) => keep.has(s));
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];

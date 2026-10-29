@@ -269,7 +269,6 @@
   window.renderSlide = function (s, viewerLens) {
     lens = viewerLens || 'all';
     const n = el('div', 'slide cs theme-' + (s.project.theme || 'site'));
-    if (s.label && s.layout !== 'title') n.appendChild(el('div', 'c-label', T(s.label)));
     (LAYOUT[s.layout] || LAYOUT.full)(s, n);
     return n;
   };
