@@ -50,7 +50,7 @@
 .c-dots span { width: clamp(8px, calc(0.9 * var(--u)), 13px); height: clamp(8px, calc(0.9 * var(--u)), 13px); border-radius: 50%; }
 .c-dots span:nth-child(1) { background: var(--yellow); } .c-dots span:nth-child(2) { background: var(--orange); } .c-dots span:nth-child(3) { background: var(--accent); }
 
-.l-values { justify-content: center; background: var(--bg); }
+.l-values { justify-content: center; gap: calc(4 * var(--u)); background: var(--bg); }
 .c-values { display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(4 * var(--u)); }
 .c-value .sq, .c-card .sq { display: block; width: clamp(18px, calc(1.8 * var(--u)), 28px); height: clamp(18px, calc(1.8 * var(--u)), 28px); border-radius: 4px; margin-bottom: calc(1.4 * var(--u)); }
 .c-vn { font-size: clamp(22px, calc(2.6 * var(--u)), 42px); font-weight: 400; letter-spacing: -0.01em; }

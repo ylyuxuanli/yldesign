@@ -47,29 +47,31 @@ window.DECK = {
       name: 'About me',
       short: 'About me',
       slides: [
+        // Who she is and what she brings: her three brand words, each tied to where it comes from
         { id: 'intro-who', min: 0.75, pri: 1, title: 'What I bring',
-          layout: 'full', center: true,
-          blocks: [{ h: 'What I bring to a team' },
-                   { cards: [
-            { color: '#FFC715', h: 'Find the real problem',
-              p: { all: 'When nobody can say what the problem is yet, I use research and the customer journey to define it, and get teams to agree on it.',
-                   pm: 'When the problem isn\'t defined yet, I use research and the customer journey to frame it, so we know what to build and what to cut.',
-                   dm: 'When the problem isn\'t defined yet, I use research and the customer journey to frame it, and get partner teams with different goals to agree.' } },
-            { color: '#FF8B22', h: 'Design how AI and people work together',
-              p: { all: 'I decide what AI does on its own, what the customer confirms, and when an expert steps in. Then I design the screens around that.',
-                   ds: 'I decide what AI does on its own, what the customer confirms, and when an expert steps in, based on what the model can really be trusted with.',
-                   eng: 'I decide what AI does on its own, what the customer confirms, and when an expert steps in, and spell out the logic so it can be built.' } },
-            { color: '#ED5148', h: 'Prove it before the big build',
-              p: { all: 'I prototype in code and run small pilots, so the team learns what works before investing in it.',
-                   eng: 'I build my prototypes in HTML, CSS and JS, and run small pilots, so we learn what works before engineering invests in it.' } }
-          ] }] },
-
-        { id: 'intro-values', min: 0.5, pri: 3, title: 'Curious, delightful, thoughtful',
-          layout: 'values',
+          layout: 'values', h: 'What I bring to a team',
           items: [
-            { name: 'Curious', color: '#FFC715', text: 'I ask why a lot, before drawing anything.' },
-            { name: 'Delightful', color: '#FF8B22', text: 'I care how things feel, not just whether they work.' },
-            { name: 'Thoughtful', color: '#ED5148', text: 'I think about what happens after launch, not just on launch day.' }
+            { name: 'Curious', color: '#FFC715',
+              text: { all: 'I was a reporter first. I still start by asking why.',
+                      pm: 'I ask why before we build, so we solve the right problem.',
+                      design: 'Reporter first. I still start with people, not screens.',
+                      dm: 'I ask the questions that get partner teams to agree on the problem.',
+                      eng: 'I want to know how things work, so I write HTML, CSS and JS myself.',
+                      ds: 'Reporter first. I size a problem with data before I design for it.' } },
+            { name: 'Delightful', color: '#FF8B22',
+              text: { all: 'I care how things feel, not just whether they work.',
+                      pm: 'I make complex flows feel simple, which is what gets them used.',
+                      design: 'I care how it feels, from design systems at Lytx to AI moments at Intuit.',
+                      dm: 'I\'ve built design systems and managed three designers at a startup.',
+                      eng: 'I build design systems with engineers, light and dark mode included.',
+                      ds: 'I turn dense data into a few things people can act on.' } },
+            { name: 'Thoughtful', color: '#ED5148',
+              text: { all: 'I think past launch: what AI should do, and when a person steps in.',
+                      pm: 'I think past launch: what to ship first, what to cut, what to measure.',
+                      design: 'I design the system behind the screens, not just the screens.',
+                      dm: 'I think about who owns what after launch, not just the UI.',
+                      eng: 'I spell out the logic: what AI does alone, what needs a human, the edge cases.',
+                      ds: 'I decide what a model should do alone, and what needs a human check.' } }
           ] },
 
         // Work experience comes as a set: all three when there's time, none when there isn't.

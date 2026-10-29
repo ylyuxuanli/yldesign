@@ -229,6 +229,7 @@
     },
     values(s, n) {
       n.classList.add('l-values');
+      if (s.h) n.appendChild(el('h2', 'c-h', T(s.h)));
       const w = el('div', 'c-values');
       s.items.forEach((v) => {
         const d = el('div', 'c-value', '<span class="sq"></span><div class="c-vn">' + T(v.name) + '</div>' + (v.text ? '<div class="c-np">' + T(v.text) + '</div>' : ''));
