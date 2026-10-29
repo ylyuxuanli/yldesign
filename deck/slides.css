@@ -138,6 +138,13 @@
 .c-card .c-k { margin-bottom: calc(0.6 * var(--u)); }
 .c-card .c-nh { font-size: clamp(17px, calc(1.8 * var(--u)), 28px); font-weight: 400; letter-spacing: -0.01em; }
 .c-cp { font-size: clamp(14px, calc(1.2 * var(--u)), 19px); color: var(--sub); line-height: 1.55; font-weight: 300; margin-top: calc(0.3 * var(--u)); }
+/* Big cards: one strong word per column, then the line, then the detail */
+.l-full.center .c-cards.big { margin-top: calc(3 * var(--u)); }
+.c-cards.big { gap: calc(5 * var(--u)); }
+.c-cards.big .sq { width: calc(1.1 * var(--u)); height: calc(1.1 * var(--u)); min-width: 10px; min-height: 10px; border-radius: 50%; margin-bottom: calc(1.6 * var(--u)); }
+.c-cards.big .c-nh { font-size: clamp(24px, calc(2.8 * var(--u)), 46px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.1; }
+.c-cs { font-size: clamp(15px, calc(1.4 * var(--u)), 22px); margin-top: calc(1.4 * var(--u)); }
+.c-cards.big .c-cp { margin-top: calc(0.5 * var(--u)); max-width: calc(30 * var(--u)); }
 .c-pick { display: grid; gap: calc(0.8 * var(--u)); }
 .c-pick div { padding: calc(1 * var(--u)) calc(1.4 * var(--u)); border-radius: calc(0.6 * var(--u)); background: #F5F5F4; color: var(--muted); font-size: clamp(14px, calc(1.25 * var(--u)), 20px); }
 .c-pick div.on { background: var(--theme); color: #fff; }

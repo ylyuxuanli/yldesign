@@ -55,10 +55,10 @@ window.DECK = {
         { id: 'intro-who', section: 'About me', min: 0.5, pri: 1, title: 'About me',
           layout: 'full', center: true,
           blocks: [{ h: 'I enjoy solving complex problems. Here\'s how I do it.' },
-                   { cards: [
-            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Working as a reporter taught me to dig past the request to the real cause.' },
-            { k: 'Delightful', color: '#FF8B22', h: 'I design for how people feel', p: 'Solving the problem is half of it. I want people to leave calmer, and a little happier.' },
-            { k: 'Thoughtful', color: '#ED5148', h: 'I find the right balance', p: 'I understand business needs and how code works, so I weigh them with user needs and find what holds up.' }
+                   { big: true, cards: [
+            { color: '#FFC715', h: 'Curious', sub: 'I ask the right questions', p: 'Working as a reporter taught me to dig past the request to the real cause.' },
+            { color: '#FF8B22', h: 'Delightful', sub: 'I design for how people feel', p: 'Solving the problem is half of it. I want people to leave calmer, and a little happier.' },
+            { color: '#ED5148', h: 'Thoughtful', sub: 'I find the right balance', p: 'I understand business needs and how code works, so I weigh them with user needs and find what holds up.' }
           ] }] },
 
         // What I bring: written for each role
