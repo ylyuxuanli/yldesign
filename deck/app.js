@@ -184,7 +184,7 @@
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
         // A few keywords set expectations better than a sentence
-        if (x.p.keywords) mid.appendChild(el('div', 'ag-tags', x.p.keywords.map((k) => '<span class="ag-tag">' + esc(k) + '</span>').join('')));
+        if (x.p.keywords) mid.appendChild(el('div', 'ag-tags ag-' + x.p.theme, x.p.keywords.map((k) => '<span>' + esc(k) + '</span>').join('')));
         r.appendChild(mid);
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
