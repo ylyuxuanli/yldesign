@@ -212,10 +212,9 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-grip { color: var(--muted); font-size: 13px; }
 .set-min { font-size: 13px; color: var(--muted); }
 @media (max-width: 560px) { .set-checks { grid-template-columns: 1fr 1fr; } }
-/* Agenda: keywords in the project's own color; Q&A is a quiet gray stop */
+/* Agenda: gray keywords under each project; Q&A is its own line */
 .ag-block { display: flex; flex-direction: column; gap: calc(1.6 * var(--u)); }
-.ag-tags { display: flex; flex-wrap: wrap; gap: calc(0.4 * var(--u)) calc(2 * var(--u)); margin-top: calc(0.8 * var(--u)); font-size: clamp(12px, calc(1.3 * var(--u)), 17px); }
-.ag-navy { color: #1D4E9E; } .ag-green { color: #2CA01C; }
+.ag-tags { display: flex; flex-wrap: wrap; gap: calc(0.4 * var(--u)) calc(2 * var(--u)); margin-top: calc(0.8 * var(--u)); font-size: clamp(12px, calc(1.3 * var(--u)), 17px); color: var(--muted); }
 .ag-qa { cursor: default; }
-.ag-qa .ag-name { font-size: clamp(14px, calc(1.5 * var(--u)), 20px); color: var(--muted); }
-.ag-qa:hover .ag-name { color: var(--muted); }
+.ag-qa .ag-name { font-size: clamp(15px, calc(1.7 * var(--u)), 24px); color: var(--sub); }
+.ag-qa:hover .ag-name { color: var(--sub); }
