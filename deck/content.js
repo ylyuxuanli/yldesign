@@ -110,7 +110,7 @@ window.DECK = {
           right: [{ media: { src: '../imgs/lytx-insight1.png', ph: 'Driver app in light and dark mode, with chart components' } }] },
 
         { id: 'intro-offerland', section: 'Work experience', group: 'work', skills: ['zero', 'align'], min: 0.5, pri: 2, lens: ['pm', 'design', 'dm'], title: 'Offerland.ai',
-          layout: 'split', ratio: 42,
+          layout: 'split', ratio: 36,
           left: [{ h: 'Offerland.ai' },
                  { p: { all: 'An AI career platform I built with friends: job tracking, resumes, interview practice.',
                         dm: 'An AI career platform I built with friends. My first time managing designers.' } },
