@@ -118,7 +118,7 @@ window.DECK = {
           right: [{ media: { src: '../imgs/deck/intro-offerland.webp', fit: 'contain', ph: 'Offerland job tracker and AI interview coach' } }] },
 
         { id: 'intro-life', section: 'Outside of work', min: 0.5, pri: 2, title: 'Delightful moments',
-          layout: 'full',
+          layout: 'full', center: true,
           blocks: [{ h: 'My delightful moments' },
                    { p: 'Ceramics taught me something useful for design: there\'s no undo button, so you think before you commit.' },
                    { gallery: [
@@ -175,7 +175,7 @@ window.DECK = {
           right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
         { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], title: 'Help before problems happen',
-          layout: 'split', ratio: 40, zone: 'right',
+          layout: 'split', ratio: 38,
           left: [{ h: 'Can we help before problems happen?' },
                  { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
                         pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
