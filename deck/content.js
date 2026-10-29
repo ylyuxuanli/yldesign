@@ -66,7 +66,7 @@ window.DECK = {
           layout: 'split', ratio: 40, zone: 'left',
           left: [{ h: 'What I bring<br/>to a team', size: 'xl' }],
           right: [{ rows: { all: [
-                       { h: 'Make complex things simple', p: 'Financial and AI products that feel easy to use' },
+                       { h: 'Make complex things simple', p: 'Products that feel easy, even when the problem isn\'t' },
                        { h: 'Design AI and people together', p: 'What AI does alone, and when a person steps in' },
                        { h: 'Prove it early', p: 'Prototypes in code and small pilots' } ],
                      pm: [
