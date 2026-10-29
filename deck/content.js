@@ -137,6 +137,7 @@ window.DECK = {
       name: 'QuickBooks: AI + Embedded Human Expertise',
       short: 'QuickBooks AI + Human',
       theme: 'navy',
+      keywords: ['AI + human', 'Service design', 'Systems', 'MVP tradeoffs'],
       focus: {
         all:    'Where human experts should show up in an AI-powered QuickBooks, and how I turned that into one experience.',
         pm:     'How the problem got framed, what we cut from the MVP, and the engagement signals that came back.',
@@ -390,6 +391,7 @@ window.DECK = {
       name: 'Business formation',
       short: 'Business formation',
       theme: 'green',
+      keywords: ['0 to 1', 'Research', 'Service design', 'Pilot without engineering'],
       focus: {
         all:    'A zero to one service: why the hard part is the decision, not the paperwork, and a pilot run with no engineering.',
         pm:     'Why this service first, where we could win against LegalZoom, and how a cheap pilot unlocked investment.',

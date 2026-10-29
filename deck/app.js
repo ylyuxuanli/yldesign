@@ -181,18 +181,12 @@
         const r = el('div', 'ag-row');
         r.appendChild(el('div', 'ag-n', '0' + (i + 1)));
         const mid = el('div', null, '<div class="ag-name">' + esc(x.p.name) + '</div>');
-        if (x.p.focus) mid.appendChild(el('div', 'ag-why', esc((!presenting() && x.p.focus[cfg.lens]) || x.p.focus.all)));
+        // A few keywords set expectations better than a sentence
+        if (x.p.keywords) mid.appendChild(el('div', 'ag-why', x.p.keywords.map(esc).join('<span>·</span>')));
         r.appendChild(mid);
-        r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
+        r.appendChild(el('div', 'ag-m', fmtMin(x.min) + (presenting() ? '<small>+ ' + SESSION.qa + ' min Q&amp;A</small>' : '')));
         r.onclick = () => goTo(firstOf(x.p));
         ag.appendChild(r);
-        if (presenting()) { // her talks always leave room for questions after each project
-          const qa = el('div', 'ag-row ag-qa');
-          qa.appendChild(el('div', 'ag-n', ''));
-          qa.appendChild(el('div', 'ag-name', 'Q&A'));
-          qa.appendChild(el('div', 'ag-m', SESSION.qa + ' min'));
-          ag.appendChild(qa);
-        }
       });
       n.appendChild(ag);
       return n;
