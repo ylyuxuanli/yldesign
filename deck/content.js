@@ -63,9 +63,9 @@ window.DECK = {
 
         // What I bring: written for each role
         { id: 'intro-bring', section: 'About me', min: 0.5, pri: 1, title: 'What I bring',
-          layout: 'full', center: true,
-          blocks: [{ h: 'What I bring to a team' },
-                   { rows: { all: [
+          layout: 'split', ratio: 40, zone: 'left',
+          left: [{ h: 'What I bring<br/>to a team', size: 'xl' }],
+          right: [{ rows: { all: [
                        { h: 'Make complex things simple', p: 'Financial and AI products that feel easy to use' },
                        { h: 'Design AI and people together', p: 'What AI does alone, and when a person steps in' },
                        { h: 'Prove it early', p: 'Prototypes in code and small pilots' } ],

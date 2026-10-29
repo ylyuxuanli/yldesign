@@ -27,10 +27,12 @@
 .sec-label.on-dark { color: rgba(255,255,255,0.65); }
 
 /* Rows: a heading and its line, divided by hairlines */
-.c-rows { display: grid; border-top: 1px solid rgba(0,0,0,0.12); }
-.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: calc(4 * var(--u)); padding: calc(2.4 * var(--u)) 0; border-bottom: 1px solid rgba(0,0,0,0.12); align-items: baseline; }
-.c-row .c-rh { font-size: clamp(18px, calc(2.2 * var(--u)), 34px); font-weight: 400; letter-spacing: -0.01em; line-height: 1.25; }
-.c-row .c-rp { font-size: clamp(14px, calc(1.3 * var(--u)), 20px); color: var(--sub); font-weight: 300; line-height: 1.5; }
+.c-rows { display: flex; flex-direction: column; gap: calc(4.2 * var(--u)); }
+.c-row { display: grid; grid-template-columns: calc(2.6 * var(--u)) 1fr; column-gap: calc(1.4 * var(--u)); row-gap: calc(0.8 * var(--u)); align-items: baseline; }
+.c-row::before { content: ''; width: calc(0.9 * var(--u)); height: calc(0.9 * var(--u)); border-radius: 50%; background: var(--yellow, #FFC715); grid-row: 1; align-self: center; }
+.c-row:nth-child(2)::before { background: #FF8B22; } .c-row:nth-child(3)::before { background: #ED5148; }
+.c-row .c-rh { font-size: clamp(20px, calc(2.6 * var(--u)), 40px); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
+.c-row .c-rp { grid-column: 2; font-size: clamp(14px, calc(1.4 * var(--u)), 21px); color: var(--sub); font-weight: 300; line-height: 1.5; }
 
 /* Layouts */
 .l-split { display: grid; grid-template-columns: var(--left) 1fr; gap: 0; padding: 0; }
@@ -270,5 +272,7 @@
   .c-n, .c-dot { display: inline-flex; align-items: center; justify-content: center; width: clamp(22px, calc(2 * var(--u)), 32px); height: clamp(22px, calc(2 * var(--u)), 32px); border-radius: 50%; border: 1.5px solid currentColor; font-size: clamp(11px, calc(0.95 * var(--u)), 15px); font-weight: 500; flex: none; }
   .c-list li { padding-left: 16px; }
   .sec-label { top: 18px; left: 20px; }
-  .c-row { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
+  .c-rows { gap: 28px; }
+  .c-row { grid-template-columns: 18px 1fr; column-gap: 10px; row-gap: 4px; }
+  .c-row::before { width: 8px; height: 8px; }
 }
