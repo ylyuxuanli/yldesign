@@ -4,6 +4,9 @@
   const ACCESS_PW = 'yldesign', ACCESS_KEY = 'deck_access', PRES_KEY = 'deck_presenter';
   // Minutes for the slides this page builds itself
   const MIN = { welcome: 0.5, setup: 0, agenda: 0.5, end: 0.25 };
+  // When she presents, time is the whole session: 5 min of intro, then each project plus 5 min of Q&A
+  const SESSION = { lengths: [45, 60], intro: 5, qa: 5 };
+  const dur = (s) => s.min + (s.qa || 0);
 
   const lens = (id) => D.lenses.find((l) => l.id === id) || D.lenses[0];
   const fmtMin = (m) => (m < 1 ? '<1' : Math.round(m)) + ' min';
@@ -20,7 +23,7 @@
   function readCfg(p) {
     return {
       lens: D.lenses.some((l) => l.id === p.get('for')) ? p.get('for') : 'all',
-      t: p.get('t') === 'all' ? 'all' : (parseInt(p.get('t'), 10) || 20),
+      t: p.get('t') === 'all' ? 'all' : (parseInt(p.get('t'), 10) || (p.get('m') === 'present' ? 45 : 20)),
       skills: (p.get('s') || '').split(',').filter((id) => allSkills.includes(id)),
       mode: p.get('m') === 'present' ? 'present' : 'read',
       proj: (p.get('p') || '').split(',').filter((id) => projIds.includes(id))
@@ -66,7 +69,8 @@
     order.forEach((p) => p.slides.forEach((s) => {
       if (!(s.read && presenting())) flat.push({ ...s, project: p, sc: score(s) - flat.length * 0.001 });
     }));
-    let budget = cfg.t === 'all' ? Infinity : cfg.t - MIN.welcome - MIN.agenda;
+    const qa = presenting() ? SESSION.qa : 0;
+    let budget = cfg.t === 'all' ? Infinity : presenting() ? cfg.t - SESSION.intro : cfg.t - MIN.welcome - MIN.agenda;
     const keep = new Set();
     const take = (s) => { keep.add(s); budget -= s.min; };
     const byScore = (list) => list.slice().sort((a, b) => b.sc - a.sc);
@@ -78,9 +82,9 @@
     const shown = new Set(intro);
     cases.forEach((p, n) => {
       const c = core(p), need = c.reduce((a, s) => a + s.min, 0);
-      if (need <= budget) { c.forEach(take); shown.add(p); }
+      if (need + qa <= budget) { c.forEach(take); shown.add(p); budget -= qa; }
       else if (n === 0) { // Not even one full case fits: show the best of the first one
-        shown.add(p);
+        shown.add(p); budget -= qa;
         byScore(c).forEach((s) => { if (s.must || s.min <= budget) take(s); });
       }
     });
@@ -99,10 +103,19 @@
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
     if (!locked && !presenting()) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
     const content = (s) => seq.push({ ...s, type: 'content' });
-    if (presenting()) picked.filter((s) => s.project.id === 'intro').forEach(content);
+    if (presenting()) { // stretch the intro's pacing to its 5 minutes, welcome included
+      const mine = picked.filter((s) => s.project.id === 'intro');
+      const k = (SESSION.intro - MIN.welcome) / mine.reduce((a, s) => a + s.min, 0);
+      mine.forEach((s) => content({ ...s, min: s.min * k }));
+    }
     seq.push({ type: 'agenda', id: 'agenda', min: MIN.agenda });
     picked.filter((s) => !presenting() || s.project.id !== 'intro').forEach(content);
     seq.push({ type: 'end', id: 'end', min: MIN.end });
+    // Q&A time sits on each project's last slide, so the presenter pace accounts for it
+    if (qa) cases.filter((p) => shown.has(p)).forEach((p) => {
+      const last = seq.map((x) => x.project).lastIndexOf(p);
+      if (last > -1) seq[last].qa = qa;
+    });
 
     const per = order.filter((p) => shown.has(p) && !(presenting() && p.id === 'intro'))
       .map((p) => {
@@ -112,7 +125,7 @@
       })
       .filter((x) => x.min > 0);
     const skipped = cases.filter((p) => !shown.has(p));
-    return { seq, picked, total: flat.length, used: seq.reduce((a, s) => a + s.min, 0), per, skipped };
+    return { seq, picked, total: flat.length, used: seq.reduce((a, s) => a + dur(s), 0), per, skipped };
   }
   let plan = build();
   let cur = 0;
@@ -305,8 +318,8 @@
     $('prBudget').textContent = cfg.t === 'all' ? fmtClock(plan.used * 60) : cfg.t + ':00';
     const e = elapsed();
     $('prElapsed').textContent = fmtClock(e);
-    const before = plan.seq.slice(0, cur).reduce((a, s) => a + s.min, 0) * 60;
-    const end = before + plan.seq[cur].min * 60;
+    const before = plan.seq.slice(0, cur).reduce((a, s) => a + dur(s), 0) * 60;
+    const end = before + dur(plan.seq[cur]) * 60;
     const pace = $('prPace');
     if (!timer.running && e === 0) { pace.textContent = 'Not started'; pace.className = 'pr-pace'; }
     else if (e < before - 30) { pace.textContent = 'Ahead by ' + fmtClock(before - e); pace.className = 'pr-pace ahead'; }
@@ -318,8 +331,8 @@
     fill($('prFrame'), s, true);
     fill($('prNextFrame'), plan.seq[cur + 1], false);
     $('prCount').textContent = (cur + 1) + ' / ' + plan.seq.length;
-    const until = plan.seq.slice(0, cur + 1).reduce((a, x) => a + x.min, 0) * 60;
-    $('prSlideTime').textContent = s.min ? 'About ' + fmtClock(s.min * 60) + ' here · move on by ' + fmtClock(until) : 'Not timed';
+    const until = plan.seq.slice(0, cur + 1).reduce((a, x) => a + dur(x), 0) * 60;
+    $('prSlideTime').textContent = s.min ? 'About ' + fmtClock(s.min * 60) + ' here' + (s.qa ? ', then ' + s.qa + ' min Q&A' : '') + ' · move on by ' + fmtClock(until) : 'Not timed';
     const n = (notes && notes[s.type === 'content' ? s.id : s.type]) || {};
     const box = $('prNotes');
     box.innerHTML = n.base ? esc(n.base) : '<span class="none">No notes for this slide.</span>';
@@ -411,13 +424,14 @@
     box.innerHTML = '';
     const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Version'));
     const c1 = el('div', 'chips');
-    c1.appendChild(chip('I\'m presenting', draft.mode === 'present', () => { draft.mode = 'present'; drawSetup(); }, true));
+    c1.appendChild(chip('I\'m presenting', draft.mode === 'present', () => { draft.mode = 'present'; if (!SESSION.lengths.includes(draft.t)) draft.t = SESSION.lengths[0]; drawSetup(); }, true));
     c1.appendChild(chip('They pick their role', draft.mode === 'read', () => { draft.mode = 'read'; drawSetup(); }, true));
     q1.appendChild(c1); box.appendChild(q1);
-    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', draft.mode === 'present' ? 'Time for projects, after the intro' : 'Time'));
+    const pres = draft.mode === 'present';
+    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', pres ? 'Session' : 'Time'));
     const c2 = el('div', 'chips');
-    D.times.forEach((m) => c2.appendChild(chip(m + ' min', draft.t === m, () => { draft.t = m; drawSetup(); }, true)));
-    c2.appendChild(chip('All', draft.t === 'all', () => { draft.t = 'all'; drawSetup(); }, true));
+    (pres ? SESSION.lengths : D.times).forEach((m) => c2.appendChild(chip(m + ' min', draft.t === m, () => { draft.t = m; drawSetup(); }, true)));
+    if (!pres) c2.appendChild(chip('All', draft.t === 'all', () => { draft.t = 'all'; drawSetup(); }, true));
     q2.appendChild(c2); box.appendChild(q2);
     if (draft.mode !== 'present') return;
     const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Projects, drag to reorder'));
@@ -450,7 +464,8 @@
   }
   function openSetup() {
     const proj = cfg.proj.length ? cfg.proj : projIds;
-    draft = { mode: cfg.mode === 'present' || !settled ? 'present' : 'read', t: cfg.t,
+    const mode = cfg.mode === 'present' || !settled ? 'present' : 'read';
+    draft = { mode, t: mode === 'present' && !SESSION.lengths.includes(cfg.t) ? SESSION.lengths[0] : cfg.t,
       order: proj.concat(projIds.filter((id) => !proj.includes(id))), on: proj.slice() };
     drawSetup();
     $('setupModal').hidden = false;
