@@ -133,7 +133,10 @@ window.DECK = {
         { id: 'qb-context', skills: ['align'], min: 1, pri: 1, lens: ['pm', 'dm', 'ds'], title: 'My role and the team',
           layout: 'split', ratio: 40,
           left: [
-            { h: 'End-to-end designer, seven partner teams' },
+            { groups: [
+              { h: 'Role', p: 'End-to-end product designer' },
+              { h: 'Cross-functional teams', p: 'PM · Engineering · Data Science · Service Design · Service Delivery · Core QuickBooks · Expert platform' }
+            ] },
             { p: { all: 'My job went beyond the interface: framing the problem, aligning teams on a service model, and setting the boundaries between AI and people.',
                    pm: 'My job went beyond the interface. I helped frame the problem, aligned teams on one service model, and pushed for where the AI and human boundaries should sit.',
                    dm: 'My job went beyond the interface. Seven partner teams each had their own goals, and a lot of the work was getting them to one shared service model.',
@@ -149,7 +152,7 @@ window.DECK = {
           right: [{ media: { ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
         { id: 'qb-from-to', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], title: 'Help before problems happen',
-          layout: 'split', ratio: 40,
+          layout: 'split', ratio: 40, zone: 'right',
           left: [{ h: 'Can we help before problems happen?' },
                  { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
                         pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
@@ -169,7 +172,7 @@ window.DECK = {
           ] },
 
         { id: 'qb-challenge', skills: ['align', 'strategy', 'hai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], title: 'AI first or human first?',
-          layout: 'split', ratio: 42,
+          layout: 'split', ratio: 42, zone: 'right',
           left: [{ h: 'AI first or human first?', size: 'xl' },
                  { p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
@@ -203,7 +206,7 @@ window.DECK = {
                    ] }] },
 
         { id: 'qb-levels', skills: ['agentic', 'hai', 'systems'], min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], title: 'Who holds the missing piece?',
-          layout: 'split', ratio: 38,
+          layout: 'split', ratio: 38, zone: 'left',
           left: [{ h: 'Who holds the missing piece?' },
                  { p: { all: 'To decide who owns each decision, we sorted bookkeeping jobs by one question.',
                         eng: 'Each level is a different handling path in the system, sorted by one question.',
@@ -230,7 +233,7 @@ window.DECK = {
           ] }] },
 
         { id: 'qb-should', skills: ['agentic', 'hai', 'strategy'], min: 1.5, pri: 1, lens: ['ds', 'pm', 'eng', 'dm'], title: 'AI can do it. Should it?',
-          layout: 'split', ratio: 50,
+          layout: 'split', ratio: 50, zone: 'right',
           left: [{ h: 'AI can do it. Should it?', size: 'xl' },
                  { p: { all: 'Our agent scored over 90 when AI and accountants evaluated it, so PM and engineering wanted to automate more. I pushed back, for two reasons.',
                         pm: 'Our agent scored over 90 in evals, and the obvious move was to automate more. I pushed back, because one wrong tax answer costs more trust than many correct auto-fixes earn.',
@@ -302,7 +305,9 @@ window.DECK = {
 
         { id: 'qb-james', skills: ['hai', 'service'], min: 1.5, pri: 2, lens: ['design', 'pm'], title: 'A year with James',
           layout: 'split', ratio: 36, leftTheme: true,
-          left: [{ h: 'Meet James Porter' }, { p: 'He runs Porter General Contracting: two years in, five employees, $675K in revenue. He wants to grow his business, not manage books.' }],
+          left: [{ h: 'Meet James Porter' }, { p: 'Runs Porter General Contracting' },
+                 { stats: [{ v: '2', l: 'Years in business' }, { v: '5', l: 'Employees' }, { v: '$675K', l: 'Revenue' }], row: true, small: true },
+                 { groups: [{ h: 'Goal', p: 'Grow the business, not manage books' }] }],
           right: [{ steps: [
             { h: 'Onboarding', p: '$12K in receivables may be unmatched. AI matched 14 deposits to invoices, and James reviews them before anything changes. Level 2.' },
             { h: 'After the call', p: 'His score rises to 78, and he gets a call summary: what we covered, what was decided, what to do next.' },
@@ -370,7 +375,7 @@ window.DECK = {
           checklist: [['Choose your entity type', true], ['File your articles of org', true], ['Obtain your EIN', false]] },
 
         { id: 'bf-context', skills: ['strategy', 'zero'], min: 1, pri: 2, lens: ['pm', 'ds'], title: 'Start with us, stay with us',
-          layout: 'split', ratio: 40,
+          layout: 'split', ratio: 40, zone: 'right',
           left: [{ h: 'Start with us, stay with us' },
                  { p: { all: 'QuickBooks was exploring four new services, and business formation stood out. I owned it from the very first concept through the pilot.',
                         pm: 'QuickBooks was exploring four new services in parallel. Business formation stood out on cost, market and ecosystem. I owned it from first concept through the pilot.' } }],
@@ -454,13 +459,13 @@ window.DECK = {
           right: [{ media: { ph: '"Welcome back, John" formation roadmap with cost, timeline and expert contact' } }] },
 
         { id: 'bf-new', skills: ['service'], min: 1, pri: 2, lens: ['design', 'pm', 'eng'], title: 'Two audiences, two front doors',
-          layout: 'split', ratio: 50, top: true,
-          left: [{ h: 'New businesses' },
+          layout: 'split', ratio: 50, top: true, zone: 'right',
+          left: [{ k: 'New to QuickBooks' }, { h: 'New businesses' },
                  { steps: [{ h: 'Fast onboarding', p: 'Just enough to get them formed' },
                            { h: 'Expert advice', p: 'A call to choose the right structure' },
                            { h: 'Formed', p: 'File with the expert or on their own' },
                            { h: 'The right QuickBooks plan', p: 'Recommended from what we learned' }] }],
-          right: [{ h: 'Existing QuickBooks customers' },
+          right: [{ k: 'QuickBooks base' }, { h: 'Existing customers' },
                   { steps: [{ h: 'Proactive reminder', p: { all: 'When it\'s time to change, like adding a partner or profit growing enough for an S-Corp', eng: 'Triggered from signals we already have, like a new partner or profit crossing an S-Corp threshold' } },
                             { h: 'Nothing to re-enter', p: 'We already know their business' },
                             { h: 'Expert already prepped', p: 'The expert knows their situation before the call' }] }] },
