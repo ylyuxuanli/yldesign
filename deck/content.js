@@ -52,9 +52,9 @@ window.DECK = {
           layout: 'full', center: true,
           blocks: [{ h: 'I enjoy solving complex problems. Here\'s how I do it.' },
                    { cards: [
-            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Years as a reporter taught me to listen, dig, and check what I hear.' },
-            { k: 'Delightful', color: '#FF8B22', h: 'I make it feel simple', p: 'I care how it feels, and I write HTML, CSS and JS, so the details survive the build.' },
-            { k: 'Thoughtful', color: '#ED5148', h: 'I look for the real cause', p: 'Before jumping to a solution, I find out why the problem exists.' }
+            { k: 'Curious', color: '#E0A800', h: 'I ask the right questions', p: 'Years as a reporter taught me to dig past the request to the real cause.' },
+            { k: 'Delightful', color: '#FF8B22', h: 'I design for how people feel', p: 'Solving the problem is half of it. I want people to leave calmer, and a little happier.' },
+            { k: 'Thoughtful', color: '#ED5148', h: 'I balance needs with what\'s real', p: 'I write code and know the business side, so I find what works within technical and business limits.' }
           ] }] },
 
         // What I bring: written for each role
