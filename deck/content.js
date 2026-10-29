@@ -58,10 +58,9 @@ window.DECK = {
                    { journey: [
                      { when: 'Before design', h: 'Reporter', p: 'Ask thoughtful questions, find what matters, explain it clearly.', on: ['all', 'design', 'pm'] },
                      { when: '2018 – 2020', h: 'M.A. Interaction Design', p: 'Academy of Art University. Switched to design, with a sponsored project for Audi.' },
-                     { when: '2020 – 2021', h: 'Naked and Thriving', p: 'First design role, at a startup.' },
                      { when: '2021 – 2022', h: 'Lytx', p: 'Complex data and very different users. Built design systems.', on: ['eng', 'ds'] },
                      { when: '2022 – now', h: 'Intuit', p: 'AI + human experiences in QuickBooks, and a 0 to 1 service.', on: ['all', 'pm', 'dm', 'eng', 'ds', 'design'] },
-                     { when: '2021 – 2024 · side project', h: 'Offerland.ai', p: 'An AI career platform, built with friends. 40K+ users.', side: [4, 6], on: ['dm', 'pm'] }
+                     { when: '2021 – 2024 · side project', h: 'Offerland.ai', p: 'An AI career platform, built with friends. 40K+ users.', side: [3, 5], on: ['dm', 'pm'] }
                    ] },
                    { note: { all: 'Thoughtful but pragmatic: I care about craft, and just as much about solving the right problem.',
                              eng: 'Along the way: HTML, CSS and JavaScript. Today I use Claude Code to build working prototypes and send PRs that engineering reviews. This deck is built in code, too.',
@@ -424,17 +423,22 @@ window.DECK = {
                    { stats: [{ k: 'Breadth', v: '1,500+', l: 'Surveys' },
                              { k: 'Depth', v: '250+', l: 'Hours of interviews' },
                              { k: 'Validation', v: '45+', l: 'Sessions with experts' }], row: true },
-                   { p: { all: 'When we started, it looked like a paperwork problem. It isn\'t.',
-                          ds: 'Surveys for breadth, interviews for depth, expert sessions to check what we heard. When we started, it looked like a paperwork problem. It isn\'t.',
-                          design: 'Mixed methods: surveys for reach, interviews for depth, experts to validate. When we started, it looked like a paperwork problem. It isn\'t.' } },
+                   { p: { all: 'Surveys for breadth, interviews for depth, and expert sessions to check what we heard.',
+                          ds: 'Surveys for breadth, interviews for depth, and expert sessions to check what we heard against how formation really works.' } },
                    { mediaRow: [{ ph: 'Workshop with the team' }, { ph: 'Remote interview' }, { ph: 'Interview guide' }] }] },
 
-        { id: 'bf-decision', skills: ['research', 'strategy'], min: 1.25, pri: 1, lens: ['pm', 'design'], label: 'Insight', title: 'Paperwork is easy. The decision is hard.',
+        { id: 'bf-steps', skills: ['research'], min: 0.5, pri: 1, label: 'Insight', title: 'Four clear steps',
+          layout: 'full', center: true,
+          blocks: [{ h: 'On paper, forming a business is <em>four clear steps</em>' },
+                   { chain: ['Choose entity type', 'File articles', 'Get an EIN', 'Ongoing compliance'], nums: true },
+                   { p: 'Each step has clear rules. Some owners even file on their own to save money.' }] },
+
+        { id: 'bf-decision', skills: ['research', 'strategy'], min: 1, pri: 1, lens: ['pm', 'design'], label: 'Insight', title: 'Step 1 hides the hard questions',
           layout: 'full',
-          blocks: [{ h: 'Paperwork is easy, <em>the decision is hard.</em>' },
-                   { p: { all: 'The filing has clear steps. The hard part is choosing your entity type. It decides your taxes, your liability and whether you can raise money, and it\'s hard to undo.',
-                          pm: 'The filing has clear steps, and competitors already do it well. The hard part is the entity decision. That reframed the product from a filing tool to an advisory service.',
-                          design: 'The filing has clear steps. The hard part is choosing your entity type, so the design focus moved to the decision, not the form.' } },
+          blocks: [{ h: 'But step 1 hides <em>the hard questions</em>' },
+                   { p: { all: 'Choosing an entity type decides your taxes, your liability and whether you can raise money. And it\'s hard to undo.',
+                          pm: 'Choosing an entity type decides taxes, liability and fundraising, and it\'s hard to undo. That moved the product from a filing tool to an advisory service.',
+                          design: 'Choosing an entity type decides taxes, liability and fundraising, and it\'s hard to undo. So the design focus moved to the decision, not the form.' } },
                    { chain: ['Choose entity type', 'File articles', 'Get an EIN', 'Ongoing compliance'], nums: true, on: 0 },
                    { risks: {
                      cols: ['What\'s really under step 1', 'If it\'s wrong'],
@@ -471,19 +475,19 @@ window.DECK = {
                        { h: 'What the owner needs', sub: 'The whole picture', cells: [2, 2, 2, 2], strong: true }
                      ] } }] },
 
-        { id: 'bf-gap', skills: ['strategy', 'zero'], min: 1, pri: 1, lens: ['pm', 'dm', 'design'], label: 'Positioning', title: 'The gap is advice, not filing',
+        { id: 'bf-gap', skills: ['strategy', 'zero'], min: 1, pri: 1, lens: ['pm', 'dm', 'design'], label: 'Positioning', title: 'Where we could win',
           layout: 'full',
-          blocks: [{ h: 'The gap is <em>advice, not filing</em>' },
+          blocks: [{ h: 'Where we <em>could win</em>' },
                    { table: { cols: ['DIY', 'Filing services', 'CPA', 'QuickBooks'], hi: 3, rows: [
                      { h: 'Helps you decide', cells: [false, false, true, true] },
                      { h: 'Affordable', cells: [true, true, false, true] },
                      { h: 'Knows your business', cells: [false, false, 'Sometimes', true] },
                      { h: 'Stays with you after filing', cells: [false, false, false, true] }
                    ] } },
-                   { p: { all: 'Services like LegalZoom are strong at filing, but offer little real advice on the decision. So we positioned around expert advice first, with filing as part of the service, not the product.',
-                          pm: 'LegalZoom wins on filing and makes money on add-ons. We have the customer\'s financial data, a platform they trust, and experts who know small businesses. So: advice first, filing as part of the service.',
-                          design: 'Competitors have a polished filing flow. We designed around the conversation instead: advice first, filing as part of the service.',
-                          dm: 'This is where the project became a product decision, not a design task: advice first, with filing as part of the service.' } }] },
+                   { p: { all: 'Filing services like LegalZoom have a polished flow, and much of their model is add-ons. Our edge: we already have the owner\'s financial data, a platform they trust, and experts who know small businesses. So we led with expert advice, and made filing part of the service.',
+                          pm: 'LegalZoom is strong at filing and makes money on add-ons. Our edge was data, trust and experts who already know small businesses. Later, AI could even spot when it\'s time to change, like adding a partner.',
+                          design: 'Competitors win on a polished filing flow. We designed around the expert conversation instead, with filing as one part of it.',
+                          dm: 'This is where the project became a product decision, not a design task: lead with expert advice, and make filing part of the service.' } }] },
 
         { id: 'bf-prototype', skills: ['proto', 'craft'], min: 0.75, pri: 2, lens: ['design'], label: 'Prototype', title: 'A roadmap that prepares you for the expert',
           layout: 'split', ratio: 34,
