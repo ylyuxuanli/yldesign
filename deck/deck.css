@@ -199,3 +199,5 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-min { font-size: 13px; color: var(--muted); }
 .set-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
 @media (max-width: 700px) { .side { width: 100%; } .app.with-side .stage { right: 0; } }
+.set-hr { border: none; border-top: 1px solid var(--border); margin: 0 0 20px; }
+#setupBody > .set-note:first-child { margin-bottom: 20px; font-size: 13px; }

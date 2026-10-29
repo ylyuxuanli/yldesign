@@ -3,7 +3,7 @@
   const $ = (id) => document.getElementById(id);
   const ACCESS_PW = 'yldesign', ACCESS_KEY = 'deck_access', PRES_KEY = 'deck_presenter';
   // Minutes for the slides this page builds itself
-  const MIN = { welcome: 0.5, setup: 0, agenda: 0.5, end: 0.25 };
+  const MIN = { welcome: 0.5, agenda: 0.5, end: 0.25 };
   // When she presents, time is the whole session: 5 min of intro, then each project plus 5 min of Q&A
   const SESSION = { lengths: [45, 60], intro: 5, qa: 5 };
   const dur = (s) => s.min + (s.qa || 0);
@@ -112,7 +112,6 @@
     const picked = flat.filter((s) => keep.has(s));
 
     const seq = [{ type: 'welcome', id: 'welcome', min: MIN.welcome }];
-    if (!locked && !presenting()) seq.push({ type: 'setup', id: 'setup', min: MIN.setup });
     const content = (s) => seq.push({ ...s, type: 'content' });
     if (presenting()) { // stretch the intro's pacing to its 5 minutes, welcome included
       const mine = picked.filter((s) => s.project.id === 'intro');
@@ -166,39 +165,12 @@
       t.appendChild(el('h1', 'hs-h', 'Hi, I\'m Yuxuan.'));
       t.appendChild(el('p', 'hs-p', 'Product designer'));
       const row = el('div', 'cta-row');
-      const go = el('button', 'cta', settled ? 'Start →' : 'Let\'s go →');
-      go.onclick = () => goTo(presenting() ? 1 : settled ? indexOf('agenda') : indexOf('setup'));
+      const go = el('button', 'cta', 'Start →');
+      go.onclick = () => { settled = true; syncUrl(); if (!isOwner()) openSetup(false); goTo(1); };
       row.appendChild(go);
-      if (settled && !locked && !presenting()) { const ch = el('button', 'link-btn', 'Change role or time'); ch.onclick = () => goTo(indexOf('setup')); row.appendChild(ch); }
       t.appendChild(row);
       n.appendChild(t);
       n.appendChild(el('div', 'w-photo'));
-      return n;
-    }
-    if (s.type === 'setup') {
-      n = el('div', 'slide hs');
-      n.appendChild(el('h2', 'hs-h', 'Let\'s tailor this for you'));
-      n.appendChild(el('p', 'hs-p', 'Tell me a little about you, and this deck will shape itself around what you care about.'));
-      const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Your role'));
-      const c1 = el('div', 'chips');
-      D.lenses.forEach((l) => c1.appendChild(chip(l.name, cfg.lens === l.id, () => { cfg.lens = l.id; rebuild(); })));
-      q1.appendChild(c1); n.appendChild(q1);
-      const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Time'));
-      const c2 = el('div', 'chips');
-      D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; rebuild(); })));
-      c2.appendChild(chip('All', cfg.t === 'all', () => { cfg.t = 'all'; rebuild(); }));
-      q2.appendChild(c2); n.appendChild(q2);
-      const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Interested in'));
-      const c3 = el('div', 'chips');
-      D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
-        cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
-        rebuild();
-      }, true, true)));
-      q3.appendChild(c3);
-      n.appendChild(q3);
-      const go = el('button', 'cta', 'Show me →');
-      go.onclick = () => goTo(indexOf('agenda'));
-      n.appendChild(go);
       return n;
     }
     if (s.type === 'agenda') {
@@ -230,7 +202,7 @@
         '<a href="../index.html">yldesign.me</a>'));
       if (live && !audience && !presenting()) {
         const row = el('div', 'cta-row');
-        if (!locked) { const b = el('button', 'link-btn', 'See another version'); b.onclick = () => goTo(indexOf('setup')); row.appendChild(b); }
+        if (!locked) { const b = el('button', 'link-btn', 'See another version'); b.onclick = () => openSetup(true); row.appendChild(b); }
         const sh = el('button', 'link-btn', 'Share this version'); sh.onclick = openShare; row.appendChild(sh);
         n.appendChild(row);
       }
@@ -259,18 +231,10 @@
     if (!$('presenter').hidden) drawPresenter();
   }
   function goTo(i) {
-    if (plan.seq[cur] && plan.seq[cur].type === 'setup' && i > cur && !settled) { settled = true; syncUrl(); }
     cur = Math.max(0, Math.min(plan.seq.length - 1, i));
     draw();
   }
   function go(d) { goTo(cur + d); }
-  // Settings changed on the setup slide: rebuild and stay on it
-  function rebuild() {
-    plan = build();
-    cur = Math.max(0, indexOf('setup'));
-    if (settled) syncUrl();
-    draw();
-  }
 
   $('prevBtn').onclick = () => go(-1);
   $('nextBtn').onclick = () => go(1);
@@ -408,11 +372,11 @@
     };
     if (presenting()) {
       toc.appendChild(el('div', 'toc-k', 'Presenting · ' + esc(timeLabel())));
-      item('Presenting setup', openSetup, 'S');
+      item('Setup', () => openSetup(true));
       toc.appendChild(el('hr'));
-    } else if (settled) {
+    } else {
       toc.appendChild(el('div', 'toc-k', 'For ' + esc(forWhom()) + ' · ' + esc(timeLabel())));
-      if (!locked) item('Change role or time', () => goTo(indexOf('setup')));
+      if (!locked) item('Change role or time', () => openSetup(true));
       toc.appendChild(el('hr'));
     }
     item('Start over', () => goTo(0));
@@ -437,13 +401,38 @@
   const isOwner = () => { try { return localStorage.getItem(OWNER_KEY) === '1'; } catch (e) { return false; } };
   const markOwner = () => { try { localStorage.setItem(OWNER_KEY, '1'); } catch (e) {} };
   function apply() {
-    if (presenting()) { cfg.lens = 'all'; cfg.skills = []; settled = true; }
-    plan = build(); syncUrl(); cur = 0; draw(); drawSetup();
+    if (presenting()) { cfg.lens = 'all'; cfg.skills = []; }
+    settled = true;
+    const at = plan.seq[cur] && plan.seq[cur].id;
+    plan = build(); syncUrl();
+    cur = Math.max(0, plan.seq.findIndex((x) => x.id === at));
+    draw(); drawSetup();
+  }
+  function viewerSettings(box) {
+    box.appendChild(el('p', 'set-note', 'Tell me a little about you, and this deck will shape itself around what you care about.'));
+    const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Your role'));
+    const c1 = el('div', 'chips');
+    D.lenses.forEach((l) => c1.appendChild(chip(l.name, cfg.lens === l.id, () => { cfg.lens = l.id; apply(); }, true)));
+    q1.appendChild(c1); box.appendChild(q1);
+    const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Time'));
+    const c2 = el('div', 'chips');
+    D.times.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; apply(); }, true)));
+    c2.appendChild(chip('All', cfg.t === 'all', () => { cfg.t = 'all'; apply(); }, true));
+    q2.appendChild(c2); box.appendChild(q2);
+    const q3 = el('div', 'q'); q3.appendChild(el('div', 'q-label', 'Interested in'));
+    const c3 = el('div', 'chips');
+    D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
+      cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
+      apply();
+    }, true, true)));
+    q3.appendChild(c3); box.appendChild(q3);
   }
   function drawSetup() {
     const box = $('setupBody');
     box.innerHTML = '';
-    const pres = presenting();
+    const pres = presenting(), owner = isOwner();
+    $('side').querySelector('.side-title').textContent = owner ? 'Setup' : 'Make it yours';
+    if (!owner) { viewerSettings(box); return; }
     const q1 = el('div', 'q'); q1.appendChild(el('div', 'q-label', 'Who\'s driving'));
     const c1 = el('div', 'chips');
     c1.appendChild(chip('I\'m presenting', pres, () => {
@@ -451,9 +440,9 @@
       if (!SESSION.lengths.includes(cfg.t)) cfg.t = SESSION.lengths[0];
       apply();
     }, true));
-    c1.appendChild(chip('They pick their role', !pres, () => { cfg.mode = 'read'; cfg.proj = []; settled = false; apply(); }, true));
+    c1.appendChild(chip('They pick their role', !pres, () => { cfg.mode = 'read'; cfg.proj = []; if (cfg.t !== 'all' && !D.times.includes(cfg.t)) cfg.t = 20; apply(); }, true));
     q1.appendChild(c1); box.appendChild(q1);
-    if (!pres) return;
+    if (!pres) { box.appendChild(el('hr', 'set-hr')); viewerSettings(box); return; }
     const q2 = el('div', 'q'); q2.appendChild(el('div', 'q-label', 'Session'));
     const c2 = el('div', 'chips');
     SESSION.lengths.forEach((m) => c2.appendChild(chip(m + ' min', cfg.t === m, () => { cfg.t = m; apply(); }, true)));
@@ -496,7 +485,8 @@
   }
   function openSetup(open) {
     open = open == null ? $('side').hidden : open;
-    if (open) { markOwner(); drawSetup(); }
+    if (open && locked && !isOwner()) return;
+    if (open) drawSetup();
     $('side').hidden = !open;
     $('app').classList.toggle('with-side', open);
   }
@@ -507,7 +497,7 @@
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !$('toc').hidden) { toggleToc(false); return; }
     if (e.target.tagName === 'INPUT' || document.querySelector('.modal:not([hidden])')) return;
-    if (e.key === 'S' && e.shiftKey) { e.preventDefault(); openSetup(); return; }
+    if (e.key === 'S' && e.shiftKey) { e.preventDefault(); markOwner(); openSetup(); return; }
     if (e.key === 'P' && e.shiftKey) { e.preventDefault(); if ($('presenter').hidden) askPresenter(); else closePresenter(); return; }
     if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(1); }
     else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(-1); }
@@ -522,7 +512,8 @@
     syncUrl();
     goTo(0);
     if (wantsPresenter) askPresenter();
-    else if (wantsSetup || (isOwner() && !preset)) openSetup(true);
+    else if (wantsSetup) { markOwner(); openSetup(true); }
+    else if (isOwner() || (!preset && !locked)) openSetup(true); // viewers start with the questions, she starts with her setup
   }
   const overlay = $('pwOverlay');
   let ok = false;
