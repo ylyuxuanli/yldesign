@@ -49,7 +49,8 @@
     },
     groups(b) {
       const w = el('div', 'c-groups');
-      b.groups.forEach((g) => w.appendChild(el('div', 'c-g', '<div class="c-gh">' + T(g.h) + '</div><div class="c-gp">' + T(g.p) + '</div>')));
+      b.groups.forEach((g) => w.appendChild(el('div', 'c-g', '<div class="c-gh">' + T(g.h) + '</div><div class="c-gp">' + T(g.p) + '</div>' +
+        (g.list ? '<ul class="c-gl">' + T(g.list).map((i) => '<li>' + T(i) + '</li>').join('') + '</ul>' : ''))));
       return w;
     },
     stats(b) {

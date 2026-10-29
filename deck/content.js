@@ -158,15 +158,10 @@ window.DECK = {
           layout: 'split', ratio: 34,
           left: [
             { groups: [
-              { h: 'Role', p: 'End-to-end product designer' },
+              { h: 'Role', p: 'End-to-end product designer', list: ['Framing the problem', 'Designing the service model', 'Setting the boundaries between AI and people', 'Aligning teams on one plan'] },
               { h: 'Scope', p: 'Across 4 QuickBooks Online plans' },
               { h: 'Cross-functional teams', p: 'PM · Engineering · Data Science · Service Design · Service Delivery · Core QuickBooks · Expert platform' }
-            ] },
-            { p: { all: 'My job went beyond the interface: framing the problem, aligning teams on a service model, and setting the boundaries between AI and people.',
-                   pm: 'My job went beyond the interface. I helped frame the problem, aligned teams on one service model, and pushed for where the AI and human boundaries should sit.',
-                   dm: 'My job went beyond the interface. Every partner team had its own goals, and a lot of the work was getting them to one shared service model.',
-                   eng: 'My job went beyond the interface. I didn\'t own the model. I owned how its decisions show up for customers and experts, and where the boundaries sit.',
-                   ds: 'My job went beyond the interface. Data science owned the model. I owned how its work reaches customers, and what it should and shouldn\'t do on its own.' } }
+            ] }
           ],
           right: [{ media: { src: '../imgs/deck/qb-context.webp', fit: 'contain', ph: 'QuickBooks overview: Books Health, Needs attention, expert video call' } }] },
 
