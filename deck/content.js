@@ -47,22 +47,22 @@ window.DECK = {
       name: 'About me',
       short: 'About me',
       slides: [
-        // About me: the same for everyone, like a studio's about page
+        // About me: the same for everyone. What kind of designer, and why; the reporter years are a bonus, not the story
         { id: 'intro-who', min: 0.5, pri: 1, title: 'About me',
-          layout: 'values', h: 'I started as a reporter',
-          p: 'I learned to ask why, listen closely, and make a complicated story easy to follow. Design turned out to be the same job, with products instead of articles.',
-          items: [
-            { name: 'Curious', color: '#FFC715', text: 'I ask why a lot, before drawing anything.' },
-            { name: 'Delightful', color: '#FF8B22', text: 'I care how things feel, not just whether they work.' },
-            { name: 'Thoughtful', color: '#ED5148', text: 'I think about what happens after launch, not just on launch day.' }
-          ] },
+          layout: 'full', center: true,
+          blocks: [{ h: 'I\'m a product designer who solves the problem behind the request' },
+                   { cards: [
+            { color: '#FFC715', h: 'I ask the right questions', p: 'Years as a reporter taught me to listen, dig, and check what I hear.' },
+            { color: '#FF8B22', h: 'I work well with engineers', p: 'I write HTML, CSS and JS, so I know what\'s easy, what\'s hard, and how to hand off.' },
+            { color: '#ED5148', h: 'I look for the real cause', p: 'Before jumping to a solution, I find out why the problem exists.' }
+          ] }] },
 
         // What I bring: written for each role
         { id: 'intro-bring', min: 0.5, pri: 1, title: 'What I bring',
           layout: 'full', center: true,
           blocks: [{ h: 'What I bring to a team' },
                    { cards: { all: [
-                       { h: 'Find the real problem', p: 'Research and journey maps that get teams aligned' },
+                       { h: 'Make complex things simple', p: 'Financial and AI products that feel easy to use' },
                        { h: 'Design AI and people together', p: 'What AI does alone, and when a person steps in' },
                        { h: 'Prove it early', p: 'Prototypes in code and small pilots' } ],
                      pm: [
@@ -78,7 +78,7 @@ window.DECK = {
                        { h: 'Move without waiting', p: 'Ran a pilot with no engineering support' },
                        { h: 'Grow designers', p: 'Managed three designers at Offerland.ai' } ],
                      eng: [
-                       { h: 'Speaks code', p: 'I prototype in HTML, CSS and JS' },
+                       { h: 'Buildable designs', p: 'States, edge cases and logic, not just screens' },
                        { h: 'Clear logic', p: 'What AI does alone, and when a person steps in' },
                        { h: 'Shippable scope', p: 'MVPs that don\'t block on other teams' } ],
                      ds: [
