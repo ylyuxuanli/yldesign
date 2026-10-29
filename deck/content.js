@@ -16,7 +16,7 @@
 //   p: { all: 'What happened', eng: 'How the system handled it', pm: 'Why it mattered to the business' }
 // Missing roles fall back to `all`.
 //
-// Images: { ph: 'what goes here' } draws a placeholder. Add src: 'img/file.jpg' to use a real image.
+// Images: { ph: 'what goes here' } draws a placeholder. Add src: 'img/file.jpg' for an image, or video: 'img/file.mp4' (+ poster) for a looping clip.
 
 window.DECK = {
   lenses: [
@@ -305,7 +305,7 @@ window.DECK = {
                  { p: { all: 'This is the target experience. What we launched first comes right after.',
                         eng: 'Each item under Needs attention is a routed issue from the system you just saw.',
                         design: 'Notice how the expert card changes across the customer lifecycle.' } }],
-          right: [{ media: { ph: 'Target design: "Good morning, James" overview with Books Health and Needs attention' } }] },
+          right: [{ media: { video: '../imgs/qbl-overview.mp4', poster: '../imgs/qbl-overview-poster.jpg', ph: 'Prototype of the Books Health overview and AI chat' } }] },
 
         { id: 'qb-james', skills: ['hai', 'service'], min: 1.5, pri: 2, lens: ['design', 'pm'], label: 'A year with James', title: 'A year with James',
           layout: 'split', ratio: 36, leftTheme: true,

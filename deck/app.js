@@ -95,8 +95,10 @@
   const firstOf = (p) => plan.seq.findIndex((s) => s.project === p);
 
   // ---------- Slides ----------
-  function chip(label, on, onClick, small) {
-    const b = el('button', 'chip' + (on ? ' on' : '') + (small ? ' small' : ''));
+  function chip(label, on, onClick, small, multi) {
+    const b = el('button', 'chip' + (on ? ' on' : '') + (small ? ' small' : '') + (multi ? ' multi' : ''));
+    b.setAttribute(multi ? 'aria-checked' : 'aria-pressed', on);
+    if (multi) b.setAttribute('role', 'checkbox');
     b.textContent = label;
     b.onclick = onClick;
     return b;
@@ -145,7 +147,7 @@
       D.skills.forEach((k) => c3.appendChild(chip(k.name, cfg.skills.includes(k.id), () => {
         cfg.skills = cfg.skills.includes(k.id) ? cfg.skills.filter((x) => x !== k.id) : allSkills.filter((x) => x === k.id || cfg.skills.includes(x));
         rebuild();
-      }, true)));
+      }, true, true)));
       q3.appendChild(c3);
       q3.appendChild(el('div', 'hint', plan.per.filter((x) => x.p.id !== 'intro').map((x) => esc(x.p.short)).join(' + ') + ', about ' + Math.round(plan.used) + ' min.' +
         (plan.skipped.length ? ' ' + esc(plan.skipped.map((p) => p.short).join(', ')) + ' needs more time.' : '')));

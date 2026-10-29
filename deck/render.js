@@ -10,7 +10,11 @@
   const ICON = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>';
   function media(m, cls) {
     const box = el('div', 'c-media' + (cls ? ' ' + cls : '') + (m.grow ? ' grow' : ''));
-    if (m.src) {
+    if (m.video) {
+      const v = el('video'); v.src = m.video; if (m.poster) v.poster = m.poster;
+      v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true; v.setAttribute('aria-label', m.cap || m.ph || '');
+      box.appendChild(v);
+    } else if (m.src) {
       const img = el('img'); img.src = m.src; img.alt = m.cap || m.ph || '';
       box.appendChild(img);
     } else {
