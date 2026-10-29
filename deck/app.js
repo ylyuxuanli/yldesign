@@ -1,4 +1,5 @@
 (function () {
+  const AUTO_SETUP = false;
   const D = window.DECK;
   const $ = (id) => document.getElementById(id);
   const ACCESS_PW = 'yldesign', ACCESS_KEY = 'deck_access', PRES_KEY = 'deck_presenter';
@@ -532,7 +533,8 @@
     goTo(0);
     if (wantsPresenter) askPresenter();
     else if (wantsSetup) { markOwner(); openSetup(true); }
-    else if (isOwner() || (!preset && !locked)) openSetup(true); // viewers start with the questions, she starts with her setup
+    // Paused while Yuxuan polishes slides. Set back to true to open setup on load again.
+    else if (AUTO_SETUP && (isOwner() || (!preset && !locked))) openSetup(true); // viewers start with the questions, she starts with her setup
   }
   const overlay = $('pwOverlay');
   let ok = false;
