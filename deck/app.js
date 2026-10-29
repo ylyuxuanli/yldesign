@@ -186,6 +186,13 @@
         r.appendChild(el('div', 'ag-m', fmtMin(x.min)));
         r.onclick = () => goTo(firstOf(x.p));
         ag.appendChild(r);
+        if (presenting()) { // her talks always leave room for questions after each project
+          const qa = el('div', 'ag-row ag-qa');
+          qa.appendChild(el('div', 'ag-n', ''));
+          qa.appendChild(el('div', 'ag-name', 'Q&A'));
+          qa.appendChild(el('div', 'ag-m', SESSION.qa + ' min'));
+          ag.appendChild(qa);
+        }
       });
       n.appendChild(ag);
       return n;

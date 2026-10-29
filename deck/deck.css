@@ -179,7 +179,7 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 }
 
 /* Setup: a small centered card over the blurred deck, a step before starting */
-.side { position: absolute; z-index: 30; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(440px, calc(100% - 32px)); max-height: calc(100% - 48px); padding: 26px 28px 24px; background: #fff; border-radius: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 24px 64px rgba(0,0,0,0.14); overflow-y: auto; }
+.side { position: absolute; z-index: 30; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(520px, calc(100% - 32px)); max-height: calc(100% - 48px); padding: 26px 28px 24px; background: #fff; border-radius: 18px; box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 24px 64px rgba(0,0,0,0.14); overflow-y: auto; }
 .app.with-side .stage, .app.with-side .top, .app.with-side .bottom, .app.with-side .progress { filter: blur(6px); opacity: 0.55; pointer-events: none; transition: filter 0.25s, opacity 0.25s; }
 .app.with-side { background: var(--bg); }
 .side-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
@@ -194,7 +194,7 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 #setupBody .chip.on { background: var(--text); border-color: var(--text); color: #fff; }
 #setupBody .pw-btn { margin-top: 4px; }
 /* Multi-select: plain checkboxes, so they never look like the single-choice pills */
-.set-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.set-checks { display: grid; grid-template-columns: repeat(3, auto); gap: 4px 16px; }
 .set-check { display: flex; align-items: center; gap: 10px; border: none; background: none; padding: 5px 0; font: inherit; font-size: 13px; color: var(--sub); text-align: left; cursor: pointer; }
 .set-check span { width: 15px; height: 15px; flex: none; border: 1.5px solid rgba(0,0,0,0.25); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff; }
 .set-check.on { color: var(--text); }
@@ -208,3 +208,6 @@ body.audience .top, body.audience .bottom, body.audience .progress { display: no
 .set-row.off .set-check { color: var(--muted); }
 .set-grip { color: var(--muted); font-size: 13px; }
 .set-min { font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) { .set-checks { grid-template-columns: 1fr 1fr; } }
+.ag-qa { cursor: default; padding-top: calc(1 * var(--u)); padding-bottom: calc(1 * var(--u)); }
+.ag-qa .ag-name { font-size: clamp(13px, calc(1.4 * var(--u)), 18px); color: var(--muted); }
