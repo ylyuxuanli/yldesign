@@ -280,7 +280,7 @@
 .c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
 .c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
 /* Once the To side shows, the From flow steps back, as in the PDF */
-.l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
+.l-split.past .c-flow, .l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
 
 /* Phones: slides become scrollable pages */
 @media (max-width: 700px) {

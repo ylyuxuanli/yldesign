@@ -310,6 +310,7 @@
       const onlyFill = s.right.length === 1 && s.right[0].media && s.right[0].media.fill;
       const R = blocks(s.right, el('div', 'c-col right' + (onlyFill ? ' fill' : '') + (s.zone === 'right' ? ' zone' : '')));
       if (s.reveal === 'right') R.dataset.step = 1; // left first, the right side on the next click
+      if (s.past) n.classList.add('past'); // left side is the old way, shown faded
       n.appendChild(L); n.appendChild(R);
     },
     full(s, n) {
