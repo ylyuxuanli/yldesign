@@ -68,7 +68,7 @@
       return w;
     },
     stats(b) {
-      const w = el('div', 'c-stats' + (b.row ? ' row' : '') + (b.small ? ' small' : ''));
+      const w = el('div', 'c-stats' + (b.row ? ' row' : '') + (b.small ? ' small' : '') + (b.stack ? ' stack' : ''));
       b.stats.forEach((s) => w.appendChild(el('div', 'c-stat',
         (s.k ? '<div class="c-sk">' + T(s.k) + '</div>' : '') + '<div class="c-sv">' + T(s.v) + '</div><div class="c-sl">' + T(s.l) + '</div>')));
       return w;

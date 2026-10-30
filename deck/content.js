@@ -183,7 +183,7 @@ window.DECK = {
             { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview' },
             { stats: [{ v: '59%', l: 'worry their books are inaccurate' },
                       { v: '65%', l: 'worry they are not tax ready' },
-                      { v: '43%', l: 'in business less than 3 years' }], row: true },
+                      { v: '43%', l: 'in business less than 3 years' }], stack: true },
             { read: true, p: { all: 'Most owners can\'t spot problems on their own. You can\'t ask for help with a problem you don\'t see.',
                    pm: 'Most owners can\'t spot problems on their own, so a help button isn\'t enough. You can\'t ask for help with a problem you don\'t see.',
                    ds: 'We sized the trust gap with survey data before building anything. The pattern: owners can\'t spot problems, so they can\'t ask for help.' } }
