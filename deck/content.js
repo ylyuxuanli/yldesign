@@ -213,7 +213,7 @@ window.DECK = {
         { id: 'qb-levels', section: 'What I did', skills: ['ai', 'systems'], min: 1.5, pri: 1, lens: ['eng', 'pm', 'ds'], title: 'Who holds the missing piece?',
           layout: 'split', ratio: 38, zone: 'left',
           left: [{ h: 'Who holds the missing piece?' },
-                 { p: { all: 'To decide who owns each decision, we sorted bookkeeping jobs by one question.',
+                 { read: true, p: { all: 'To decide who owns each decision, we sorted bookkeeping jobs by one question.',
                         eng: 'Each level is a different handling path in the system, sorted by one question.',
                         pm: 'This gave every team one shared language for prioritizing, sorted by one question.',
                         ds: 'Each level sets what the model must be confident about before it acts alone.' } },
