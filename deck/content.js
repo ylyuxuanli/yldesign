@@ -188,9 +188,9 @@ window.DECK = {
                    ds: 'We sized the trust gap with survey data before building anything. The pattern: owners can\'t spot problems, so they can\'t ask for help.' } }
           ] },
 
-        { id: 'qb-challenge', section: 'Challenge', skills: ['align', 'strategy', 'ai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], title: 'AI first or human first?',
+        { id: 'qb-challenge', section: 'Challenge', skills: ['align', 'strategy', 'ai'], min: 1.25, pri: 1, lens: ['dm', 'pm'], title: 'What should come first: AI, the expert, or both?',
           layout: 'split', ratio: 42, zone: 'right',
-          left: [{ h: 'AI first or human first?', size: 'xl' },
+          left: [{ h: 'What should come first: AI, the expert, or both?', size: 'xl' },
                  { read: true, p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
             { h: 'No pattern to reuse', p: 'AI and human experts in one product was new. There was no playbook for who does what.' },
