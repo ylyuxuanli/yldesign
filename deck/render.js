@@ -238,11 +238,11 @@
       const img = el('img'); img.src = x.src; img.alt = T(x.alt || '');
       map.appendChild(img);
       if (x.color) map.style.setProperty('--pin', x.color);
-      x.at.forEach((p) => {
+      x.at.forEach((p, k) => {
         const d = el('div', 'c-pin ' + (p.up ? 'up' : 'down'),
           '<i></i><b></b><div class="c-pin-card"><div class="c-nh">' + T(p.h) + '</div><div class="c-np">' + T(p.p) + '</div></div>');
         d.style.left = p.x + '%'; d.style.top = p.y + '%';
-        if (x.reveal) d.dataset.step = 1; // map first, callouts on the next click
+        if (x.reveal) { d.dataset.step = 1; d.style.setProperty('--k', k); } // map first, callouts on the next click
         map.appendChild(d);
       });
       w.appendChild(map);

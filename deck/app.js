@@ -260,9 +260,18 @@
   }
   function go(d) {
     const n = presenting() ? stepsIn($('frame')) : 0;
-    if (d > 0 && step < n) { step++; draw(); return; }
-    if (d < 0 && step > 0) { step--; draw(); return; }
+    if (d > 0 && step < n) { stepTo(step + 1); return; }
+    if (d < 0 && step > 0) { stepTo(step - 1); return; }
     goTo(cur + d, d < 0);
+  }
+  // A reveal only changes the slide already on screen, so it can animate instead of redrawing
+  function stepTo(k) {
+    step = k;
+    showSteps($('frame'), step);
+    if (!$('presenter').hidden) {
+      showSteps($('prFrame'), step);
+      if (bc) bc.postMessage({ type: 'go', i: cur, step, q: query(cfg), settled });
+    }
   }
   // Clicking a part that's waiting reveals it, same as the next key
   $('frame').addEventListener('click', (e) => { if (presenting() && e.target.closest('.c-pins') && step < stepsIn($('frame'))) go(1); });
@@ -366,8 +375,11 @@
 
   // The audience window follows the presenter, settings included
   if (audience && bc) {
+    let lastQ = null;
     bc.onmessage = (e) => {
       if (e.data.type !== 'go') return;
+      if (e.data.i === cur && e.data.q === lastQ && e.data.settled === settled) { stepTo(e.data.step || 0); return; } // same slide, just a reveal
+      lastQ = e.data.q;
       Object.assign(cfg, readCfg(new URLSearchParams(e.data.q)));
       settled = e.data.settled;
       plan = build(); goTo(e.data.i); step = e.data.step || 0; draw();
