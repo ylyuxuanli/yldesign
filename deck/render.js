@@ -160,7 +160,12 @@
     },
     gallery(b) {
       const w = el('div', 'c-gallery');
-      b.gallery.forEach((m) => w.appendChild(media(m, 'tall')));
+      b.gallery.forEach((m) => {
+        if (!m.note || live) return w.appendChild(media(m, 'tall'));
+        const g = el('div', 'c-gi'); // the self-read version gets one line under each photo
+        g.appendChild(media(m, 'tall')); g.appendChild(el('p', 'c-np', T(m.note)));
+        w.appendChild(g);
+      });
       return w;
     },
     chips(b) {

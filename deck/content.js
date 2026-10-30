@@ -120,12 +120,11 @@ window.DECK = {
         { id: 'intro-life', section: 'Outside of work', min: 0.5, pri: 2, title: 'Delightful moments',
           layout: 'full', center: true,
           blocks: [{ h: 'My delightful moments' },
-                   { p: 'Ceramics taught me something useful for design: there\'s no undo button, so you think before you commit.' },
                    { gallery: [
-                     { src: '../imgs/oow-yoyo.jpg', cap: 'Yoyo' },
-                     { src: '../imgs/oow-ceramics.jpg', cap: 'Ceramics' },
-                     { src: '../imgs/oow-bouldering.jpg', cap: 'Bouldering' },
-                     { src: '../imgs/oow-travelling.jpg', cap: 'Travel' }
+                     { src: '../imgs/oow-yoyo.jpg', cap: 'Yoyo', note: 'My dog. Everyone says she\'s the cutest. Everyone is correct.' },
+                     { src: '../imgs/oow-ceramics.jpg', cap: 'Ceramics', note: 'Hands in clay, no screens. A good reminder that not everything needs an undo button.' },
+                     { src: '../imgs/oow-bouldering.jpg', cap: 'Bouldering', note: 'Finding flow on the wall and occasionally getting humbled by it.' },
+                     { src: '../imgs/oow-travelling.jpg', cap: 'Travel', note: 'Always chasing places that shift my perspective a little.' }
                    ] }] }
       ]
     },
