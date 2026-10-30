@@ -195,7 +195,7 @@ window.DECK = {
                  { read: true, p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
             { h: 'No pattern to reuse', p: 'AI and human experts in one product was new. There was no playbook for who does what.' },
-            { h: 'Customers asked for a person', p: 'But not for what, or when. Their needs weren\'t defined yet.' },
+            { h: 'Customers wanted a person. The business needed scale.', p: 'People trusted humans with their books. But experts are expensive, and AI was getting good fast.' },
             { h: 'Teams pulled in different directions', p: 'Expert services feared AI would replace experts. Core QuickBooks guarded the overall experience.' }
           ] }] },
 
