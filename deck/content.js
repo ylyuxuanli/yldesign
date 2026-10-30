@@ -175,12 +175,12 @@ window.DECK = {
           right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }] },
 
         { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], title: 'Help before problems happen',
-          layout: 'split', ratio: 38,
+          layout: 'split', ratio: 44,
           left: [{ h: 'Can we help before problems happen?' },
-                 { p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
+                 { read: true, p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
                         pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
                         design: 'With AI, the mental model changes: support isn\'t a line you call at the end, it surrounds the customer. That shaped every screen after this.' } }],
-          right: [{ media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', ph: 'AI and experts around the customer' } }] },
+          right: [{ media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', inset: true, ph: 'AI and experts around the customer' } }] },
 
         { id: 'qb-why', section: 'Why this matters', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], title: '"I don\'t know what I don\'t know"',
           layout: 'full', center: true,
