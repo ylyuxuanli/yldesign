@@ -280,8 +280,9 @@
 .c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
 .c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
 /* Side by side with a picture (From / To): the flow spans the same height as the picture */
-.l-split.top .c-flow { height: calc(34 * var(--u)); margin-top: calc(7 * var(--u)); }
-.l-split.top .c-flow .c-fl { flex: 1; height: auto; min-height: calc(2 * var(--u)); }
+.l-split.top .c-col.left:has(> .c-flow) { padding-bottom: calc(2 * var(--u)); }
+.l-split.top .c-flow { flex: 1; min-height: 0; justify-content: center; margin: 0; } /* same box as the picture on the right, so both share a center line */
+.l-split.top .c-flow .c-fl { height: calc(7 * var(--u)); }
 .l-split.top .c-fn { font-size: clamp(16px, calc(1.8 * var(--u)), 28px); }
 /* Once the To side shows, the From flow steps back, as in the PDF */
 .l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
