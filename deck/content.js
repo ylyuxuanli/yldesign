@@ -177,8 +177,9 @@ window.DECK = {
                   { media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', ph: 'AI and experts around the customer' } }] },
 
         { id: 'qb-why', section: 'Why this matters', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], title: '"I don\'t know what I don\'t know"',
-          layout: 'full', center: true,
-          blocks: [
+          layout: 'split', ratio: 56,
+          right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }],
+          left: [
             { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview' },
             { stats: [{ v: '59%', l: 'worry their books are inaccurate' },
                       { v: '65%', l: 'worry they are not tax ready' },
