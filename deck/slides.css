@@ -42,7 +42,7 @@
 .c-col.right.fill { padding: 0; }
 .c-col.right.fill .c-media { height: 100%; border-radius: 0; }
 .l-split.top { align-items: stretch; }
-.l-split.top .c-col { justify-content: flex-start; padding-top: calc(12 * var(--u)); }
+.l-split.top .c-col { justify-content: flex-start; padding-top: calc(9 * var(--u)); }
 .c-col.themed { background: var(--theme); color: #fff; }
 .c-col.zone { background: var(--zone); }
 .c-col.right.zone { padding-left: calc(5 * var(--u)); }
@@ -104,7 +104,7 @@
 .c-col.right > .c-media.contain { aspect-ratio: auto; flex: 1 1 auto; height: 100%; border-radius: 0; }
 .c-col.right > .c-media.contain.inset { padding: calc(2.5 * var(--u)) 0; } /* image with more air around it */
 .c-col.right:has(> .c-media.contain) { padding-top: calc(4 * var(--u)); padding-bottom: calc(4 * var(--u)); }
-.l-split.top .c-col.right:has(> .c-media.contain) { padding-top: calc(12 * var(--u)); } /* headings line up across both columns */
+.l-split.top .c-col.right:has(> .c-media.contain) { padding-top: calc(9 * var(--u)); padding-bottom: calc(2 * var(--u)); padding-right: calc(3 * var(--u)); } /* headings line up across both columns */
 .c-mgrid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); grid-auto-rows: 1fr; gap: calc(1.2 * var(--u)); flex: 1; min-height: 0; }
 .c-mgrid .c-media { height: 100%; min-height: 0; }
 .l-full.center .c-tl { flex: none; }
@@ -280,7 +280,7 @@
 .c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
 .c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
 /* Side by side with a picture (From / To): the flow spans the same height as the picture */
-.l-split.top .c-flow { height: calc(33 * var(--u)); margin-top: calc(3 * var(--u)); }
+.l-split.top .c-flow { height: calc(34 * var(--u)); margin-top: calc(7 * var(--u)); }
 .l-split.top .c-flow .c-fl { flex: 1; height: auto; min-height: calc(2 * var(--u)); }
 .l-split.top .c-fn { font-size: clamp(16px, calc(1.8 * var(--u)), 28px); }
 /* Once the To side shows, the From flow steps back, as in the PDF */
