@@ -37,7 +37,7 @@
       a.href = b.link.href; a.target = '_blank'; a.rel = 'noopener';
       return a;
     },
-    quote: (b) => el('blockquote', 'c-quote', '<span>' + T(b.quote) + '</span>' + (b.by ? '<cite>' + T(b.by) + '</cite>' : '')),
+    quote: (b) => el('blockquote', 'c-quote' + (b.big ? ' big' : ''), '<span>' + T(b.quote) + '</span>' + (b.by ? '<cite>' + T(b.by) + '</cite>' : '')),
 
     list(b) {
       const w = el('div', 'c-list' + (b.muted ? ' muted' : ''));

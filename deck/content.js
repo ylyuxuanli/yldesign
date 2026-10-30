@@ -180,7 +180,7 @@ window.DECK = {
           layout: 'split', ratio: 56,
           right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }],
           left: [
-            { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview' },
+            { quote: 'I don\'t know what I don\'t know.', by: 'Small business owner, research interview', big: true },
             { stats: [{ v: '59%', l: 'worry their books are inaccurate' },
                       { v: '65%', l: 'worry they are not tax ready' },
                       { v: '43%', l: 'in business less than 3 years' }], stack: true },
