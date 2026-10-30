@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" href="/favicon.ico" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex"/>
+  <title>Portfolio review | Yuxuan Li</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="deck.css"/>
+  <link rel="stylesheet" href="slides.css"/>
+</head>
+<body>
+
+  <!-- Access gate, same password as the Intuit case studies -->
+  <div class="pw-overlay" id="pwOverlay">
+    <div class="pw-box">
+      <img class="pw-logo" src="../imgs/logo.png" alt="Yuxuan Li"/>
+      <div class="pw-title">This portfolio review is password protected</div>
+      <div class="pw-sub">Don't have it? Reach out at yl.yuxuanli@gmail.com</div>
+      <input class="pw-input" type="password" id="pwInput" placeholder="Password" autocomplete="off"/>
+      <button class="pw-btn" id="pwBtn">Continue →</button>
+      <div class="pw-error" id="pwError">Incorrect password. Try again.</div>
+      <a class="pw-back" href="../index.html">← Back to work</a>
+    </div>
+  </div>
+
+  <!-- The deck -->
+  <div class="app" id="app">
+    <header class="top">
+      <button class="menu-btn" id="menuBtn" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false">⋯</button>
+    </header>
+
+    <nav class="toc" id="toc" hidden></nav>
+
+    <!-- Yuxuan's own setup -->
+    <aside class="side" id="side" hidden>
+      <div class="side-top"><span class="side-title">Setup</span><button class="side-x" id="sideClose" aria-label="Close">×</button></div>
+      <div id="setupBody"></div>
+    </aside>
+
+    <div class="stage" id="stage">
+      <div class="frame" id="frame"></div>
+    </div>
+    <footer class="bottom">
+      <span class="spacer"></span>
+      <span class="count" id="count"></span>
+      <button class="nav-btn" id="prevBtn" title="Previous (←)">←</button>
+      <button class="nav-btn" id="nextBtn" title="Next (→)">→</button>
+    </footer>
+    <div class="progress"><div id="progBar"></div></div>
+  </div>
+
+  <!-- Presenter: only unlocks with the presenter password -->
+  <div class="presenter" id="presenter" hidden>
+    <div class="pr-main">
+      <div class="pr-stage"><div class="frame" id="prFrame"></div></div>
+      <div class="pr-nav">
+        <button class="pr-btn" id="prPrev">← Prev</button>
+        <span id="prCount"></span>
+        <button class="pr-btn" id="prNext">Next →</button>
+      </div>
+    </div>
+    <aside class="pr-side">
+      <div class="pr-timer">
+        <div><div class="pr-k">Elapsed</div><div class="pr-big" id="prElapsed">0:00</div></div>
+        <div><div class="pr-k">Budget</div><div class="pr-big pr-dim" id="prBudget"></div></div>
+        <div><div class="pr-k">Pace</div><div class="pr-pace" id="prPace">Not started</div></div>
+      </div>
+      <div class="pr-tools">
+        <button class="pr-btn" id="prStart">Start timer</button>
+        <button class="pr-btn" id="prReset">Reset</button>
+        <button class="pr-btn" id="prAudience" title="Open a clean slides window to screen share. It follows this one.">Audience window ↗</button>
+        <button class="pr-btn" id="prSetup">Setup</button>
+        <button class="pr-btn" id="prExit">Exit</button>
+      </div>
+      <div class="pr-k" id="prSlideTime"></div>
+      <div class="pr-notes" id="prNotes"></div>
+      <div class="pr-k">Up next</div>
+      <div class="pr-next"><div class="frame" id="prNextFrame"></div></div>
+    </aside>
+  </div>
+
+  <!-- Dialogs -->
+  <div class="modal" id="shareModal" hidden>
+    <div class="modal-box">
+      <div class="modal-title">Share this version</div>
+      <p class="modal-sub" id="shareDesc"></p>
+      <label class="check"><input type="checkbox" id="shareSkip" checked/> Skip the questions, start with these settings</label>
+      <label class="check"><input type="checkbox" id="shareAdjust" checked/> Let them change role and time</label>
+      <div class="share-row">
+        <input class="share-url" id="shareUrl" readonly/>
+        <button class="pw-btn" id="shareCopy">Copy</button>
+      </div>
+      <button class="modal-close" data-close>Close</button>
+    </div>
+  </div>
+
+  <div class="modal" id="presModal" hidden>
+    <div class="modal-box">
+      <div class="modal-title">Presenter mode</div>
+      <p class="modal-sub">Speaker notes are encrypted. Enter your presenter password.</p>
+      <input class="pw-input" type="password" id="presInput" placeholder="Presenter password" autocomplete="off"/>
+      <button class="pw-btn" id="presBtn">Unlock</button>
+      <div class="pw-error" id="presError">That's not it.</div>
+      <button class="modal-close" data-close>Cancel</button>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="render.js"></script>
+  <script src="notes.enc.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
