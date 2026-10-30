@@ -167,7 +167,7 @@ window.DECK = {
           right: [{ media: { src: '../imgs/deck/qb-context.webp', fit: 'contain', ph: 'QuickBooks overview: Books Health, Needs attention, expert video call' } }] },
 
         { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1.5, pri: 2, lens: ['pm', 'design'], title: 'From help after problems, to help around the customer',
-          layout: 'split', ratio: 44, zone: 'right', top: true, past: true,
+          layout: 'split', ratio: 44, zone: 'right', top: true,
           left: [{ h: 'From' },
                  { flow: [{ img: '../imgs/deck/from-customer.png', t: 'Customers' },
                           { img: '../imgs/deck/from-qb.png', t: 'Manual workflow' },

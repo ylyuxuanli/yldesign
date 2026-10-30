@@ -279,8 +279,12 @@
 .c-fn img { width: calc(6.4 * var(--u)); height: calc(6.4 * var(--u)); flex: none; }
 .c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
 .c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
+/* Side by side with a picture (From / To): the flow spans the same height as the picture */
+.l-split.top .c-flow { height: calc(33 * var(--u)); margin-top: calc(3 * var(--u)); }
+.l-split.top .c-flow .c-fl { flex: 1; height: auto; min-height: calc(2 * var(--u)); }
+.l-split.top .c-fn { font-size: clamp(16px, calc(1.8 * var(--u)), 28px); }
 /* Once the To side shows, the From flow steps back, as in the PDF */
-.l-split.past .c-flow, .l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
+.l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
 
 /* Phones: slides become scrollable pages */
 @media (max-width: 700px) {
