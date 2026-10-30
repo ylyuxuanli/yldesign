@@ -8,7 +8,7 @@
   display: flex; flex-direction: column; gap: calc(1.6 * var(--u)); overflow: hidden;
 }
 .cs.theme-navy, .cs.theme-green { --bg: #fff; --zone: #F5F7F8; } /* project slides are white, gray panels as in the PDF */
-.cs.theme-navy  { --theme: #0E2E63; --theme-soft: #EEF3FB; --primary: #1D4E9E; }
+.cs.theme-navy  { --theme: #0E2E63; --theme-soft: #EEF3FB; --primary: #003E31; } /* QuickBooks dark green accents, as in the PDF */
 .cs.theme-green { --theme: #0B3D33; --theme-soft: #EAF6EC; --primary: #2CA01C; }
 
 .c-k { font-size: clamp(13px, calc(1.1 * var(--u)), 17px); font-weight: 500; color: var(--primary); }
@@ -104,6 +104,7 @@
 .c-col.right > .c-media.contain { aspect-ratio: auto; flex: 1 1 auto; height: 100%; border-radius: 0; }
 .c-col.right > .c-media.contain.inset { padding: calc(2.5 * var(--u)) 0; } /* image with more air around it */
 .c-col.right:has(> .c-media.contain) { padding-top: calc(4 * var(--u)); padding-bottom: calc(4 * var(--u)); }
+.l-split.top .c-col.right:has(> .c-media.contain) { padding-top: calc(12 * var(--u)); } /* headings line up across both columns */
 .c-mgrid { display: grid; grid-template-columns: repeat(var(--cols), 1fr); grid-auto-rows: 1fr; gap: calc(1.2 * var(--u)); flex: 1; min-height: 0; }
 .c-mgrid .c-media { height: 100%; min-height: 0; }
 .l-full.center .c-tl { flex: none; }
@@ -278,6 +279,8 @@
 .c-fn img { width: calc(6.4 * var(--u)); height: calc(6.4 * var(--u)); flex: none; }
 .c-fl { display: block; width: 2px; height: calc(5.5 * var(--u)); margin-left: calc(3.2 * var(--u) - 1px); background: var(--theme); }
 .c-fl.dash { background: repeating-linear-gradient(to bottom, var(--theme) 0 6px, transparent 6px 12px); }
+/* Once the To side shows, the From flow steps back, as in the PDF */
+.l-split:has(> .c-col.right[data-step]:not(.pending)) .c-flow { opacity: 0.45; transition: opacity 0.35s ease; }
 
 /* Phones: slides become scrollable pages */
 @media (max-width: 700px) {

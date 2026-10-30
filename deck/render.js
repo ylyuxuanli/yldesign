@@ -309,6 +309,7 @@
       const L = blocks(s.left, el('div', 'c-col left' + (s.leftTheme ? ' themed' : '') + (s.zone === 'left' ? ' zone' : '')));
       const onlyFill = s.right.length === 1 && s.right[0].media && s.right[0].media.fill;
       const R = blocks(s.right, el('div', 'c-col right' + (onlyFill ? ' fill' : '') + (s.zone === 'right' ? ' zone' : '')));
+      if (s.reveal === 'right') R.dataset.step = 1; // left first, the right side on the next click
       n.appendChild(L); n.appendChild(R);
     },
     full(s, n) {

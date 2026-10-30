@@ -166,21 +166,15 @@ window.DECK = {
           ],
           right: [{ media: { src: '../imgs/deck/qb-context.webp', fit: 'contain', ph: 'QuickBooks overview: Books Health, Needs attention, expert video call' } }] },
 
-        { id: 'qb-from', section: 'Context', min: 0.75, pri: 3, title: 'Help only came after something went wrong',
-          layout: 'split', ratio: 46,
+        { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1.5, pri: 2, lens: ['pm', 'design'], title: 'From help after problems, to help around the customer',
+          layout: 'split', ratio: 44, zone: 'right', reveal: 'right', top: true,
           left: [{ h: 'From' },
                  { flow: [{ img: '../imgs/deck/from-customer.png', t: 'Customers' },
                           { img: '../imgs/deck/from-qb.png', t: 'Manual workflow' },
                           { img: '../imgs/deck/from-expert.png', t: 'Expert services $$', dashed: true }] }],
-          right: [{ media: { src: '../imgs/deck/qb-from.webp', pos: '70% center', ph: 'Contractor on a job site checking a tablet', fill: true } }] },
-
-        { id: 'qb-from-to', section: 'Context', skills: ['strategy', 'service'], min: 1, pri: 2, lens: ['pm', 'design'], title: 'Help before problems happen',
-          layout: 'split', ratio: 44,
-          left: [{ h: 'Can we help before problems happen?' },
-                 { read: true, p: { all: 'With AI, we asked a bigger question: instead of waiting for customers to come to us, can AI and experts work together around them?',
-                        pm: 'With AI, the strategy could shift. Experts stop being an upsell you buy after a problem, and become part of the product.',
-                        design: 'With AI, the mental model changes: support isn\'t a line you call at the end, it surrounds the customer. That shaped every screen after this.' } }],
-          right: [{ media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', inset: true, ph: 'AI and experts around the customer' } }] },
+          right: [{ h: 'To' },
+                  { read: true, p: 'Can AI and experts work together around the customer, and help before problems happen?' },
+                  { media: { src: '../imgs/deck/qb-to-aihi.webp', fit: 'contain', ph: 'AI and experts around the customer' } }] },
 
         { id: 'qb-why', section: 'Why this matters', skills: ['research'], min: 1, pri: 2, lens: ['pm', 'ds'], title: '"I don\'t know what I don\'t know"',
           layout: 'full', center: true,
@@ -199,12 +193,9 @@ window.DECK = {
           left: [{ h: 'AI first or human first?', size: 'xl' },
                  { read: true, p: 'I dug into why. People didn\'t need a person for everything. They didn\'t trust AI to get their books right. The real problem was trust, and a human is only one way to build it.' }],
           right: [{ numbered: [
-            { h: 'Customers wanted a person', p: 'Our paid services showed people want to talk to a human. Even in free support, people didn\'t like chatting with AI.' },
-            { h: 'The business wanted scale', p: 'Humans are expensive and hard to scale, and AI had gotten much better.' },
-            { h: { all: 'Teams pulled in different directions', dm: 'Teams pulled in different directions', pm: 'No shared definition, no shared roadmap' },
-              p: { all: 'Expert services worried AI would replace experts. Core QuickBooks cared most about the overall experience.',
-                   dm: 'Expert services worried AI would replace experts and their services. Core QuickBooks cared most about the overall experience. Each was right about their part.',
-                   pm: 'Expert services worried about their revenue. Core QuickBooks cared about the overall experience. We needed one definition before a roadmap.' } }
+            { h: 'No pattern to reuse', p: 'AI and human experts in one product was new. There was no playbook for who does what.' },
+            { h: 'Customers asked for a person', p: 'But not for what, or when. Their needs weren\'t defined yet.' },
+            { h: 'Teams pulled in different directions', p: 'Expert services feared AI would replace experts. Core QuickBooks guarded the overall experience.' }
           ] }] },
 
         { id: 'qb-journey', section: 'What I did', skills: ['service', 'research', 'align', 'ai'], min: 1.75, pri: 2, lens: ['design', 'dm', 'pm'], title: 'Where expertise matters most',
